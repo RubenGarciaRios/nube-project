@@ -1,15 +1,15 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 15/11/18 18:52
+ *  Last modified 16/11/18 15:02
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.services.eureka.config;
 
 import com.netflix.discovery.DiscoveryClient;
-import org.nube.core.security.ssl.SSLContextBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.nube.core.security.ssl.SSLContextBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

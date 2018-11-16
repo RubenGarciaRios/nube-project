@@ -1,14 +1,14 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 15/11/18 18:52
+ *  Last modified 16/11/18 15:02
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.core.configuration.http;
 
-import org.nube.core.base.CoreConfigurationObject;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.nube.core.base.CoreConfigurationObject;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;

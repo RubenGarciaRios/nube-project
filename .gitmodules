@@ -1,0 +1,6 @@
+[submodule "nube-services/nube-services-configuration"]
+	path = nube-services/nube-services-configuration
+	url = https://github.com/RubenGarciaRios/nube-services-configuration.git
+[submodule "nube-services/nube-services-api"]
+	path = nube-services/nube-services-api
+	url = https://github.com/RubenGarciaRios/nube-services-api.git

@@ -1,14 +1,14 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 15/11/18 18:52
+ *  Last modified 16/11/18 15:02
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.core.configuration.ssl;
 
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.nube.core.base.CoreConfigurationObject;
 import org.nube.core.security.ssl.SSLContextBuilder;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

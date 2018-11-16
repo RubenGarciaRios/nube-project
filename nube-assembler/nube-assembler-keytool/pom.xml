@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 8/11/18 11:05
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>nube-assembler</artifactId>
+		<groupId>org.nube</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>nube-assembler-keytool</artifactId>
+	<name>NUBE - Assembler - Keytool</name>
+	<description>NUBE - Assembler - Keytool (SSL Keystore generator)</description>
+	<packaging>pom</packaging>
+
+	<properties>
+		<ssl-files-setup-directory>${project.parent.basedir}/src/main/resources/nube-services-ssl-files</ssl-files-setup-directory>
+	</properties>
+
+	<!-- ============================== -->
+	<!-- KEYTOOL - SSL FILES GENERATION -->
+	<!-- ============================== -->
+	<build>
+		<plugins>
+			<!-- =================== -->
+			<!-- MAVEN ANTRUN PLUGIN -->
+			<!-- =================== -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>####################################################################</echo>
+								<echo>## [WARNING] NUBE - ASSEMBLER - GENERATING SSL FILES WITH KEYTOOL ##</echo>
+								<echo>####################################################################</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- ==================== -->
+			<!-- MAVEN KEYTOOL PLUGIN -->
+			<!-- ==================== -->
+			<!-- Create ssl keystores and certificates -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>keytool-maven-plugin</artifactId>
+				<executions>
+					<!-- ===================== -->
+					<!-- SSL FILES CLEAN PHASE -->
+					<!-- ===================== -->
+					<!-- TRUSTSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Cleaning: ${nube.ssl.truststore}</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.truststore}</keystore>
+						</configuration>
+					</execution>
+					<!-- TRUSTSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Cleaning: ${nube.ssl.browser-keystore}</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.browser-keystore}</keystore>
+						</configuration>
+					</execution>
+					<!-- ROOT KEYSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Cleaning: ${nube.ssl.root.keystore}</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.root.keystore}</keystore>
+						</configuration>
+					</execution>
+					<!-- CA KEYSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Cleaning: ${nube.ssl.ca.keystore}</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.ca.keystore}</keystore>
+						</configuration>
+					</execution>
+					<!-- SERVICES KEYSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Cleaning: ${nube.ssl.nube-services.keystore}</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.nube-services.keystore}</keystore>
+						</configuration>
+					</execution>
+					<!-- GATEWAY KEYSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Cleaning: ${nube.api-gateway-service.ssl.keystore}</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.keystore}</keystore>
+						</configuration>
+					</execution>
+					<!-- =================================== -->
+					<!-- SSL FILES KEYSTORE GENERATION PHASE -->
+					<!-- =================================== -->
+					<!-- ROOT KEYSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - ${nube.ssl.root.keystore} Keystore Generation</id>
+						<goals>
+							<goal>generateKeyPair</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.root.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<keyalg>${nube.ssl.key-algorithm}</keyalg>
+							<keysize>${nube.ssl.key-size}</keysize>
+							<validity>${nube.ssl.key-validity}</validity>
+							<sigalg>${nube.ssl.sig-algorithm}</sigalg>
+							<alias>${nube.ssl.root.keystore-alias}</alias>
+							<ext>${nube.ssl.root.ext}</ext>
+							<keypass>${nube.ssl.root.keystore-password}</keypass>
+							<storepass>${nube.ssl.root.keystore-store-password}</storepass>
+							<dname>${nube.ssl.root.dname}</dname>
+						</configuration>
+					</execution>
+					<!-- CA KEYSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - ${nube.ssl.ca.keystore} Keystore Generation</id>
+						<goals>
+							<goal>generateKeyPair</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.ca.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<keyalg>${nube.ssl.key-algorithm}</keyalg>
+							<keysize>${nube.ssl.key-size}</keysize>
+							<validity>${nube.ssl.key-validity}</validity>
+							<sigalg>${nube.ssl.sig-algorithm}</sigalg>
+							<alias>${nube.ssl.ca.keystore-alias}</alias>
+							<ext>${nube.ssl.ca.ext}</ext>
+							<keypass>${nube.ssl.ca.keystore-password}</keypass>
+							<storepass>${nube.ssl.ca.keystore-store-password}</storepass>
+							<dname>${nube.ssl.ca.dname}</dname>
+						</configuration>
+					</execution>
+					<!-- SERVICES KEYSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - ${nube.ssl.nube-services.keystore} Keystore Generation</id>
+						<goals>
+							<goal>generateKeyPair</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.nube-services.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<keyalg>${nube.ssl.key-algorithm}</keyalg>
+							<keysize>${nube.ssl.key-size}</keysize>
+							<validity>${nube.ssl.key-validity}</validity>
+							<sigalg>${nube.ssl.sig-algorithm}</sigalg>
+							<alias>${nube.ssl.nube-services.keystore-alias}</alias>
+							<keypass>${nube.ssl.nube-services.keystore-password}</keypass>
+							<storepass>${nube.ssl.nube-services.keystore-store-password}</storepass>
+							<dname>${nube.ssl.nube-services.dname}</dname>
+						</configuration>
+					</execution>
+					<!-- GATEWAY KEYSTORE -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - ${nube.api-gateway-service.ssl.keystore} Keystore Generation</id>
+						<goals>
+							<goal>generateKeyPair</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<keyalg>${nube.ssl.key-algorithm}</keyalg>
+							<keysize>${nube.ssl.key-size}</keysize>
+							<validity>${nube.ssl.key-validity}</validity>
+							<sigalg>${nube.ssl.sig-algorithm}</sigalg>
+							<alias>${nube.api-gateway-service.ssl.keystore-alias}</alias>
+							<keypass>${nube.api-gateway-service.ssl.keystore-password}</keypass>
+							<storepass>${nube.api-gateway-service.ssl.keystore-store-password}</storepass>
+							<dname>${nube.api-gateway-service.ssl.dname}</dname>
+						</configuration>
+					</execution>
+					<!-- ============================= -->
+					<!-- ROOT & CA CERTIFICATION PHASE -->
+					<!-- ============================= -->
+					<!-- ROOT CERTIFICATE EXPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Exportation ${nube.ssl.root.keystore} > ${nube.ssl.root.certificate}</id>
+						<goals>
+							<goal>exportCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.root.keystore}</keystore>
+							<alias>${nube.ssl.root.keystore-alias}</alias>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<storepass>${nube.ssl.root.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.root.certificate}</file>
+							<rfc>true</rfc>
+						</configuration>
+					</execution>
+					<!-- CA CERTIFICATE SIGNING REQUEST -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Signing Request ${nube.ssl.ca.keystore} > ${nube.ssl.ca.certificate-signing-request}</id>
+						<goals>
+							<goal>generateCertificateRequest</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.ca.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.ca.keystore-alias}</alias>
+							<storepass>${nube.ssl.ca.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.ca.certificate-signing-request}</file>
+						</configuration>
+					</execution>
+					<!-- CA SINGED CERTIFICATE BY ROOT  -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Generating Signed Certificate ${nube.ssl.ca.certificate-signing-request} > ${nube.ssl.ca.root-signed-certificate}</id>
+						<goals>
+							<goal>generateCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.root.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.root.keystore-alias}</alias>
+							<storepass>${nube.ssl.root.keystore-store-password}</storepass>
+							<infile>${ssl-files-setup-directory}/${nube.ssl.ca.certificate-signing-request}
+							</infile>
+							<outfile>${ssl-files-setup-directory}/${nube.ssl.ca.root-signed-certificate}
+							</outfile>
+							<rfc>true</rfc>
+							<ext>${nube.ssl.ca.certificate-signing-request.ext.bc}</ext>
+							<!-- [WARNING] MAVEN KEYTOOL PLUGIN NOT SUPPORT MORE THAN ONE EXT
+							<ext>${nube.ssl.ca.certificate-signing-request.ext.san}</ext>
+							-->
+						</configuration>
+					</execution>
+					<!-- CA - ROOT CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.root.certificate} > ${nube.ssl.ca.keystore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.ca.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.root.keystore-alias}</alias>
+							<storepass>${nube.ssl.ca.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.root.certificate}</file>
+							<trustcacerts>true</trustcacerts>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- CA - ROOT SINGED CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.ca.root-signed-certificate} > ${nube.ssl.ca.keystore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.ca.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.ca.keystore-alias}</alias>
+							<storepass>${nube.ssl.ca.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.ca.root-signed-certificate}</file>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- ================================ -->
+					<!-- ALL SERVICES CERTIFICATION PHASE -->
+					<!-- ================================ -->
+					<!-- SERVICES CERTIFICATE SIGNING REQUEST -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Signing Request ${nube.ssl.nube-services.keystore} > ${nube.ssl.nube-services.certificate-signing-request}</id>
+						<goals>
+							<goal>generateCertificateRequest</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.nube-services.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<sigalg>${nube.ssl.sig-algorithm}</sigalg>
+							<alias>${nube.ssl.nube-services.keystore-alias}</alias>
+							<storepass>${nube.ssl.nube-services.keystore-store-password}</storepass>
+							<file>
+								${ssl-files-setup-directory}/${nube.ssl.nube-services.certificate-signing-request}
+							</file>
+						</configuration>
+					</execution>
+					<!-- GATEWAY CERTIFICATE SIGNING REQUEST -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Signing Request ${nube.api-gateway-service.ssl.keystore} > ${nube.api-gateway-service.ssl.certificate-signing-request}</id>
+						<goals>
+							<goal>generateCertificateRequest</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<sigalg>${nube.ssl.sig-algorithm}</sigalg>
+							<alias>${nube.api-gateway-service.ssl.keystore-alias}</alias>
+							<storepass>${nube.api-gateway-service.ssl.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.certificate-signing-request}</file>
+						</configuration>
+					</execution>
+					<!-- SERVICES SINGED CERTIFICATE BY CA  -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Generating Signed Certificate ${nube.ssl.nube-services.certificate-signing-request} > ${nube.ssl.nube-services.ca-signed-certificate}</id>
+						<goals>
+							<goal>generateCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.ca.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.ca.keystore-alias}</alias>
+							<storepass>${nube.ssl.ca.keystore-store-password}</storepass>
+							<infile>
+								${ssl-files-setup-directory}/${nube.ssl.nube-services.certificate-signing-request}
+							</infile>
+							<!-- [WARNING] MAVEN KEYTOOL PLUGIN NOT SUPPORT MORE THAN ONE EXT
+							<ext>${nube.ssl.nube-services.certificate-signing-request.ext.eku}</ext>
+							-->
+							<ext>${nube.ssl.nube-services.certificate-signing-request.ext.ku}</ext>
+							<rfc>true</rfc>
+							<outfile>
+								${ssl-files-setup-directory}/${nube.ssl.nube-services.ca-signed-certificate}
+							</outfile>
+						</configuration>
+					</execution>
+					<!-- GATEWAY SINGED CERTIFICATE BY CA  -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Generating Signed Certificate ${nube.api-gateway-service.ssl.certificate-signing-request} > ${nube.api-gateway-service.ssl.ca-signed-certificate}</id>
+						<goals>
+							<goal>generateCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.ca.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.ca.keystore-alias}</alias>
+							<storepass>${nube.ssl.ca.keystore-store-password}</storepass>
+							<infile>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.certificate-signing-request}
+							</infile>
+							<!-- [WARNING] MAVEN KEYTOOL PLUGIN NOT SUPPORT MORE THAN ONE EXT
+							<ext>${nube.api-gateway-service.ssl.certificate-signing-request.ext.eku}</ext>
+							-->
+							<ext>${nube.api-gateway-service.ssl.certificate-signing-request.ext.ku}</ext>
+							<rfc>true</rfc>
+							<outfile>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.ca-signed-certificate}</outfile>
+						</configuration>
+					</execution>
+					<!-- NUBE-SERVICES - ROOT CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.root.certificate} > ${nube.ssl.nube-services.keystore} </id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.nube-services.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.root.keystore-alias}</alias>
+							<storepass>${nube.ssl.nube-services.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.root.certificate}</file>
+							<trustcacerts>true</trustcacerts>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- CA - ROOT TO NUBE-SERVICES - SINGED CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.ca.root-signed-certificate} > ${nube.ssl.nube-services.keystore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.nube-services.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.ca.keystore-alias}</alias>
+							<storepass>${nube.ssl.nube-services.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.ca.root-signed-certificate}</file>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- CA TO NUBE-SERVICES - SINGED CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.nube-services.ca-signed-certificate} > ${nube.ssl.nube-services.keystore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.nube-services.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.nube-services.keystore-alias}</alias>
+							<storepass>${nube.ssl.nube-services.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.nube-services.ca-signed-certificate}
+							</file>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- GATEWAY - ROOT CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.root.certificate} > ${nube.api-gateway-service.ssl.keystore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.root.keystore-alias}</alias>
+							<storepass>${nube.api-gateway-service.ssl.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.root.certificate}</file>
+							<trustcacerts>true</trustcacerts>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- CA - ROOT TO GATEWAY - SINGED CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.ca.root-signed-certificate} > ${nube.api-gateway-service.ssl.keystore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.ca.keystore-alias}</alias>
+							<storepass>${nube.api-gateway-service.ssl.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.ca.root-signed-certificate}</file>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- CA TO GATEWAY - SINGED CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.api-gateway-service.ssl.ca-signed-certificate} > ${nube.api-gateway-service.ssl.keystore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.keystore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.api-gateway-service.ssl.keystore-alias}</alias>
+							<storepass>${nube.api-gateway-service.ssl.keystore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.ca-signed-certificate}</file>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- ================ -->
+					<!-- TRUSTSTORE PHASE -->
+					<!-- ================= -->
+					<!-- TRUSTSTORE - ROOT CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.root.certificate} > ${nube.ssl.truststore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.truststore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.root.keystore-alias}</alias>
+							<storepass>${nube.ssl.truststore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.root.certificate}</file>
+							<trustcacerts>true</trustcacerts>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- CA - ROOT - TRUSTSTORE - SINGED CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.ca.root-signed-certificate} > ${nube.ssl.truststore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.truststore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.ca.keystore-alias}</alias>
+							<storepass>${nube.ssl.truststore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.ca.root-signed-certificate}</file>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- CA - ROOT - NUBE-SERVICES - TRUSTSTORE - SINGED CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.ssl.nube-services.ca-signed-certificate} > ${nube.ssl.truststore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.truststore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.ssl.nube-services.keystore-alias}</alias>
+							<storepass>${nube.ssl.truststore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.ssl.nube-services.ca-signed-certificate}
+							</file>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- CA - ROOT - GATEWAY - TRUSTSTORE - SINGED CERTIFICATE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Certificate Importation ${nube.api-gateway-service.ssl.ca-signed-certificate} > ${nube.ssl.truststore}</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<keystore>${ssl-files-setup-directory}/${nube.ssl.truststore}</keystore>
+							<storetype>${nube.ssl.store-type}</storetype>
+							<alias>${nube.api-gateway-service.ssl.keystore-alias}</alias>
+							<storepass>${nube.ssl.truststore-store-password}</storepass>
+							<file>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.ca-signed-certificate}</file>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- ====================== -->
+					<!-- BROWSER KEYSTORE PHASE -->
+					<!-- ====================== -->
+					<!-- NUBE-SERVICES KEYSTORE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Keystore Importation ${nube.ssl.nube-services.keystore} > ${nube.ssl.browser-keystore}</id>
+						<goals>
+							<goal>importKeystore</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<srckeystore>${ssl-files-setup-directory}/${nube.ssl.nube-services.keystore}
+							</srckeystore>
+							<srcstoretype>${nube.ssl.store-type}</srcstoretype>
+							<srckeypass>${nube.ssl.nube-services.keystore-password}</srckeypass>
+							<srcstorepass>${nube.ssl.nube-services.keystore-store-password}</srcstorepass>
+							<srcalias>${nube.ssl.nube-services.keystore-alias}</srcalias>
+							<destkeystore>${ssl-files-setup-directory}/${nube.ssl.browser-keystore}
+							</destkeystore>
+							<deststoretype>${nube.ssl.store-type}</deststoretype>
+							<destkeypass>${nube.ssl.browser-keystore-password}</destkeypass>
+							<deststorepass>${nube.ssl.browser-keystore-store-password}</deststorepass>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+					<!-- GATEWAY KEYSTORE IMPORTATION -->
+					<execution>
+						<id>NUBE - Assembler - Keytool - Keystore Importation ${nube.api-gateway-service.ssl.keystore} > ${nube.ssl.browser-keystore}</id>
+						<goals>
+							<goal>importKeystore</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<srckeystore>${ssl-files-setup-directory}/${nube.api-gateway-service.ssl.keystore}</srckeystore>
+							<srcstoretype>${nube.ssl.store-type}</srcstoretype>
+							<srckeypass>${nube.api-gateway-service.ssl.keystore-password}</srckeypass>
+							<srcstorepass>${nube.api-gateway-service.ssl.keystore-store-password}</srcstorepass>
+							<srcalias>${nube.api-gateway-service.ssl.keystore-alias}</srcalias>
+							<destkeystore>${ssl-files-setup-directory}/${nube.ssl.browser-keystore}
+							</destkeystore>
+							<deststoretype>${nube.ssl.store-type}</deststoretype>
+							<destkeypass>${nube.ssl.browser-keystore-password}</destkeypass>
+							<deststorepass>${nube.ssl.browser-keystore-store-password}</deststorepass>
+							<noprompt>true</noprompt>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

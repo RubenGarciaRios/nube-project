@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 15/11/18 13:47
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>nube-services</artifactId>
+		<groupId>org.nube</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>nube-services-admin-manager</artifactId>
+	<name>NUBE - Services - Admin-Manager</name>
+	<description>NUBE - Services - Admin Manager (Spring Boot Admin)</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<!-- ================== -->
+	<!-- MODULE PROPERTIES -->
+	<!-- ================== -->
+	<properties>
+		<!-- General properties -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<deploy>${project.artifactId}.${project.version}</deploy>
+	</properties>
+	<!-- =================== -->
+	<!-- MODULE DEPENDENCIES -->
+	<!-- =================== -->
+	<dependencies>
+		<!-- ========================= -->
+		<!-- SPRING BOOT ADMIN MANAGER -->
+		<!-- ========================= -->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<!-- ===================== -->
+		<!-- NETFLIX EUREKA CLIENT -->
+		<!-- ===================== -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-netflix-eureka-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.netflix.eureka</groupId>
+			<artifactId>eureka-client</artifactId>
+		</dependency>
+		<!-- =================== -->
+		<!-- SPRING CLOUD CONFIG -->
+		<!-- =================== -->
+		<dependency>
+			<!-- Spring Configuration Client -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-client</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+</project>

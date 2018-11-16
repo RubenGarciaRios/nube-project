@@ -1,0 +1,98 @@
+#################################################
+### S P R I N G   C O N F I G U R A T I I O N ###
+#################################################
+spring:
+  application:
+    name: [{nube.api-gateway-service.application.name}]
+  # Spring session MongoDB store.
+  session:
+    store-type: mongodb
+  # Spring Data MongoDB configuration.
+  data:
+    mongodb:
+      host: ${MONGODB_HOST:[{mongodb.httpsessions.hosts}]}
+      port: ${MONGODB_PORT:[{mongodb.httpsessions.port}]}
+      database: ${MONGODB_DBNAME:[{mongodb.httpsessions.database}]}
+  # Enable ansi colors for default spring logging.
+  output:
+    ansi:
+      enabled: always
+  # RabbitMQ configuration.
+  rabbitmq:
+    host: [{rabbitmq.host}]
+    port: [{rabbitmq.port}]
+    username: [{rabbitmq.username}]
+    password: [{rabbitmq.password}]
+  # Sleuth configuration.
+  sleuth:
+    sampler:
+      precentage: 1.0
+    web:
+      skip-pattern: (^cleanup.*|.+favicon.*)
+  # Zipkin configuration.
+  zipkin:
+    discovery-client-enabled: true
+    enabled: true
+    locator:
+      discovery:
+        enabled: true
+    service:
+      name: [{nube.zipkin-service.application.name}]
+###########################
+### M A N A G E M E N T ###
+###########################
+management:
+  security:
+    sessions: always
+  endpoint:
+    sessions:
+      enabled: true
+###########################################
+### Z U U L   C O N F I G U R A T I O N ###
+###########################################
+zuul:
+  routes:
+    test-service:
+      path: /test-service/**
+      sensitive-headers: Set-Cookie,Authorization
+    # EUREKA ROUTING.
+    eureka:
+      path: /eureka/**
+      sensitive-headers: Set-Cookie,Authorization
+      url: [{eureka.uri}]
+hystrix:
+  command:
+    test-service:
+      execution:
+        isolation:
+          thread:
+            timeout-in-milliseconds: 600000
+    # EUREKA.
+    eureka:
+          execution:
+            isolation:
+              thread:
+                timeout-in-milliseconds: 600000
+#################################################
+### L O G G I N G   C O N F I G U R A T I O N ###
+#################################################
+logging:
+  register-shutdown-hook: true
+  level:
+    root: ${LOGGING_LEVEL:[{nube.logging.level}]}
+###############################################
+### R I B B O N   C O N F I G U R A T I O N ###
+###############################################
+ribbon:
+  # Enable Ribbon load balancer on discovery service.
+  eureka:
+    enabled: true
+#######################################
+### C U S T O M   P R O P E R I E S ###
+#######################################
+nube:
+  service:
+    security:
+      username: [{nube.api-gateway-service.security.username}]
+      password: [{nube.api-gateway-service.security.password}]
+      roles: [{nube.api-gateway-service.security.roles}]

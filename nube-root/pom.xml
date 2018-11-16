@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 12/11/18 18:44
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>nube-dependency-injector</artifactId>
+		<groupId>org.nube</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../nube-dependency-injector</relativePath>
+	</parent>
+
+	<artifactId>nube-root</artifactId>
+	<name>NUBE - Root</name>
+	<description>NUBE - Root</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<developers>
+		<developer>
+			<name>Rubén García Ríos</name>
+			<email>garcia.rios.ruben@gmail.com</email>
+		</developer>
+	</developers>
+	<!-- ==================== -->
+	<!-- NUBE ROOT PROPERTIES -->
+	<!-- ==================== -->
+	<properties>
+		<!-- DEFAULT PROPERTIES -->
+		<default.transport-protocol>https</default.transport-protocol>
+		<maven-resources-plugin.resource.delimiter>[{*}]</maven-resources-plugin.resource.delimiter>
+		<!-- ======================== -->
+		<!-- NUBE - SSL CONFIGURATION -->
+		<!-- ======================== -->
+		<!-- NUBE SSL GENERAL CONFIG -->
+		<nube.ssl.files.directory-path>classpath:nube-services-ssl-files</nube.ssl.files.directory-path>
+		<nube.ssl.store-type>PKCS12</nube.ssl.store-type>
+		<nube.ssl.store-file-extension>p12</nube.ssl.store-file-extension>
+		<nube.ssl.certificate-file-extension>crt</nube.ssl.certificate-file-extension>
+		<nube.ssl.certificate-signing-request-file-extension>csr</nube.ssl.certificate-signing-request-file-extension>
+		<nube.ssl.key-algorithm>RSA</nube.ssl.key-algorithm>
+		<nube.ssl.sig-algorithm>SHA512withRSA</nube.ssl.sig-algorithm>
+		<nube.ssl.key-size>4096</nube.ssl.key-size>
+		<nube.ssl.key-validity>4000</nube.ssl.key-validity>
+		<!-- NUBE SSL TRUSTSTORE -->
+		<nube.ssl.truststore-filename>nube-truststore.${nube.ssl.store-file-extension}</nube.ssl.truststore-filename>
+		<nube.ssl.truststore>${nube.ssl.truststore-filename}</nube.ssl.truststore>
+		<nube.ssl.truststore-password>_nUb3#TrU5t5T0r3_</nube.ssl.truststore-password>
+		<nube.ssl.truststore-store-password>${nube.ssl.truststore-password}</nube.ssl.truststore-store-password>
+		<!-- NUBE BROWSER KEYSTORE -->
+		<nube.ssl.browser-keystore> browser-keystore.${nube.ssl.store-file-extension}</nube.ssl.browser-keystore>
+		<nube.ssl.browser-keystore-password>_Br0wS3r_</nube.ssl.browser-keystore-password>
+		<nube.ssl.browser-keystore-store-password>${nube.ssl.browser-keystore-password}</nube.ssl.browser-keystore-store-password>
+		<!-- NUBE SSL ROOT -->
+		<nube.ssl.root.keystore>nube-root-keystore.${nube.ssl.store-file-extension}</nube.ssl.root.keystore>
+		<nube.ssl.root.certificate>nube-root-certificate.${nube.ssl.certificate-file-extension}</nube.ssl.root.certificate>
+		<nube.ssl.root.keystore-password>_nUb3#1nTr4n3t_</nube.ssl.root.keystore-password>
+		<nube.ssl.root.keystore-store-password>${nube.ssl.root.keystore-password}</nube.ssl.root.keystore-store-password>
+		<nube.ssl.root.keystore-alias>root</nube.ssl.root.keystore-alias>
+		<nube.ssl.root.dname>cn=NUBE - Intranet</nube.ssl.root.dname>
+		<nube.ssl.root.ext>bc:c</nube.ssl.root.ext>
+		<!-- NUBE SSL CERTIFICATE AUTHORITY -->
+		<nube.ssl.ca.keystore>nube-ca-keystore.${nube.ssl.store-file-extension}</nube.ssl.ca.keystore>
+		<nube.ssl.ca.certificate-signing-request>
+			nube-ca-certificate-signing-request.${nube.ssl.certificate-signing-request-file-extension}
+		</nube.ssl.ca.certificate-signing-request>
+		<nube.ssl.ca.certificate>nube-ca-certificate.${nube.ssl.certificate-file-extension}</nube.ssl.ca.certificate>
+		<nube.ssl.ca.root-signed-certificate>ca-root-signed-certificate.${nube.ssl.certificate-file-extension}</nube.ssl.ca.root-signed-certificate>
+		<nube.ssl.ca.keystore-password>_nUb3#4uTh0r1Ty_</nube.ssl.ca.keystore-password>
+		<nube.ssl.ca.keystore-store-password>${nube.ssl.ca.keystore-password}</nube.ssl.ca.keystore-store-password>
+		<nube.ssl.ca.keystore-alias>ca</nube.ssl.ca.keystore-alias>
+		<nube.ssl.ca.dname>cn=NUBE - Certificate Authority</nube.ssl.ca.dname>
+		<nube.ssl.ca.ext>bc:c</nube.ssl.ca.ext>
+		<nube.ssl.ca.certificate-signing-request.ext.bc>bc=0</nube.ssl.ca.certificate-signing-request.ext.bc>
+		<nube.ssl.ca.certificate-signing-request.ext.san>san=dns:ca</nube.ssl.ca.certificate-signing-request.ext.san>
+		<!-- NUBE SSL SERVICE -->
+		<nube.ssl.nube-services.keystore>nube-services-keystore.${nube.ssl.store-file-extension}
+		</nube.ssl.nube-services.keystore>
+		<nube.ssl.nube-services.certificate-signing-request>
+			nube-services-certificate-signing-request.${nube.ssl.certificate-signing-request-file-extension}
+		</nube.ssl.nube-services.certificate-signing-request>
+		<nube.ssl.nube-services.certificate>nube-services-certificate.${nube.ssl.certificate-file-extension}</nube.ssl.nube-services.certificate>
+		<nube.ssl.nube-services.ca-signed-certificate>
+			nube-services-ca-signed-certificate.${nube.ssl.certificate-file-extension}
+		</nube.ssl.nube-services.ca-signed-certificate>
+		<nube.ssl.nube-services.keystore-alias>nube-services</nube.ssl.nube-services.keystore-alias>
+		<nube.ssl.nube-services.keystore-password>rHk%z#8wmU_ZasuNX6fjF?R7xb-K9VE5GCyBtWPJSv+qYen3*h</nube.ssl.nube-services.keystore-password>
+		<nube.ssl.nube-services.keystore-store-password>${nube.ssl.nube-services.keystore-password}</nube.ssl.nube-services.keystore-store-password>
+		<nube.ssl.nube-services.dname>cn=NUBE - Services, ou=nube-service, o=NUBE, l=na, s=na, c=SP</nube.ssl.nube-services.dname>
+		<nube.ssl.nube-services.certificate-signing-request.ext.ku>ku:c=dig,keyEnc</nube.ssl.nube-services.certificate-signing-request.ext.ku>
+		<nube.ssl.nube-services.certificate-signing-request.ext.eku>eku=sa,ca</nube.ssl.nube-services.certificate-signing-request.ext.eku>
+		<!-- ================================== -->
+		<!-- NUBE - CONFIGURATION FILES GIT URI -->
+		<!-- ================================== -->
+		<nube.configuration-files.git.uri>
+			git@github.com:RubenGarciaRios/nube-configuration-files.git
+		</nube.configuration-files.git.uri>
+		<!-- ===================== -->
+		<!-- NUBE - LOGGING CONFIG -->
+		<!-- ===================== -->
+		<nube.logging.dependency>logback</nube.logging.dependency>
+		<nube.logging.level>INFO</nube.logging.level>
+		<!-- =============================== -->
+		<!-- NUBE - EUREKA SERVICE SUBMODULE -->
+		<!-- =============================== -->
+		<!-- SPRING CLOUD NETFLIX EUREKA SERVICE REGISTER -->
+		<nube.eureka-discovery-service.application.name>eureka</nube.eureka-discovery-service.application.name>
+		<!-- SERVER CONFIGURATION -->
+		<nube.eureka-discovery-service.transport-protocol>${default.transport-protocol}</nube.eureka-discovery-service.transport-protocol>
+		<!-- EUREKA INSTANCE -->
+		<nube.eureka-discovery-service.instance.lease-renewal-interval-in-seconds>20</nube.eureka-discovery-service.instance.lease-renewal-interval-in-seconds>
+		<nube.eureka-discovery-service.instance.lease-expiration-duration-in-seconds>60</nube.eureka-discovery-service.instance.lease-expiration-duration-in-seconds>
+		<!-- EUREKA SERVER -->
+		<nube.eureka-discovery-service.server.eviction-interval-timer-in-ms>40000</nube.eureka-discovery-service.server.eviction-interval-timer-in-ms>
+		<nube.eureka-discovery-service.server.renewal-percent-threshold>0.85</nube.eureka-discovery-service.server.renewal-percent-threshold>
+		<nube.eureka-discovery-service.server.renewal-threshold-update-interval-ms>300000</nube.eureka-discovery-service.server.renewal-threshold-update-interval-ms>
+		<!-- EUREKA CLIENT -->
+		<nube.eureka-discovery-service.client.registry-fetch-interval-seconds>10</nube.eureka-discovery-service.client.registry-fetch-interval-seconds>
+		<!-- SECURITY AUTHENTICATION -->
+		<nube.eureka-discovery-service.security.username>servicenetwork</nube.eureka-discovery-service.security.username>
+		<nube.eureka-discovery-service.security.password>AeFC3q27Lk01H9p3KDYzX</nube.eureka-discovery-service.security.password>
+		<nube.eureka-discovery-service.security.roles>SYSTEM</nube.eureka-discovery-service.security.roles>
+		<!-- ===================================== -->
+		<!-- NUBE - CONFIGURATOR SERVICE SUBMODULE -->
+		<!-- ===================================== -->
+		<nube.configurator-service.application.name>configurator</nube.configurator-service.application.name>
+		<!-- SERVER CONFIG -->
+		<nube.configurator-service.transport-protocol>${default.transport-protocol}</nube.configurator-service.transport-protocol>
+		<nube.configurator-service.default-port>0</nube.configurator-service.default-port>
+		<!-- SECURITY AUTHENTICATION -->
+		<nube.configurator-service.security.username>servicenetwork</nube.configurator-service.security.username>
+		<nube.configurator-service.security.password>9Kd4f3OqRs2H2l7aWcX8u</nube.configurator-service.security.password>
+		<nube.configurator-service.security.roles>SYSTEM</nube.configurator-service.security.roles>
+		<!-- =============================== -->
+		<!-- NUBE - ZIPKIN SERVICE SUBMODULE -->
+		<!-- =============================== -->
+		<nube.zipkin-service.application.name>zipkin</nube.zipkin-service.application.name>
+		<!-- SERVER CONFIGURATION -->
+		<nube.zipkin-service.transport-protocol>${default.transport-protocol}</nube.zipkin-service.transport-protocol>
+		<nube.zipkin-service.default-port>8200</nube.zipkin-service.default-port>
+		<!-- SECURITY AUTHENTICATION -->
+		<nube.zipkin-service.security.username>servicenetwork</nube.zipkin-service.security.username>
+		<nube.zipkin-service.security.password>Z1kJ52tWi7q3Hr9J0xBnC</nube.zipkin-service.security.password>
+		<nube.zipkin-service.security.roles>SYSTEM</nube.zipkin-service.security.roles>
+		<!-- ====================================== -->
+		<!-- NUBE - ADMIN MANAGER SERVICE SUBMODULE -->
+		<!-- ====================================== -->
+		<nube.admin-manager-service.application.name>admin-manager</nube.admin-manager-service.application.name>
+		<!-- SERVER CONFIGURATION -->
+		<nube.admin-manager-service.transport-protocol>${default.transport-protocol}</nube.admin-manager-service.transport-protocol>
+		<nube.admin-manager-service.default-port>8300</nube.admin-manager-service.default-port>
+		<!-- SECURITY AUTHENTICATION -->
+		<nube.admin-manager-service.security.username>administrator</nube.admin-manager-service.security.username>
+		<nube.admin-manager-service.security.password>luGp2TiXe9oHq1DrFp0n3</nube.admin-manager-service.security.password>
+		<nube.admin-manager-service.security.roles>ADMINISTRATION</nube.admin-manager-service.security.roles>
+		<!-- ===================== -->
+		<!-- NUBE - GATEWAY MODULE -->
+		<!-- ===================== -->
+		<nube.api-gateway-service.application.name>gateway</nube.api-gateway-service.application.name>
+		<!-- SERVER CONFIGURATION -->
+		<nube.api-gateway-service.transport-protocol>${default.transport-protocol}</nube.api-gateway-service.transport-protocol>
+		<!-- SECURITY AUTHENTICATION -->
+		<nube.api-gateway-service.security.username>administrator</nube.api-gateway-service.security.username>
+		<nube.api-gateway-service.security.password>oK0MyZ5eBs722TqeAwKq3</nube.api-gateway-service.security.password>
+		<nube.api-gateway-service.security.roles>ADMINISTRATION</nube.api-gateway-service.security.roles>
+		<!-- SSL -->
+		<nube.api-gateway-service.ssl.keystore-filename>
+			${nube.api-gateway-service.application.name}-keystore.${nube.ssl.store-file-extension}
+		</nube.api-gateway-service.ssl.keystore-filename>
+		<nube.api-gateway-service.ssl.keystore>
+			${nube.api-gateway-service.ssl.keystore-filename}
+		</nube.api-gateway-service.ssl.keystore>
+		<nube.api-gateway-service.ssl.certificate-signing-request>
+			${nube.api-gateway-service.application.name}-certificate-signing-request.${nube.ssl.certificate-signing-request-file-extension}
+		</nube.api-gateway-service.ssl.certificate-signing-request>
+		<nube.api-gateway-service.ssl.certificate>
+			${nube.api-gateway-service.application.name}-certificate.${nube.ssl.certificate-file-extension}
+		</nube.api-gateway-service.ssl.certificate>
+		<nube.api-gateway-service.ssl.ca-signed-certificate>
+			${nube.api-gateway-service.application.name}-ca-signed-certificate.${nube.ssl.certificate-file-extension}
+		</nube.api-gateway-service.ssl.ca-signed-certificate>
+		<nube.api-gateway-service.ssl.keystore-alias>
+			${nube.api-gateway-service.application.name}
+		</nube.api-gateway-service.ssl.keystore-alias>
+		<nube.api-gateway-service.ssl.keystore-password>_nUb3#G4t3w4y_</nube.api-gateway-service.ssl.keystore-password>
+		<nube.api-gateway-service.ssl.keystore-store-password>
+			${nube.api-gateway-service.ssl.keystore-password}
+		</nube.api-gateway-service.ssl.keystore-store-password>
+		<nube.api-gateway-service.ssl.dname>
+			cn=NUBE - Gateway, ou=gateway-service, o=Nube, l=na, s=na, c=SP
+		</nube.api-gateway-service.ssl.dname>
+		<nube.api-gateway-service.ssl.certificate-signing-request.ext.ku>
+			ku:c=dig,keyEnc
+		</nube.api-gateway-service.ssl.certificate-signing-request.ext.ku>
+		<nube.api-gateway-service.ssl.certificate-signing-request.ext.eku>
+			eku=sa,ca
+		</nube.api-gateway-service.ssl.certificate-signing-request.ext.eku>
+	</properties>
+
+	<profiles>
+		<!-- =============== -->
+		<!-- DEVELOP PROFILE -->
+		<!-- =============== -->
+		<profile>
+			<id>develop</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>environment</name>
+					<value>develop</value>
+				</property>
+			</activation>
+			<!-- ================== -->
+			<!-- DEVELOP PROPERTIES -->
+			<!-- ================== -->
+			<properties>
+				<!-- =========== -->
+				<!-- DATA SOURCE -->
+				<!-- =========== -->
+				<!-- OAUTH2 MONGODB -->
+				<!-- Comma Separated -->
+				<mongodb.oauth2.hosts>localhost</mongodb.oauth2.hosts>
+				<mongodb.oauth2.port>27017</mongodb.oauth2.port>
+				<mongodb.oauth2.database>oauth2</mongodb.oauth2.database>
+				<!-- HTTP SESSIONS MONGODB -->
+				<!-- Comma Separated -->
+				<mongodb.httpsessions.hosts>localhost</mongodb.httpsessions.hosts>
+				<mongodb.httpsessions.port>27017</mongodb.httpsessions.port>
+				<mongodb.httpsessions.database>httpsessions</mongodb.httpsessions.database>
+				<!-- API MONGODB -->
+				<!-- Comma Separated -->
+				<mongodb.api.hosts>localhost</mongodb.api.hosts>
+				<mongodb.api.port>27017</mongodb.api.port>
+				<mongodb.api.database>api</mongodb.api.database>
+				<!-- ========= -->
+				<!-- RABBIT MQ -->
+				<!-- ========= -->
+				<rabbitmq.host>localhost</rabbitmq.host>
+				<rabbitmq.port>5672</rabbitmq.port>
+				<rabbitmq.username>guest</rabbitmq.username>
+				<rabbitmq.password>guest</rabbitmq.password>
+			</properties>
+			<build>
+				<plugins>
+					<!-- =================== -->
+					<!-- MAVEN ANTRUN PLUGIN -->
+					<!-- =================== -->
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>initialize</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<echo>#############################################</echo>
+										<echo>## [INFO] NUBE - ACTIVE PROFILE: [develop] ##</echo>
+										<echo>#############################################</echo>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- ================== -->
+					<!-- MAVEN CLEAN PLUGIN -->
+					<!-- ================== -->
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<executions>
+							<execution>
+								<!-- Auto Clean projects in initialization phase -->
+								<id>NUBE - Develop Profile - Auto Clean</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>clean</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

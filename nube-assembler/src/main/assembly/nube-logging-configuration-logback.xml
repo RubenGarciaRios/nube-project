@@ -1,0 +1,18 @@
+<!--
+  ~ Developed by Rubén García Ríos
+  ~ Last modified 7/11/18 23:00
+  ~ Copyright (c) 2018. All rights reserved.
+  -->
+<assembly>
+	<id>nube-logging-configuration-files</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>${project.parent.basedir}/src/main/resources/nube-logging-configuration-files/logback</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+	</fileSets>
+</assembly>

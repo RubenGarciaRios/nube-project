@@ -1,0 +1,57 @@
+#################################################
+### S P R I N G   C O N F I G U R A T I I O N ###
+#################################################
+spring:
+  application:
+    name: [{nube.admin-manager-service.application.name}]
+  # RabbitMQ configuration.
+  rabbitmq:
+    host: [{rabbitmq.host}]
+    port: [{rabbitmq.port}]
+    username: [{rabbitmq.username}]
+    password: [{rabbitmq.password}]
+  # Zipkin configuration.
+  zipkin:
+    discovery-client-enabled: true
+    enabled: true
+    locator:
+      discovery:
+        enabled: true
+    service:
+      name: [{nube.zipkin-service.application.name}]
+  # Enable ansi colors for default spring logging.
+  output:
+    ansi:
+      enabled: always
+###########################
+### M A N A G E M E N T ###
+###########################
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+#################################################
+### L O G G I N G   C O N F I G U R A T I O N ###
+#################################################
+logging:
+  register-shutdown-hook: true
+  level:
+    root: ${LOGGING_LEVEL:[{nube.logging.level}]}
+###############################################
+### R I B B O N   C O N F I G U R A T I O N ###
+###############################################
+ribbon:
+  # Enable Ribbon load balancer on discovery service.
+  eureka:
+    enabled: true
+#######################################
+### C U S T O M   P R O P E R I E S ###
+#######################################
+nube:
+  service:
+    security:
+      username: [{nube.admin-manager-service.security.username}]
+      password: [{nube.admin-manager-service.security.password}]
+      roles: [{nube.admin-manager-service.security.roles}]

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 15/11/18 16:21
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>nube-root</artifactId>
+		<groupId>org.nube</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../nube-root</relativePath>
+	</parent>
+
+	<artifactId>nube-core</artifactId>
+	<name>NUBE - Core</name>
+	<description>NUBE - Core</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>nube-core-base</module>
+		<module>nube-core-configuration</module>
+		<module>nube-core-security</module>
+	</modules>
+	<!-- ================== -->
+	<!-- MODULE PROPERTIES -->
+	<!-- ================== -->
+	<properties>
+		<!-- General properties -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<deploy>${project.artifactId}.${project.version}</deploy>
+	</properties>
+	<!-- =================== -->
+	<!-- MODULE DEPENDENCIES -->
+	<!-- =================== -->
+	<dependencies>
+		<!-- ==================== -->
+		<!-- SPRING BOOT STARTERS -->
+		<!-- ==================== -->
+		<dependency>
+			<!-- Spring Boot Starter -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Boot Starter Security -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Boot Starter Web -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ===================== -->
+		<!-- SPRING CLOUD STARTERS -->
+		<!-- ===================== -->
+		<dependency>
+			<!-- Spring ribbon load balancer -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ============ -->
+		<!-- SPRING RETRY -->
+		<!-- ============ -->
+		<dependency>
+			<!-- Spring Retry (@retryable support) -->
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- =================== -->
+		<!-- SPRING CLOUD CONFIG -->
+		<!-- =================== -->
+		<dependency>
+			<!-- Spring Configuration Client -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-client</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ======================== -->
+		<!-- SPRING DATA FOR MONGODB  -->
+		<!-- ======================== -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ==================== -->
+		<!-- JAVAX VALIDATION API -->
+		<!-- ==================== -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ====== -->
+		<!-- APACHE -->
+		<!-- ====== -->
+		<!-- Httpclient for client certificate handling -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ===================== -->
+		<!-- NETFLIX EUREKA CLIENT -->
+		<!-- ===================== -->
+		<dependency>
+			<!-- Spring Netflix Eureka Adapter -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-netflix-eureka-client</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Netflix Eureka lib -->
+			<groupId>com.netflix.eureka</groupId>
+			<artifactId>eureka-client</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Spring OAuth 2.0 Services -->
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<optional>true</optional>
+			<scope>compile</scope>
+		</dependency>
+		<!-- ======= -->
+		<!-- JACKSON -->
+		<!-- ======= -->
+		<dependency>
+			<!-- Jackson Data binding -->
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Jackson Data type -->
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Jackson Data YALM formatter -->
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Jackson Data XML formatter -->
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ======= -->
+		<!-- LOGGING -->
+		<!-- ======= -->
+		<dependency>
+			<!-- Logback for logging -->
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Logback classic -->
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Logback encoder -->
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ======= -->
+		<!-- TESTING -->
+		<!-- ======= -->
+		<dependency>
+			<!-- Spring Testing -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<optional>true</optional>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Security Testing -->
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<optional>true</optional>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<!-- ========= -->
+	<!-- REPORTING -->
+	<!-- ========= -->
+	<reporting>
+		<plugins>
+			<!-- ============== -->
+			<!-- JAVADOC PLUGIN -->
+			<!-- ============== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<docencoding>${project.reporting.outputEncoding}</docencoding>
+					<outputDirectory>${project.build.directory}/nube-docs</outputDirectory>
+					<reportOutputDirectory>${project.build.directory}/nube-docs</reportOutputDirectory>
+					<author>true</author>
+					<applyJavadocSecurityFix>true</applyJavadocSecurityFix>
+					<detectLinks>true</detectLinks>
+					<detectOfflineLinks>true</detectOfflineLinks>
+					<docfilessubdirs>true</docfilessubdirs>
+					<groups>
+						<!-- NUBE CORE MODULE -->
+						<group>
+							<title>Nube Objects Packages</title>
+							<packages>org.nube.core.*</packages>
+						</group>
+					</groups>
+					<additionalJOptions>
+						<additionalJOption>-J-Xmx4g</additionalJOption>
+					</additionalJOptions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 13/11/18 9:42
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>nube-root</artifactId>
+		<groupId>org.nube</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../nube-root</relativePath>
+	</parent>
+
+	<artifactId>nube-assembler</artifactId>
+	<name>NUBE - Assembler</name>
+	<description>NUBE - Assembler</description>
+	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<!-- ======== -->
+	<!-- PROFILES -->
+	<!-- ======== -->
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<!-- =================== -->
+			<!-- SSL FILES GENERATOR -->
+			<!-- =================== -->
+			<modules>
+				<module>nube-assembler-assembly</module>
+			</modules>
+		</profile>
+		<!-- ACTIVATE ALL ASSEMBLER SUBMODULES -->
+		<!-- To activate: mvn -Dassembly-all=true -->
+		<!-- or: mvn -Passembly-all -->
+		<profile>
+			<id>assembly-all</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>assembly-all</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<!-- =================== -->
+			<!-- SSL FILES GENERATOR -->
+			<!-- =================== -->
+			<modules>
+				<module>nube-assembler-keytool</module>
+				<module>nube-assembler-assembly</module>
+			</modules>
+		</profile>
+		<!-- ACTIVATE KEYTOOL ASSEMBLER SUBMODULE -->
+		<!-- To activate: mvn -Dassembly-keytool=true -->
+		<!-- or: mvn -Passembly-keytool -->
+		<profile>
+			<id>assembly-keytool</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>assembly-keytool</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<!-- =================== -->
+			<!-- SSL FILES GENERATOR -->
+			<!-- =================== -->
+			<modules>
+				<module>nube-assembler-keytool</module>
+				<module>nube-assembler-assembly</module>
+			</modules>
+		</profile>
+	</profiles>
+	<!-- ============================================== -->
+	<!-- NUBE - ASSEMBLER MODULES DEPENDENCY MANAGEMENT -->
+	<!-- ============================================== -->
+	<dependencyManagement>
+		<!-- ========================= -->
+		<!-- NUBE - DEPENDENCY MANAGER -->
+		<!-- ========================= -->
+		<dependencies>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>nube-dependency-injector</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<!-- ======================================= -->
+		<!-- CONFIGURATION RESOURCE FILES MANAGEMENT -->
+		<!-- ======================================= -->
+		<resources>
+			<!-- ALL RESOURCES -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<!-- Allow to replace tokens with parameterised values of root parent pom -->
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>src/main/resources/nube-services-ssl-files</exclude>
+				</excludes>
+			</resource>
+			<!-- SSL RESOURCE FILES -->
+			<resource>
+				<directory>src/main/resources/nube-services-ssl-files</directory>
+				<!-- Avoid generating corrupt files -->
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<!-- ====================== -->
+			<!-- MAVEN RESOURCES PLUGIN -->
+			<!-- ====================== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<!-- Replace tokens with parameterised values of root parent pom -->
+						<id>NUBE - Assembler [Resources Plugin] - Token Replacement</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+						<configuration>
+							<!-- Delimitiers for regex token replacement -->
+							<delimiters>
+								<delimiter>${maven-resources-plugin.resource.delimiter}</delimiter>
+							</delimiters>
+							<!-- delimiter that doesn't clash with Spring ${} placeholders -->
+							<useDefaultDelimiters>false</useDefaultDelimiters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

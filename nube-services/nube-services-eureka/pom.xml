@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 15/11/18 10:45
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>nube-services</artifactId>
+		<groupId>org.nube</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>nube-services-eureka</artifactId>
+	<name>NUBE - Services - Eureka</name>
+	<description>NUBE - Services - Eureka Service (Spring Netflix Eureka Server)</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<!-- ================== -->
+	<!-- MODULE PROPERTIES -->
+	<!-- ================== -->
+	<properties>
+		<!-- General properties -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<deploy>${project.artifactId}.${project.version}</deploy>
+	</properties>
+	<!-- =================== -->
+	<!-- MODULE DEPENDENCIES -->
+	<!-- =================== -->
+	<dependencies>
+		<!-- ===================== -->
+		<!-- NETFLIX EUREKA SERVER -->
+		<!-- ===================== -->
+		<dependency>
+			<!-- Eureka service registration - CHANGED -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+		</dependency>
+		<!-- ========================= -->
+		<!-- MONGO FOR SESSION STORAGE -->
+		<!-- ========================= -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		<!-- =========================== -->
+		<!-- SPRING SESSION DATA MONGODB -->
+		<!-- =========================== -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-mongodb</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- ======================== -->
+		<!-- RESOURCE FILES LOCATIONS -->
+		<!-- ======================== -->
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}/generated-resources</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+	</build>
+</project>

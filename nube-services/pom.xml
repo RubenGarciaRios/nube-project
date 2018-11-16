@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 15/11/18 16:19
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>nube-root</artifactId>
+		<groupId>org.nube</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../nube-root</relativePath>
+	</parent>
+
+	<artifactId>nube-services</artifactId>
+	<name>NUBE - Services</name>
+	<description>NUBE - Services</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>nube-services-configuration</module>
+		<module>nube-services-eureka</module>
+		<module>nube-services-configurator</module>
+		<module>nube-services-zipkin</module>
+		<module>nube-services-api</module>
+		<module>nube-services-admin-manager</module>
+	</modules>
+	<!-- ================== -->
+	<!-- MODULE PROPERTIES -->
+	<!-- ================== -->
+	<properties>
+		<!-- General properties -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<deploy>${project.artifactId}.${project.version}</deploy>
+	</properties>
+	<!-- ============================================ -->
+	<!-- NUBE - SERVICES MODULE DEPENDENCY MANAGEMENT -->
+	<!-- ============================================ -->
+	<dependencyManagement>
+		<dependencies>
+
+		</dependencies>
+	</dependencyManagement>
+	<!-- =================== -->
+	<!-- MODULE DEPENDENCIES -->
+	<!-- =================== -->
+	<dependencies>
+		<!-- ================ -->
+		<!-- NUBE - SSL FILES -->
+		<!-- ================ -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>nube-assembler-assembly</artifactId>
+			<classifier>nube-services-ssl-files</classifier>
+			<type>zip</type>
+		</dependency>
+		<!-- ================================== -->
+		<!-- NUBE - LOGGING CONFIGURATION FILES -->
+		<!-- ================================== -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>nube-assembler-assembly</artifactId>
+			<classifier>nube-logging-configuration-files</classifier>
+			<type>zip</type>
+		</dependency>
+		<!-- ============= -->
+		<!-- NUBE - KERNEL -->
+		<!-- ============= -->
+		<dependency>
+			<!-- BASE -->
+			<groupId>${project.groupId}</groupId>
+			<artifactId>nube-core-base</artifactId>
+		</dependency>
+
+		<dependency>
+			<!-- CONFIGURATION -->
+			<groupId>${project.groupId}</groupId>
+			<artifactId>nube-core-configuration</artifactId>
+		</dependency>
+
+		<dependency>
+			<!-- SECURITY -->
+			<groupId>${project.groupId}</groupId>
+			<artifactId>nube-core-security</artifactId>
+		</dependency>
+		<!-- ==================== -->
+		<!-- SPRING BOOT STARTERS -->
+		<!-- ==================== -->
+		<dependency>
+			<!-- Spring Boot Starter -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Boot Starter Security -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Boot Starter Web -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ===================== -->
+		<!-- SPRING CLOUD STARTERS -->
+		<!-- ===================== -->
+		<dependency>
+			<!-- Spring Cloud starter -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Cloud starter Zipkin -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Ribbon load balancer -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Bus AMQP (RabbitMQ) -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ============ -->
+		<!-- SPRING RETRY -->
+		<!-- ============ -->
+		<dependency>
+			<!-- Spring Retry (@retryable support) -->
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ==================== -->
+		<!-- SPRING BOOT ACTUATOR -->
+		<!-- ==================== -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-actuator</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ========================== -->
+		<!-- RABBITMQ MESSAGING BROKER -->
+		<!-- ========================== -->
+		<!-- [WARNING] RabbitMQ NEED TO BE INSTALLED IN THE MACHINE -->
+		<dependency>
+			<!-- Spring Rabbit -->
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ======= -->
+		<!-- JACKSON -->
+		<!-- ======= -->
+		<dependency>
+			<!-- Jackson Data binding -->
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<!-- Jackson Data type -->
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+
+		<dependency>
+			<!-- Jackson Data YALM formatter -->
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
+
+		<dependency>
+			<!-- Jackson Data XML formatter -->
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		<!-- ======= -->
+		<!-- LOGGING -->
+		<!-- ======= -->
+		<dependency>
+			<!-- Logback for logging -->
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Logback classic -->
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<!-- Logback encoder -->
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- ======= -->
+		<!-- TESTING -->
+		<!-- ======= -->
+		<dependency>
+			<!-- Spring Testing -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<optional>true</optional>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<!-- Spring Security Testing -->
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<optional>true</optional>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- ====================== -->
+			<!-- MAVEN RESOURCES PLUGIN -->
+			<!-- ====================== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<!-- Replace tokens with parameterised values of root parent pom -->
+						<id>NUBE - Services [Resources Plugin] - Token Replacement</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+						<configuration>
+							<!-- Delimitiers for regex token replacement -->
+							<delimiters>
+								<delimiter>${maven-resources-plugin.resource.delimiter}</delimiter>
+							</delimiters>
+							<!-- delimiter that doesn't clash with Spring ${} placeholders -->
+							<useDefaultDelimiters>false</useDefaultDelimiters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- ===================== -->
+			<!-- MAVEN ASSEMBLY PLUGIN -->
+			<!-- ===================== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<!-- UNPACK SSL FILES -->
+					<execution>
+						<id>NUBE - Services [Dependency Plugin] - Unpack nube-services-ssl-files</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<includeGroupIds>${project.groupId}</includeGroupIds>
+							<includeArtifactIds>nube-assembler-assembly</includeArtifactIds>
+							<classifier>nube-services-ssl-files</classifier>
+							<excludeTransitive>true</excludeTransitive>
+							<includes>**/${nube.ssl.truststore},**/${nube.ssl.nube-services.keystore}</includes>
+						</configuration>
+					</execution>
+					<!-- UNPACK LOGGING CONFIGURATION FILES -->
+					<execution>
+						<id>NUBE - Services [Dependency Plugin] - Unpack nube-logging-configuration-files</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<includeGroupIds>${project.groupId}</includeGroupIds>
+							<includeArtifactIds>nube-assembler-assembly</includeArtifactIds>
+							<classifier>nube-logging-configuration-files</classifier>
+							<excludeTransitive>true</excludeTransitive>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- ================== -->
+			<!-- SPRING BOOT PLUGIN -->
+			<!-- ================== -->
+			<!-- Run spring-boot with maven: mvn spring-boot:run -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>
+						<!-- SET UP SSL PROPERTIES
+						-Djavax.net.debug=ssl,handshake
+						-Djavax.net.ssl.keyStore=${eureka.ssl.keystore}
+						-Djavax.net.ssl.keyStoreAlias=${eureka.ssl.keystore-alias}
+						-Djavax.net.ssl.keyStorePassword=${eureka.ssl.keystore-password}
+						-Djavax.net.ssl.keyStoreStorePassword=${eureka.ssl.keystore-store-password}
+						-Djavax.net.ssl.keyStoreType=${nube.ssl.store-type}
+						-Djavax.net.ssl.trustStore=${nube.ssl.truststore}
+						-Djavax.net.ssl.trustStorePassword=${nube.ssl.truststore-password}
+						-Djavax.net.ssl.trustStorePassword=${nube.ssl.truststore-password}
+						-Djavax.net.ssl.trustStoreStorePassword=${nube.ssl.truststore-store-password}
+						-Djavax.net.ssl.trustStoreType=${nube.ssl.store-type}
+						-->
+					</jvmArguments>
+				</configuration>
+				<executions>
+					<execution>
+						<id>NUBE - Services [Spring Boot Plugin] - Repackage Executable jar</id>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<executable>true</executable>
+						</configuration>
+					</execution>
+					<execution>
+						<id>NUBE - Services [Spring Boot Plugin] - Build Info</id>
+						<goals>
+							<goal>build-info</goal>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<additionalProperties>
+								<java.target>${java.version}</java.target>
+								<time>${maven.build.timestamp}</time>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- ========= -->
+	<!-- REPORTING -->
+	<!-- ========= -->
+	<reporting>
+		<plugins>
+			<!-- ============== -->
+			<!-- JAVADOC PLUGIN -->
+			<!-- ============== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<docencoding>${project.reporting.outputEncoding}</docencoding>
+					<outputDirectory>${project.build.directory}/nube-docs</outputDirectory>
+					<reportOutputDirectory>${project.build.directory}/nube-docs</reportOutputDirectory>
+					<author>true</author>
+					<applyJavadocSecurityFix>true</applyJavadocSecurityFix>
+					<detectLinks>true</detectLinks>
+					<detectOfflineLinks>true</detectOfflineLinks>
+					<docfilessubdirs>true</docfilessubdirs>
+					<groups>
+						<!-- NUBE SERVICES MODULE -->
+						<group>
+							<title>Nube Services Packages</title>
+							<packages>org.nube.services.*</packages>
+						</group>
+					</groups>
+					<additionalJOptions>
+						<additionalJOption>-J-Xmx4g</additionalJOption>
+					</additionalJOptions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

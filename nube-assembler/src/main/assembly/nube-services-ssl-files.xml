@@ -1,0 +1,18 @@
+<!--
+  ~ Developed by Rubén García Ríos
+  ~ Last modified 7/11/18 23:00
+  ~ Copyright (c) 2018. All rights reserved.
+  -->
+<assembly>
+	<id>nube-services-ssl-files</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>${project.parent.basedir}/src/main/resources/nube-services-ssl-files</directory>
+			<outputDirectory>nube-services-ssl-files</outputDirectory>
+		</fileSet>
+	</fileSets>
+</assembly>

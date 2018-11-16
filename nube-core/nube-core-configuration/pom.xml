@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 15/11/18 9:28
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>nube-core</artifactId>
+		<groupId>org.nube</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>nube-core-configuration</artifactId>
+	<name>NUBE - Core - Configuration</name>
+	<description>NUBE - Core - Configuration</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<!-- =================== -->
+	<!-- MODULE DEPENDENCIES -->
+	<!-- =================== -->
+	<dependencies>
+		<dependency>
+			<!-- Objects -->
+			<groupId>${project.groupId}</groupId>
+			<artifactId>nube-core-base</artifactId>
+		</dependency>
+
+		<dependency>
+			<!-- Security -->
+			<groupId>${project.groupId}</groupId>
+			<artifactId>nube-core-security</artifactId>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,240 @@
+#################################################################
+### E M B E D E D   S E R V E R   C O N F I G U R A T I I O N ###
+#################################################################
+server:
+  ssl:
+    enabled: true
+    client-auth: need
+    # Key Store configuration.
+    key-store: [{nube.ssl.files.directory-path}]/[{nube.ssl.nube-services.keystore}]
+    key-store-type: [{nube.ssl.store-type}]
+    key-alias: [{nube.ssl.nube-services.keystore-alias}]
+    key-password: [{nube.ssl.nube-services.keystore-password}]
+    key-store-password: [{nube.ssl.nube-services.keystore-store-password}]
+    # Trust Store configuration.
+    trust-store: [{nube.ssl.files.directory-path}]/[{nube.ssl.truststore}]
+    trust-store-password: [{nube.ssl.truststore-password}]
+    trust-store-type: [{nube.ssl.store-type}]
+########################################
+### S P R I N G  E N V I R O M E N T ###
+########################################
+spring:
+  application:
+    name: [{nube.eureka-discovery-service.application.name}]
+  # Profile active.
+  profiles:
+    active: ${EUREKA_ZONE:zone1}
+  # Discovery Server Dashboard uses FreeMarker. Don't want Thymeleaf templates.
+  thymeleaf:
+    enabled: false
+  # Spring session MongoDB store.
+  session:
+    store-type: mongodb
+  # Spring Data MongoDB configuration.
+  data:
+    mongodb:
+      host: [{mongodb.httpsessions.hosts}]
+      port: [{mongodb.httpsessions.port}]
+      database: [{mongodb.httpsessions.database}]
+  # Enable ansi colors for default spring logging.
+  output:
+    ansi:
+      enabled: always
+  # RabbitMQ configuration.
+  rabbitmq:
+    host: [{rabbitmq.host}]
+    port: [{rabbitmq.port}]
+    username: [{rabbitmq.username}]
+    password: [{rabbitmq.password}]
+  # Zipkin configuration.
+  zipkin:
+    discovery-client-enabled: true
+    enabled: true
+    locator:
+      discovery:
+        enabled: true
+    service:
+      name: [{nube.zipkin-service.application.name}]
+###########################
+### M A N A G E M E N T ###
+###########################
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+  #server:
+    #ssl:
+      #enabled: true
+#################################################
+### L O G G I N G   C O N F I G U R A T I O N ###
+#################################################
+logging:
+  register-shutdown-hook: true
+  level:
+    root: ${LOGGING_LEVEL:[{nube.logging.level}]}
+#######################################
+### C U S T O M   P R O P E R I E S ###
+#######################################
+nube:
+  service:
+    security:
+      username: [{nube.eureka-discovery-service.security.username}]
+      password: [{nube.eureka-discovery-service.security.password}]
+      roles: [{nube.eureka-discovery-service.security.roles}], [{gateway.security.roles}]
+###################################################################################
+### D I S C O V E R Y   S E R V E R   S E R V I C E   C O N F I G U R A T I O N ###
+###################################################################################
+# Discovery cluster configuration.
+discovery-service-cluster:
+  # Need DNS hostname resolver, or edit host files and add all hostnames:
+  # - WINDOWS: c:\Windows\System32\Drivers\etc\hosts
+  # - LINUX, MACOS: /etc/hosts
+  # NUBE - EUREKA DISCOVERY SERVICE HOSTS
+  #    IP        DNS-HOSTNAME
+  # 127.0.0.1 discovery-service
+  # 127.0.0.1 discovery-service-2
+  # 127.0.0.1 discovery-service-3
+  # 127.0.0.1 discovery-service-4
+  zone1:
+    hostname: discovery-service
+    eureka-port: 8001
+    zone: zone1
+  zone2:
+    hostname: discovery-service-2
+    eureka-port: 8002
+    zone: zone2
+  zone3:
+    hostname: discovery-service-3
+    eureka-port: 8003
+    zone: zone3
+  zone4:
+    hostname: discovery-service-4
+    eureka-port: 8004
+    zone: zone4
+##############################
+### E U R E K A  P E E R S ###
+##############################
+# GENERAL CONFIGURATION.
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    region: es-madrid
+    service-url:
+      #defaultZone: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone1.hostname}:${discovery-service-cluster.zone1.eureka-port}/eureka/,[{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone2.hostname}:${discovery-service-cluster.zone2.eureka-port}/eureka/,[{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone3.hostname}:${discovery-service-cluster.zone3.eureka-port}/eureka/,[{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone4.hostname}:${discovery-service-cluster.zone4.eureka-port}/eureka/
+      zone1: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone1.hostname}:${discovery-service-cluster.zone1.eureka-port}/eureka/
+      zone2: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone2.hostname}:${discovery-service-cluster.zone2.eureka-port}/eureka/
+      zone3: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone3.hostname}:${discovery-service-cluster.zone3.eureka-port}/eureka/
+      zone4: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone4.hostname}:${discovery-service-cluster.zone4.eureka-port}/eureka/
+    availability-zones:
+      es-madrid: zone1,zone2,zone3,zone4
+    #prefer-same-zone-eureka: true
+  dashboard:
+      enabled: true
+      path: /
+  instance:
+    # Discovery client SSL activation.
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    # Home page URL.
+    home-page-url: [{default.transport-protocol}]://@${eureka.instance.hostname}:${eureka.instance.secure-port}/
+    # Status page URL (Actuator: info).
+    status-page-url: [{default.transport-protocol}]://${eureka.instance.hostname}:${eureka.instance.secure-port}/actuator/info
+    # Health check URL (Actuator: health).
+    health-check-url: [{default.transport-protocol}]://${eureka.instance.hostname}:${eureka.instance.secure-port}/actuator/health
+    # Indicates the frequency the client sends heartbeats to server to indicate that it is still alive.
+    # It’s not advisable to change this value since self-preservation assumes that heartbeats are always
+    # received at intervals of {X} seconds.
+    #lease-renewal-interval-in-seconds: [{nube.eureka-discovery-service.instance.lease-renewal-interval-in-seconds}]
+    # Indicates the duration the server waits since it received the last heartbeat before it can evict
+    # an instance from its registry. This value should be greater than [lease-renewal-interval-in-seconds].
+    # Setting this value too long impacts the precision of actual heartbeats per minute calculation
+    # described in the next section, since the liveliness of the registry is dependent on this value.
+    # Setting this value too small could make the system intolerable to temporary network glitches.
+    #lease-expiration-duration-in-seconds: [{nube.eureka-discovery-service.instance.lease-expiration-duration-in-seconds}]
+  server:
+    # A scheduler is run at this frequency which will evict instances from the registry if the lease
+    # of the instances are expired as configured by [lease-expiration-duration-in-seconds].
+    # Setting this value too long will delay the system entering into self-preservation mode.
+    #eviction-interval-timer-in-ms: [{nube.eureka-discovery-service.server.eviction-interval-timer-in-ms}]
+    # This value is used to calculate the expected heartbeats per minute
+    #renewal-percent-threshold: [{nube.eureka-discovery-service.server.renewal-percent-threshold}]
+    # A scheduler is run at this frequency which calculates the expected heartbeats per minute
+    # default: {5 * 60 * 1000 = 300000} (5 minutes).
+    #renewal-threshold-update-interval-ms: [{nube.eureka-discovery-service.server.renewal-threshold-update-interval-ms}]
+    # Self-preservation. Eureka server enters self-preservation mode if the actual number of heartbeats
+    # in last minute is less than the expected number of heartbeats per minute.
+    enable-self-preservation: true
+###############################################
+### R I B B O N   C O N F I G U R A T I O N ###
+###############################################
+ribbon:
+  # Enable Ribbon load balancer on discovery service.
+  eureka:
+    enabled: true
+# PROFILES CONFIGURATION.
+---
+spring:
+  profiles: zone1
+# Discovery Server configuration
+eureka:
+  instance:
+    hostname: ${discovery-service-cluster.zone1.hostname}
+    secure-port: ${discovery-service-cluster.zone1.eureka-port}
+    metadata-map:
+      zone: ${discovery-service-cluster.zone1.zone}
+      user: [{nube.eureka-discovery-service.security.username}]
+      username: [{nube.eureka-discovery-service.security.username}]
+      password: [{nube.eureka-discovery-service.security.password}]
+server:
+  port: ${PORT:${discovery-service-cluster.zone1.eureka-port}}
+
+---
+spring:
+  profiles: zone2
+# Discovery Server configuration
+eureka:
+  instance:
+    hostname: ${discovery-service-cluster.zone2.hostname}
+    secure-port: ${discovery-service-cluster.zone2.eureka-port}
+    metadata-map:
+      zone: ${discovery-service-cluster.zone2.zone}
+      user: [{nube.eureka-discovery-service.security.username}]
+      username: [{nube.eureka-discovery-service.security.username}]
+      password: [{nube.eureka-discovery-service.security.password}]
+server:
+  port: ${PORT:${discovery-service-cluster.zone2.eureka-port}}
+
+---
+spring:
+  profiles: zone3
+# Discovery Server configuration
+eureka:
+  instance:
+    hostname: ${discovery-service-cluster.zone3.hostname}
+    secure-port: ${discovery-service-cluster.zone3.eureka-port}
+    metadata-map:
+      zone: ${discovery-service-cluster.zone3.zone}
+      user: [{nube.eureka-discovery-service.security.username}]
+      username: [{nube.eureka-discovery-service.security.username}]
+      password: [{nube.eureka-discovery-service.security.password}]
+server:
+  port: ${PORT:${discovery-service-cluster.zone3.eureka-port}}
+
+---
+spring:
+  profiles: zone4
+# Discovery Server configuration
+eureka:
+  instance:
+    hostname: ${discovery-service-cluster.zone4.hostname}
+    secure-port: ${discovery-service-cluster.zone4.eureka-port}
+    metadata-map:
+      zone: ${discovery-service-cluster.zone4.zone}
+      user: [{nube.eureka-discovery-service.security.username}]
+      username: [{nube.eureka-discovery-service.security.username}]
+      password: [{nube.eureka-discovery-service.security.password}]
+server:
+  port: ${PORT:${discovery-service-cluster.zone4.eureka-port}}

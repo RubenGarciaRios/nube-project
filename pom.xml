@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Developed by Rubén García Ríos
+  ~  Last modified 8/11/18 10:13
+  ~  Copyright (c) 2018 All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.nube</groupId>
+	<artifactId>nube</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>NUBE - Builder</name>
+	<description>NUBE - Builder</description>
+
+	<developers>
+		<developer>
+			<name>Rubén García Ríos</name>
+			<email>garcia.rios.ruben@gmail.com</email>
+		</developer>
+	</developers>
+	<!-- =============== -->
+	<!-- PROJECT MODULES -->
+	<!-- =============== -->
+	<modules>
+		<module>nube-dependency-injector</module>
+		<module>nube-root</module>
+		<module>nube-assembler</module>
+		<module>nube-core</module>
+		<module>nube-services</module>
+	</modules>
+	<!-- ================== -->
+	<!-- PROJECT PROPERTIES -->
+	<!-- ================== -->
+	<properties>
+		<!-- General properties -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<!-- Maven plugins versions -->
+		<maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+		<maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+		<maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+	</properties>
+	<!-- ============ -->
+	<!-- REPOSITORIES -->
+	<!-- ============ -->
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<!-- ===== -->
+	<!-- BUILD -->
+	<!-- ===== -->
+	<build>
+		<!-- =============================== -->
+		<!-- DEFAULT PLUGINS FOR ALL MODULES -->
+		<!-- =============================== -->
+		<plugins>
+			<!-- ===================== -->
+			<!-- MAVEN ENFORCER PLUGIN -->
+			<!-- ===================== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${maven-enforcer-plugin.version}</version>
+				<configuration>
+					<rules>
+						<dependencyConvergence/>
+					</rules>
+				</configuration>
+			</plugin>
+			<!-- ===================== -->
+			<!-- MAVEN COMPILER PLUGIN -->
+			<!-- ===================== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<!-- ==================== -->
+			<!-- MAVEN RELEASE PLUGIN -->
+			<!-- ==================== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven-release-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>

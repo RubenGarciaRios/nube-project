@@ -9,10 +9,12 @@ package org.nube.core.base;
 import java.io.Serializable;
 
 /**
- * The interface Core object.
+ * NUBE Object.
+ * All NUBE related objects implements this interface.
  *
- * @see java.io.Serializable
+ * @author Rubén García Ríos.
  */
 public interface NubeObject
-        extends Serializable, Cloneable {
+        extends Serializable,
+        Cloneable {
 }

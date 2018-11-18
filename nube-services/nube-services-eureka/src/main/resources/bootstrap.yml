@@ -1,21 +1,3 @@
-#################################################################
-### E M B E D E D   S E R V E R   C O N F I G U R A T I I O N ###
-#################################################################
-server:
-  ssl:
-    enabled: true
-    # Two Way SSL.
-    client-auth: need
-    # Key Store configuration.
-    key-store: [{nube.ssl.files.directory-path}]/[{nube.ssl.nube-services.keystore}]
-    key-store-type: [{nube.ssl.store-type}]
-    key-alias: [{nube.ssl.nube-services.keystore-alias}]
-    key-password: [{nube.ssl.nube-services.keystore-password}]
-    key-store-password: [{nube.ssl.nube-services.keystore-store-password}]
-    # Trust Store configuration.
-    trust-store: [{nube.ssl.files.directory-path}]/[{nube.ssl.truststore}]
-    trust-store-password: [{nube.ssl.truststore-password}]
-    trust-store-type: [{nube.ssl.store-type}]
 ########################################
 ### S P R I N G  E N V I R O M E N T ###
 ########################################

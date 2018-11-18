@@ -4,7 +4,9 @@
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.base;
+package org.nube.core.base.security;
+
+import org.nube.core.base.NubeObject;
 
 /**
  * The interface Core security object.

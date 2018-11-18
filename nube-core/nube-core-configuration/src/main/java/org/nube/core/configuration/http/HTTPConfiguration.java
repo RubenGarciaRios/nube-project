@@ -8,7 +8,7 @@ package org.nube.core.configuration.http;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.nube.core.base.CoreConfigurationObject;
+import org.nube.core.base.config.NubeConfigurationObject;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
@@ -17,7 +17,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 public interface HTTPConfiguration
-        extends CoreConfigurationObject {
+        extends NubeConfigurationObject {
     @Bean( "httpClient" )
     @ConditionalOnBean( SSLConnectionSocketFactory.class )
     @DependsOn( { "sslConnectionSocketFactory" } )

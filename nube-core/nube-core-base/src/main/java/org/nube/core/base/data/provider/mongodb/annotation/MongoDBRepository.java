@@ -4,7 +4,7 @@
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.base.data.provider.nosql.mongodb.annotation;
+package org.nube.core.base.data.provider.mongodb.annotation;
 
 import java.lang.annotation.*;
 

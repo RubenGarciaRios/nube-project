@@ -6,7 +6,7 @@
 
 package org.nube.core.security.oauth2.provider.token.repository;
 
-import org.nube.core.base.data.provider.nosql.mongodb.annotation.MongoDBRepository;
+import org.nube.core.base.data.provider.mongodb.annotation.MongoDBRepository;
 import org.nube.core.security.oauth2.provider.token.domain.MongoOAuth2AccessToken;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

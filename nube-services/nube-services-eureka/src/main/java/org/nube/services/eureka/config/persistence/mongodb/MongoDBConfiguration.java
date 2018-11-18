@@ -7,8 +7,8 @@
 package org.nube.services.eureka.config.persistence.mongodb;
 
 import com.mongodb.MongoClient;
-import org.nube.core.base.data.provider.nosql.mongodb.AbstractMongoAdapter;
-import org.nube.core.base.data.provider.nosql.mongodb.MongoAdapter;
+import org.nube.core.base.data.provider.mongodb.AbstractMongoAdapter;
+import org.nube.core.base.data.provider.mongodb.MongoAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;

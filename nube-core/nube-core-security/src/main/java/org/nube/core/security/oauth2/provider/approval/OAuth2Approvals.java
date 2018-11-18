@@ -6,7 +6,7 @@
 
 package org.nube.core.security.oauth2.provider.approval;
 
-import org.nube.core.base.NubeSecurityObject;
+import org.nube.core.base.security.NubeSecurityObject;
 
 import java.util.Date;
 

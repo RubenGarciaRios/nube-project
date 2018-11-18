@@ -6,7 +6,7 @@
 
 package org.nube.core.security.oauth2.provider.approval.repository;
 
-import org.nube.core.base.data.provider.nosql.mongodb.annotation.MongoDBRepository;
+import org.nube.core.base.data.provider.mongodb.annotation.MongoDBRepository;
 import org.nube.core.security.oauth2.provider.approval.domain.MongoOAuth2Approvals;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

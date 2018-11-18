@@ -75,25 +75,25 @@ discovery-service-cluster:
   # - WINDOWS: c:\Windows\System32\Drivers\etc\hosts
   # - LINUX, MACOS: /etc/hosts
   # NUBE - EUREKA DISCOVERY SERVICE HOSTS
-  #    IP        DNS-HOSTNAME
-  # 127.0.0.1 discovery-service
-  # 127.0.0.1 discovery-service-2
-  # 127.0.0.1 discovery-service-3
-  # 127.0.0.1 discovery-service-4
+  #  IP       DNS-HOSTNAME
+  # 127.0.0.1 nube
+  # 127.0.0.1 nube-2
+  # 127.0.0.1 nube-3
+  # 127.0.0.1 nube-4
   zone1:
-    hostname: discovery-service
+    hostname: nube
     eureka-port: 8001
     zone: zone1
   zone2:
-    hostname: discovery-service-2
+    hostname: nube-2
     eureka-port: 8002
     zone: zone2
   zone3:
-    hostname: discovery-service-3
+    hostname: nube-3
     eureka-port: 8003
     zone: zone3
   zone4:
-    hostname: discovery-service-4
+    hostname: nube-4
     eureka-port: 8004
     zone: zone4
 ##############################

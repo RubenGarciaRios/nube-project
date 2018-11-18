@@ -97,7 +97,7 @@ spring:
 ### D I S C O V E R Y   C L I E N T   C O N F I G U R A T I O N ###
 ###################################################################
 # Discovery client health check activation.
-# [WARNING] This property must set in application.yml instead bootstrap.yml to avoid malfunction problems.
+# [WARNING] This property must set in application.yml instead nube-core.properties to avoid malfunction problems.
 eureka:
   client:
     healthcheck:

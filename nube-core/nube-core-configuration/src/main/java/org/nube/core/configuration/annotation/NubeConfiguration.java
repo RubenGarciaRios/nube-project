@@ -1,19 +1,14 @@
-/*
- *  Developed by Rubén García Ríos
- *  Last modified 16/11/18 12:04
- *  Copyright (c) 2018 All rights reserved.
- */
-
 package org.nube.core.configuration.annotation;
 
-import org.springframework.core.annotation.AliasFor;
+import org.nube.core.configuration.DefaultConfigurationIncludeSelector;
+import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
 /**
- * NUBE Service.
- * All applications that uses this annotation, are automatically preconfigured
- * to be part of NUBE Environment System.
+ * Include Configuration.
+ * All Classes that has this annotation, import the default NUBE
+ * Environment System configuration.
  *
  * @author Rubén García Ríos.
  */
@@ -21,27 +16,24 @@ import java.lang.annotation.*;
 @Target( ElementType.TYPE )
 @Documented
 @Inherited
-@NubeConfiguration
-public @interface NubeService {
+@Import( DefaultConfigurationIncludeSelector.class )
+public @interface NubeConfiguration {
     /**
      * Include specific auto-configuration classes such that they will be applied.
      * @return the classes to include
      */
-    @AliasFor( annotation = NubeConfiguration.class )
     Class< ? >[ ] include( ) default { };
 
     /**
      * Include specific auto-configuration class names such that they will be applied.
      * @return the class names to include
      */
-    @AliasFor( annotation = NubeConfiguration.class )
     String[ ] includeName( ) default { };
 
     /**
      * Exclude specific auto-configuration classes such that they will never be applied.
      * @return the classes to exclude
      */
-    @AliasFor( annotation = NubeConfiguration.class )
     Class< ? >[ ] exclude( ) default { };
 
     /**
@@ -49,6 +41,5 @@ public @interface NubeService {
      * applied.
      * @return the class names to exclude
      */
-    @AliasFor( annotation = NubeConfiguration.class )
     String[ ] excludeName( ) default { };
 }

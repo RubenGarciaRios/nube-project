@@ -4,7 +4,7 @@
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.base.data.provider.nosql.mongodb;
+package org.nube.core.base.data.provider.mongodb;
 
 import com.mongodb.MongoClient;
 import org.springframework.data.mongodb.MongoDbFactory;

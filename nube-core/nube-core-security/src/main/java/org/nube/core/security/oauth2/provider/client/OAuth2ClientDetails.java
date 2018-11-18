@@ -6,7 +6,7 @@
 
 package org.nube.core.security.oauth2.provider.client;
 
-import org.nube.core.base.NubeSecurityObject;
+import org.nube.core.base.security.NubeSecurityObject;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 /**

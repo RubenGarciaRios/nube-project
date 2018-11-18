@@ -6,8 +6,8 @@
 
 package org.nube.core.configuration.cloud;
 
-import org.nube.core.base.CoreConfigurationObject;
+import org.nube.core.base.config.NubeConfigurationObject;
 
 public interface CloudConfiguration
-        extends CoreConfigurationObject {
+        extends NubeConfigurationObject {
 }

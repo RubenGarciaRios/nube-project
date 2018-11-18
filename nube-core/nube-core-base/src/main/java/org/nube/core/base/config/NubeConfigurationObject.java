@@ -4,11 +4,11 @@
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.base;
+package org.nube.core.base.config;
 
 import java.io.Serializable;
 
-public interface CoreConfigurationObject
+public interface NubeConfigurationObject
         extends Serializable, Cloneable {
     void initializer( );
 }

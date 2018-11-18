@@ -4,12 +4,12 @@
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.security;
+package org.nube.core.base;
 
-import org.nube.core.base.NubeException;
-
-public class SecurityException extends NubeException {
-    private static final long serialVersionUID = -5990301565055498499L;
+public class NubeException
+        extends RuntimeException
+        implements NubeObject {
+    private static final long serialVersionUID = 7120063804722236297L;
 
     public static long getSerialVersionUID( ) {
         return serialVersionUID;

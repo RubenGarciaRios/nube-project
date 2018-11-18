@@ -6,7 +6,7 @@
 
 package org.nube.core.configuration.cloud;
 
-import org.nube.core.base.CoreConfigurationObject;
+import org.nube.core.base.config.NubeConfigurationObject;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.config.client.ConfigClientProperties;
 import org.springframework.cloud.config.client.ConfigServicePropertySourceLocator;
@@ -16,7 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 
 public interface ConfigClientConfiguration
-        extends CoreConfigurationObject {
+        extends NubeConfigurationObject {
     @Bean( "configClientProperties" )
     ConfigClientProperties configClientProperties( Environment environment );
 

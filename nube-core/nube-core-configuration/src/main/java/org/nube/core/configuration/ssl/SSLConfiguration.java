@@ -7,7 +7,7 @@
 package org.nube.core.configuration.ssl;
 
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.nube.core.base.CoreConfigurationObject;
+import org.nube.core.base.config.NubeConfigurationObject;
 import org.nube.core.security.ssl.SSLContextBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -24,7 +24,7 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 public interface SSLConfiguration
-        extends CoreConfigurationObject {
+        extends NubeConfigurationObject {
     @Bean( "sslContextBuilder" )
     @ConditionalOnMissingBean
     SSLContextBuilder simpleSSLContextBuilder( Environment environment );

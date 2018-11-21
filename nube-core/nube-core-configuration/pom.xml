@@ -24,6 +24,9 @@
 	<!-- MODULE DEPENDENCIES -->
 	<!-- =================== -->
 	<dependencies>
+		<!-- ============= -->
+		<!-- NUBE - KERNEL -->
+		<!-- ============= -->
 		<dependency>
 			<!-- Objects -->
 			<groupId>${project.groupId}</groupId>
@@ -35,5 +38,106 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>nube-core-security</artifactId>
 		</dependency>
+		<!-- ================ -->
+		<!-- NUBE - SSL FILES -->
+		<!-- ================ -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>nube-assembler-assembly</artifactId>
+			<classifier>nube-services-ssl-files</classifier>
+			<type>zip</type>
+		</dependency>
 	</dependencies>
+
+	<build>
+		<!-- ======================== -->
+		<!-- RESOURCE FILES LOCATIONS -->
+		<!-- ======================== -->
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>${basedir}/src/main/resources/nube-services-ssl-files</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<!-- SSL Files -->
+				<directory>${basedir}/src/main/resources/nube-services-ssl-files</directory>
+				<!-- Avoid corrupted files -->
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}/generated-resources</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- ====================== -->
+			<!-- MAVEN RESOURCES PLUGIN -->
+			<!-- ====================== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<!-- Replace tokens with parameterised values of root parent pom -->
+						<id>NUBE - Services [Resources Plugin] - Token Replacement</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+						<configuration>
+							<!-- Delimitiers for regex token replacement -->
+							<delimiters>
+								<delimiter>${maven-resources-plugin.resource.delimiter}</delimiter>
+							</delimiters>
+							<!-- delimiter that doesn't clash with Spring ${} placeholders -->
+							<useDefaultDelimiters>false</useDefaultDelimiters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- ===================== -->
+			<!-- MAVEN ASSEMBLY PLUGIN -->
+			<!-- ===================== -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<!-- UNPACK SSL FILES -->
+					<execution>
+						<id>NUBE - Services [Dependency Plugin] - Unpack nube-services-ssl-files</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<includeGroupIds>${project.groupId}</includeGroupIds>
+							<includeArtifactIds>nube-assembler-assembly</includeArtifactIds>
+							<classifier>nube-services-ssl-files</classifier>
+							<excludeTransitive>true</excludeTransitive>
+							<includes>**/${nube.ssl.truststore},**/${nube.ssl.nube-services.keystore}</includes>
+						</configuration>
+					</execution>
+					<!-- UNPACK LOGGING CONFIGURATION FILES -->
+					<execution>
+						<id>NUBE - Services [Dependency Plugin] - Unpack nube-logging-configuration-files</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<includeGroupIds>${project.groupId}</includeGroupIds>
+							<includeArtifactIds>nube-assembler-assembly</includeArtifactIds>
+							<classifier>nube-logging-configuration-files</classifier>
+							<excludeTransitive>true</excludeTransitive>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

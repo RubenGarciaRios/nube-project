@@ -26,9 +26,6 @@ public abstract class AbstractIncludeSelector
     protected List< String > defaultClasses = new ArrayList< >( );
 
     @Override
-    public void initializer( ) { }
-
-    @Override
     public String[ ] selectImports( AnnotationMetadata importingClassMetadata ) {
         // Gets annotation values.
         AnnotationAttributes annotationAttributes =

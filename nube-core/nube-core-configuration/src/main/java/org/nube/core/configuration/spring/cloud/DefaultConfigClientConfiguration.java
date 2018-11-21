@@ -4,30 +4,27 @@
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.configuration.cloud;
+package org.nube.core.configuration.spring.cloud;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.nube.core.configuration.http.DefaultHTTPConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.config.client.ConfigClientProperties;
 import org.springframework.cloud.config.client.ConfigServicePropertySourceLocator;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Default Spring Cloud Config Client configuration.
  * @author Rubén García Ríos
  */
-@Configuration
 @ConditionalOnClass( { ConfigClientProperties.class, RestTemplate.class } )
 @Import( DefaultHTTPConfiguration.class )
 public class DefaultConfigClientConfiguration
@@ -35,9 +32,8 @@ public class DefaultConfigClientConfiguration
     private static final Logger _LOG = LogManager.getLogger( DefaultConfigClientConfiguration.class );
     private static final long serialVersionUID = 6382632455937473506L;
 
-    @Override
-    @PostConstruct
-    public void initializer( ) {
+    @Autowired
+    public DefaultConfigClientConfiguration( ) {
         _LOG.info(
                 "\n##########################################" +
                 "\n### [SPRING CLOUD] CONFIG CLIENT SETUP ###" +

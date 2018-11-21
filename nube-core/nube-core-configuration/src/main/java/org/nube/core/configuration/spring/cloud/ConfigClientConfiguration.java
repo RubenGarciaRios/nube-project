@@ -4,7 +4,7 @@
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.configuration.cloud;
+package org.nube.core.configuration.spring.cloud;
 
 import org.nube.core.base.config.NubeConfigurationObject;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

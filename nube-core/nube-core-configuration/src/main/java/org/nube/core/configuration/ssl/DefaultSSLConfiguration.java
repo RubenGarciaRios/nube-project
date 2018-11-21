@@ -11,16 +11,16 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.nube.core.base.data.property.NubeSSLProperties;
-import org.nube.core.configuration.http.HTTPConfiguration;
 import org.nube.core.security.ssl.SSLContextBuilder;
 import org.nube.core.security.ssl.SimpleSSLContextBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -31,52 +31,25 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 /**
- * Configure SSL Connections for all applications with the parametrized values.
+ * Default SSL connection configuration for all NUBE services.
  *
  * @author Rubén García Ríos
  */
-@Configuration
 @PropertySources( {
-    @PropertySource( "classpath:nube-core.properties" ) } )
+    @PropertySource( "classpath:nube-configuration.properties" ) } )
 @EnableConfigurationProperties( NubeSSLProperties.class )
-@AutoConfigureAfter( HTTPConfiguration.class )
 public class DefaultSSLConfiguration
         implements SSLConfiguration{
     private static final Logger _LOG = LogManager.getLogger( DefaultSSLConfiguration.class );
     private static final long serialVersionUID = -3170599873338821186L;
 
     @Autowired
-    public DefaultSSLConfiguration( NubeSSLProperties nubeSSLProperties ) {
+    public DefaultSSLConfiguration( ) {
         _LOG.info(
                 "\n###############################" +
                 "\n### SSL CONFIGURATION SETUP ###" +
                 "\n###############################" );
-        _LOG.info( " - Nube SSL properties object: {}", nubeSSLProperties );
-        _LOG.info( " - Setting Embbeded Server SSL properties..." );
-        /*
-        System.setProperty( "server.ssl.enabled", "true" );
-        System.setProperty( "server.ssl.client-auth", nubeSSLProperties.getClientAuth( ) );
-        System.setProperty( "server.ssl.key-alias", nubeSSLProperties.getKeyStore( ).getAlias( ) );
-        System.setProperty( "server.ssl.key-alias", nubeSSLProperties.getKeyStore( ).getAlias( ) );
-        System.setProperty( "server.ssl.key-password", nubeSSLProperties.getKeyStore( ).getPassword( ) );
-        System.setProperty( "server.ssl.key-store-password", nubeSSLProperties.getKeyStore( ).getStorePassword( ) );
-
-
-
-        server.ssl.key-store= # Path to the key store that holds the SSL certificate (typically a jks file).
-        server.ssl.key-store-password= # Password used to access the key store.
-        server.ssl.key-store-provider= # Provider for the key store.
-        server.ssl.key-store-type= # Type of the key store.
-        server.ssl.protocol=TLS # SSL protocol to use.
-        server.ssl.trust-store= # Trust store that holds SSL certificates.
-        server.ssl.trust-store-password= # Password used to access the trust store.
-        server.ssl.trust-store-provider= # Provider for the trust store.
-        server.ssl.trust-store-type= # Type of the trust store.
-        */
     }
-
-    @Override
-    public void initializer( ) { }
 
     /**
      * Gets serial version uid.
@@ -89,16 +62,16 @@ public class DefaultSSLConfiguration
      * Simple SSLContext Builder prepared with the configuration set in parent pom
      * and .yml files.
      *
-     * @param environment Spring CLoud Environment
+     * @param nubeSSLProperties NUBE SSL Properties
      * @return {@link SimpleSSLContextBuilder}
      */
     @Override
     @Bean( "sslContextBuilder" )
     @ConditionalOnMissingBean
-    public SSLContextBuilder simpleSSLContextBuilder( Environment environment ) {
+    public SSLContextBuilder simpleSSLContextBuilder( NubeSSLProperties nubeSSLProperties ) {
 
         _LOG.info( " - Generating SimpleSSLContextBuilder bean..." );
-        SSLContextBuilder simpleSSLContextBuilder = new SimpleSSLContextBuilder( environment );
+        SSLContextBuilder simpleSSLContextBuilder = new SimpleSSLContextBuilder( nubeSSLProperties );
         _LOG.info( " - SimpleSSLContextBuilder bean has been created successfully: {}", simpleSSLContextBuilder );
         return simpleSSLContextBuilder;
     }
@@ -112,7 +85,7 @@ public class DefaultSSLConfiguration
      * ($JAVA_HOME/jre/lib/security/cacerts).
      *
      * SSLContextBuilder bean injection.
-     * @see DefaultSSLConfiguration#simpleSSLContextBuilder(Environment)
+     * @see DefaultSSLConfiguration#simpleSSLContextBuilder(NubeSSLProperties)
      * </p>
      *
      * @param sslContextBuilder SSL Context Builder

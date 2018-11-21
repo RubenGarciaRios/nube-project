@@ -6,9 +6,14 @@
 
 package org.nube.core.base.config;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+
 import java.io.Serializable;
 
+@Configuration
+@Order( NubeConfigurationObject.DEFAULT_CONFIGURATION_ORDER_PRECEDENCE )
 public interface NubeConfigurationObject
         extends Serializable, Cloneable {
-    void initializer( );
+    int DEFAULT_CONFIGURATION_ORDER_PRECEDENCE = -100;
 }

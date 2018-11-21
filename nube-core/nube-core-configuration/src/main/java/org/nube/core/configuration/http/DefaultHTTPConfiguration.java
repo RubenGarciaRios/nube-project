@@ -12,6 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.nube.core.configuration.ssl.DefaultSSLConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -21,19 +22,16 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import javax.net.ssl.SSLContext;
 
-@Configuration
 @Import( DefaultSSLConfiguration.class )
 public class DefaultHTTPConfiguration
         implements HTTPConfiguration {
     private static final Logger _LOG = LogManager.getLogger( DefaultSSLConfiguration.class );
     private static final long serialVersionUID = -2549689124050903785L;
 
-    @Override
-    @PostConstruct
-    public void initializer( ) {
+    @Autowired
+    public DefaultHTTPConfiguration( ) {
         _LOG.info(
                 "\n################################" +
                 "\n### HTTP CONFIGURATION SETUP ###" +

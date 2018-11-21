@@ -33,47 +33,4 @@
 			<optional>false</optional>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<!-- ======================== -->
-		<!-- RESOURCE FILES LOCATIONS -->
-		<!-- ======================== -->
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>${project.build.directory}/generated-resources</directory>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
-		<plugins>
-			<!-- ====================== -->
-			<!-- MAVEN RESOURCES PLUGIN -->
-			<!-- ====================== -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<!-- Replace tokens with parameterised values of root parent pom -->
-						<id>NUBE - Services [Resources Plugin] - Token Replacement</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>resources</goal>
-						</goals>
-						<configuration>
-							<!-- Delimitiers for regex token replacement -->
-							<delimiters>
-								<delimiter>${maven-resources-plugin.resource.delimiter}</delimiter>
-							</delimiters>
-							<!-- delimiter that doesn't clash with Spring ${} placeholders -->
-							<useDefaultDelimiters>false</useDefaultDelimiters>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>

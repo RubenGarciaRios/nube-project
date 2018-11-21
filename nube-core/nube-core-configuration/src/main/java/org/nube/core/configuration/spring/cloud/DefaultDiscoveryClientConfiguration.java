@@ -4,7 +4,7 @@
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.configuration.cloud;
+package org.nube.core.configuration.spring.cloud;
 
 import com.netflix.discovery.DiscoveryClient;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
@@ -12,31 +12,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.nube.core.configuration.ssl.DefaultSSLConfiguration;
 import org.nube.core.security.ssl.SSLContextBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 
-import javax.annotation.PostConstruct;
 import javax.net.ssl.SSLContext;
 
-@Configuration
-@ConditionalOnClass( DiscoveryClient.class )
 @Import( DefaultSSLConfiguration.class )
-@EnableDiscoveryClient
-@EnableEurekaClient
 public class DefaultDiscoveryClientConfiguration
         implements DiscoveryClientConfiguration {
     private static final Logger _LOG = LogManager.getLogger( DefaultConfigClientConfiguration.class );
     private static final long serialVersionUID = -4402558066248108982L;
 
-    @Override
-    @PostConstruct
-    public void initializer( ) {
+    @Autowired
+    public void DefaultDiscoveryClientConfiguration( ) {
         _LOG.info(
                 "\n#############################################" +
                 "\n### [SPRING CLOUD] DISCOVERY CLIENT SETUP ###" +

@@ -9,6 +9,5 @@ package org.nube.core.base.config;
 import org.springframework.context.annotation.ImportSelector;
 
 public interface IncludeSelector
-        extends ImportSelector,
-        NubeConfigurationObject {
+        extends ImportSelector {
 }

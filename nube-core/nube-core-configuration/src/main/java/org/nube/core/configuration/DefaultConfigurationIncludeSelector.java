@@ -21,7 +21,7 @@ public class DefaultConfigurationIncludeSelector
     private static final long serialVersionUID = 384506978592727275L;
 
     public DefaultConfigurationIncludeSelector( ) {
-        super.defaultClasses.add( _BASE_PACKAGE + ".cloud.DefaultCloudConfiguration" );
+        super.defaultClasses.add( _BASE_PACKAGE + ".spring.DefaultSpringConfiguration" );
     }
 
     public static long getSerialVersionUID( ) {

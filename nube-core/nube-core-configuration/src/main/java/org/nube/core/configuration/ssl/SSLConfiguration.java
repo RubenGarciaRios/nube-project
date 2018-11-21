@@ -8,12 +8,12 @@ package org.nube.core.configuration.ssl;
 
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.nube.core.base.config.NubeConfigurationObject;
+import org.nube.core.base.data.property.NubeSSLProperties;
 import org.nube.core.security.ssl.SSLContextBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.env.Environment;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public interface SSLConfiguration
         extends NubeConfigurationObject {
     @Bean( "sslContextBuilder" )
     @ConditionalOnMissingBean
-    SSLContextBuilder simpleSSLContextBuilder( Environment environment );
+    SSLContextBuilder simpleSSLContextBuilder( NubeSSLProperties nubeSSLProperties );
 
     @Bean( "sslContext" )
     @ConditionalOnClass( SSLContextBuilder.class )

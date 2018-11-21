@@ -52,15 +52,6 @@
 	<!-- MODULE DEPENDENCIES -->
 	<!-- =================== -->
 	<dependencies>
-		<!-- ================ -->
-		<!-- NUBE - SSL FILES -->
-		<!-- ================ -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>nube-assembler-assembly</artifactId>
-			<classifier>nube-services-ssl-files</classifier>
-			<type>zip</type>
-		</dependency>
 		<!-- ================================== -->
 		<!-- NUBE - LOGGING CONFIGURATION FILES -->
 		<!-- ================================== -->
@@ -262,46 +253,6 @@
 							</delimiters>
 							<!-- delimiter that doesn't clash with Spring ${} placeholders -->
 							<useDefaultDelimiters>false</useDefaultDelimiters>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- ===================== -->
-			<!-- MAVEN ASSEMBLY PLUGIN -->
-			<!-- ===================== -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<!-- UNPACK SSL FILES -->
-					<execution>
-						<id>NUBE - Services [Dependency Plugin] - Unpack nube-services-ssl-files</id>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<includeGroupIds>${project.groupId}</includeGroupIds>
-							<includeArtifactIds>nube-assembler-assembly</includeArtifactIds>
-							<classifier>nube-services-ssl-files</classifier>
-							<excludeTransitive>true</excludeTransitive>
-							<includes>**/${nube.ssl.truststore},**/${nube.ssl.nube-services.keystore}</includes>
-						</configuration>
-					</execution>
-					<!-- UNPACK LOGGING CONFIGURATION FILES -->
-					<execution>
-						<id>NUBE - Services [Dependency Plugin] - Unpack nube-logging-configuration-files</id>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<includeGroupIds>${project.groupId}</includeGroupIds>
-							<includeArtifactIds>nube-assembler-assembly</includeArtifactIds>
-							<classifier>nube-logging-configuration-files</classifier>
-							<excludeTransitive>true</excludeTransitive>
 						</configuration>
 					</execution>
 				</executions>

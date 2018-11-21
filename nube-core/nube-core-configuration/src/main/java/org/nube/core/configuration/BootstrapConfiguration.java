@@ -8,11 +8,9 @@ package org.nube.core.configuration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.nube.core.configuration.cloud.DefaultCloudConfiguration;
+import org.nube.core.configuration.spring.DefaultSpringConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.util.SocketUtils;
 
@@ -24,9 +22,7 @@ import javax.annotation.PostConstruct;
  *
  * @author Rubén García Ríos
  */
-@Order( 0 )
-@Configuration
-@Import( { DefaultCloudConfiguration.class } )
+@Import( { DefaultSpringConfiguration.class } )
 @org.springframework.cloud.bootstrap.BootstrapConfiguration
 public class BootstrapConfiguration {
     private static final Logger _LOG = LogManager.getLogger( BootstrapConfiguration.class );

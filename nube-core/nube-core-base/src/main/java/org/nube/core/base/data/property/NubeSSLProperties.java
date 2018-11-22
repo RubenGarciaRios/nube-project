@@ -1,3 +1,9 @@
+/*
+ *  Developed by Rubén García Ríos
+ *  Last modified 22/11/18 16:40
+ *  Copyright (c) 2018 All rights reserved.
+ */
+
 package org.nube.core.base.data.property;
 
 
@@ -8,48 +14,49 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.Objects;
 
 /**
- * NUBE SSL Configuration properties.
+ * NUBE SSL properties.
+ * Used by core configuration module for ssl configuration.
  *
  * @author Rubén García Ríos
  */
 @ConfigurationProperties( prefix = NubeSSLProperties.NUBE_PROPERTIES_SSL_PREFIX )
 public class NubeSSLProperties
         implements NubePropertiesObject {
+    /**
+     * NUBE_PROPERTIES_SSL_PREFIX constant.
+     */
     public static final String NUBE_PROPERTIES_SSL_PREFIX = "nube.ssl";
     private static final Logger _LOG = LogManager.getLogger( NubeSSLProperties.class );
     private static final long serialVersionUID = 6376617351138655352L;
+    // DEFAULT VALUES.
+    /**
+     * DEFAULT_CLIENT_AUTH constant.
+     */
+    public static final String DEFAULT_CLIENT_AUTH = "need";
+    // ATTRIBUTES.
     // Two way SSL, indicates that client must to be authenticated.
-    private String clientAuth = "need";
+    private String clientAuth = DEFAULT_CLIENT_AUTH;
     // Keystore configuration.
     private KeyStore keyStore = new KeyStore( );
     // TrustStore configuration.
     private TrustStore trustStore = new TrustStore( );
-
-    public String getClientAuth( ) {
-        return clientAuth;
-    }
-
-    public void setClientAuth( String clientAuth ) {
+    // CONSTRUCTORS.
+    public NubeSSLProperties( ) { }
+    public NubeSSLProperties(
+            final String clientAuth,
+            final KeyStore keyStore,
+            final TrustStore trustStore ) {
         this.clientAuth = clientAuth;
-    }
-
-    public KeyStore getKeyStore( ) {
-        return keyStore;
-    }
-
-    public void setKeyStore( KeyStore keyStore ) {
         this.keyStore = keyStore;
-    }
-
-    public TrustStore getTrustStore( ) {
-        return trustStore;
-    }
-
-    public void setTrustStore( TrustStore trustStore ) {
         this.trustStore = trustStore;
     }
 
-    // KEYSTORE CONFIGURATION.
+    /**
+     * NUBE SSL Keystore Properties.
+     * Used by core configuration module for ssl Keystore configuration.
+     *
+     * @author Rubén García Ríos.
+     */
     public static class KeyStore
             implements NubePropertiesObject {
         private static final long serialVersionUID = -5102790233088935086L;
@@ -63,51 +70,114 @@ public class NubeSSLProperties
         private String password;
         // Key store password.
         private String storePassword;
-
-        public String getPath( ) {
-            return path;
-        }
-
-        public void setPath( String path ) {
+        // CONSTRUCTORS.
+        public KeyStore( ) { }
+        public KeyStore(
+                final String path,
+                final String type,
+                final String alias,
+                final String password,
+                final String storePassword ) {
             this.path = path;
-        }
-
-        public String getType( ) {
-            return type;
-        }
-
-        public void setType( String type ) {
             this.type = type;
-        }
-
-        public String getAlias( ) {
-            return alias;
-        }
-
-        public void setAlias( String alias ) {
             this.alias = alias;
-        }
-        // If password is null gets the store password (Indicates that password and store password is the same).
-        public String getPassword( ) {
-            return password != null ? password : storePassword;
-        }
-
-        public void setPassword( String password ) {
             this.password = password;
-        }
-        // If store password is null gets the password (Indicates that password and store password is the same).
-        public String getStorePassword( ) {
-            return storePassword != null ? storePassword : password;
-        }
-
-        public void setStorePassword( String storePassword ) {
             this.storePassword = storePassword;
         }
 
-        public static long getSerialVersionUID( ) {
-            return serialVersionUID;
-        }
+        /**
+         * Gets path.
+         *
+         * @return the path
+         */
+        //@formatter:off
+        public String getPath( )
+            { return path; }
 
+        /**
+         * Sets path.
+         *
+         * @param path the path
+         */
+        public void setPath( String path )
+            { this.path = path; }
+
+        /**
+         * Gets type.
+         *
+         * @return the type
+         */
+        public String getType( )
+            { return type; }
+
+        /**
+         * Sets type.
+         *
+         * @param type the type
+         */
+        public void setType( String type )
+            { this.type = type; }
+
+        /**
+         * Gets alias.
+         *
+         * @return the alias
+         */
+        public String getAlias( )
+            { return alias; }
+
+        /**
+         * Sets alias.
+         *
+         * @param alias the alias
+         */
+        public void setAlias( String alias )
+            { this.alias = alias; }
+
+        /**
+         * Gets password.
+         * If password is null gets the store password (Indicates that password and
+         * store password is the same).
+         *
+         * @return the password
+         */
+        public String getPassword( )
+            { return password != null ? password : storePassword; }
+
+        /**
+         * Sets password.
+         *
+         * @param password the password
+         */
+        public void setPassword( String password )
+            { this.password = password; }
+
+        /**
+         * Gets store password.
+         * If store password is null gets the password (Indicates that password
+         * and store password is the same).
+         *
+         * @return the store password
+         */
+        public String getStorePassword( )
+            { return storePassword != null ? storePassword : password; }
+
+        /**
+         * Sets store password.
+         *
+         * @param storePassword the store password
+         */
+        public void setStorePassword( String storePassword )
+            { this.storePassword = storePassword; }
+
+        /**
+         * Gets serial version uid.
+         *
+         * @return the serial version uid
+         */
+        public static long getSerialVersionUID( )
+            { return serialVersionUID; }
+        //@formatter:on
         @Override
         public boolean equals( Object o ) {
             if ( this == o ) return true;
@@ -121,9 +191,8 @@ public class NubeSSLProperties
         }
 
         @Override
-        public int hashCode( ) {
-            return Objects.hash( getPath( ), getType( ), getAlias( ), getPassword( ), getStorePassword( ) );
-        }
+        public int hashCode( )
+            { return Objects.hash( getPath( ), getType( ), getAlias( ), getPassword( ), getStorePassword( ) ); }
 
         @Override
         public String toString( ) {
@@ -132,12 +201,16 @@ public class NubeSSLProperties
                     ", type='" + type + '\'' +
                     ", alias='" + alias + '\'' +
                     ", password='" + password + '\'' +
-                    ", storePassword='" + storePassword + '\'' +
-                    '}';
+                    ", storePassword='" + storePassword + '\'' + '}';
         }
+        //@formatter:on
     }
 
-    // TRUSTSTORE CONFIGURATION.
+    /**
+     * NUBE SSL Truststore Properties.
+     * Used by core configuration module for ssl Truststore configuration.
+     *
+     */
     public static class TrustStore
             implements NubePropertiesObject {
         private static final long serialVersionUID = -1515924486798971518L;
@@ -149,43 +222,96 @@ public class NubeSSLProperties
         private String password;
         // Truststore store password.
         private String storePassword;
+        // CONSTRUCTORS.
 
-        public String getPath( ) {
-            return path;
-        }
-
-        public void setPath( String path ) {
+        public TrustStore( ) { }
+        public TrustStore(
+                final String path,
+                final String type,
+                final String password,
+                final String storePassword ) {
             this.path = path;
-        }
-
-        public String getType( ) {
-            return type;
-        }
-
-        public void setType( String type ) {
             this.type = type;
-        }
-
-        // If password is null gets the store password (Indicates that password and store password is the same).
-        public String getPassword( ) {
-            return password != null ? password : storePassword;
-        }
-
-        public void setPassword( String password ) {
             this.password = password;
-        }
-        // If store password is null gets the password (Indicates that password and store password is the same).
-        public String getStorePassword( ) {
-            return storePassword != null ? storePassword : password;
-        }
-
-        public void setStorePassword( String storePassword ) {
             this.storePassword = storePassword;
         }
 
-        public static long getSerialVersionUID( ) {
-            return serialVersionUID;
-        }
+        /**
+         * Gets path.
+         *
+         * @return the path
+         */
+        //@formatter:off
+        public String getPath( )
+            { return path; }
+
+        /**
+         * Sets path.
+         *
+         * @param path the path
+         */
+        public void setPath( String path )
+            { this.path = path; }
+
+        /**
+         * Gets type.
+         *
+         * @return the type
+         */
+        public String getType( )
+            { return type; }
+
+        /**
+         * Sets type.
+         *
+         * @param type the type
+         */
+        public void setType( String type )
+            { this.type = type; }
+
+        /**
+         * Gets password.
+         * If password is null gets the store password (Indicates that password and
+         * store password is the same).
+         *
+         * @return the password
+         */
+        public String getPassword( )
+            { return password != null ? password : storePassword; }
+
+        /**
+         * Sets password.
+         *
+         * @param password the password
+         */
+        public void setPassword( String password )
+            { this.password = password; }
+
+        /**
+         * Gets store password.
+         * If store password is null gets the password (Indicates that password and
+         * store password is the same.
+         *
+         * @return the store password
+         */
+        public String getStorePassword( )
+            { return storePassword != null ? storePassword : password; }
+
+        /**
+         * Sets store password.
+         *
+         * @param storePassword the store password
+         */
+        public void setStorePassword( String storePassword )
+            { this.storePassword = storePassword; }
+
+        /**
+         * Gets serial version uid.
+         *
+         * @return the serial version uid
+         */
+        public static long getSerialVersionUID( )
+            { return serialVersionUID; }
 
         @Override
         public boolean equals( Object o ) {
@@ -199,9 +325,8 @@ public class NubeSSLProperties
         }
 
         @Override
-        public int hashCode( ) {
-            return Objects.hash( getPath( ), getType( ), getPassword( ), getStorePassword( ) );
-        }
+        public int hashCode( )
+            { return Objects.hash( getPath( ), getType( ), getPassword( ), getStorePassword( ) ); }
 
         @Override
         public String toString( ) {
@@ -209,14 +334,68 @@ public class NubeSSLProperties
                     "path='" + path + '\'' +
                     ", type='" + type + '\'' +
                     ", password='" + password + '\'' +
-                    ", storePassword='" + storePassword + '\'' +
-                    '}';
+                    ", storePassword='" + storePassword + '\'' + '}';
         }
+        //@formatter:on
     }
 
-    public static long getSerialVersionUID( ) {
-        return serialVersionUID;
-    }
+    /**
+     * Gets serial version uid.
+     *
+     * @return the serial version uid
+     */
+    //@formatter:off
+    public static long getSerialVersionUID( )
+        { return serialVersionUID; }
+
+    /**
+     * Gets client auth.
+     *
+     * @return the client auth
+     */
+    public String getClientAuth( )
+        { return clientAuth; }
+
+    /**
+     * Sets client auth.
+     * Default value <code>"need"</code>
+     *
+     * @param clientAuth the client auth
+     */
+    public void setClientAuth( String clientAuth )
+        { this.clientAuth = clientAuth; }
+
+    /**
+     * Gets key store.
+     *
+     * @return the key store
+     */
+    public KeyStore getKeyStore( )
+        { return keyStore; }
+
+    /**
+     * Sets key store.
+     *
+     * @param keyStore the key store
+     */
+    public void setKeyStore( KeyStore keyStore )
+        { this.keyStore = keyStore; }
+
+    /**
+     * Gets trust store.
+     *
+     * @return the trust store
+     */
+    public TrustStore getTrustStore( )
+        { return trustStore; }
+
+    /**
+     * Sets trust store.
+     *
+     * @param trustStore the trust store
+     */
+    public void setTrustStore( TrustStore trustStore )
+        { this.trustStore = trustStore; }
 
     @Override
     public boolean equals( Object o ) {
@@ -227,16 +406,15 @@ public class NubeSSLProperties
     }
 
     @Override
-    public int hashCode( ) {
-        return Objects.hash( getClientAuth( ) );
-    }
+    public int hashCode( )
+        { return Objects.hash( getClientAuth( ) ); }
 
     @Override
     public String toString( ) {
         return "NubeSSLProperties{" +
                 "clientAuth='" + clientAuth + '\'' +
                 ", keyStore=" + keyStore +
-                ", trustStore=" + trustStore +
-                '}';
+                ", trustStore=" + trustStore + '}';
     }
+    //@formatter:on
 }

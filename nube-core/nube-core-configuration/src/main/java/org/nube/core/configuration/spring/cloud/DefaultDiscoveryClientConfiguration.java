@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 16/11/18 15:02
+ *  Last modified 22/11/18 14:37
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -45,7 +45,7 @@ public class DefaultDiscoveryClientConfiguration
 
     /**
      * Set SSL context to discovery client optional arguments bean.
-     * Provides two-way SSL authentication (x509) to clients thats connects
+     * Provides two-way SSL authentication (x509) to clients thats connect
      * with other core services.
      *
      * <p>

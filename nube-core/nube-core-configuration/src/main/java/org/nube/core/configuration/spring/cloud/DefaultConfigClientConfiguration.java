@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 16/11/18 15:02
+ *  Last modified 22/11/18 14:37
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -75,7 +75,7 @@ public class DefaultConfigClientConfiguration
     /**
      * Configured Config service property source locator bean.
      * Provides two-way SSL authentication (x509) to clients that
-     * connects with spring config server.
+     * connect with spring config server.
      *
      * <p>
      * [NOTE] RestTemplate Bean injection.

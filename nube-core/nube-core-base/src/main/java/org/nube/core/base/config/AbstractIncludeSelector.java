@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 16/11/18 15:02
+ *  Last modified 22/11/18 15:54
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractIncludeSelector
         implements IncludeSelector {
+    protected final Logger _LOG = LogManager.getLogger( this.getClass( ) );
     private static final long serialVersionUID = -5453050090836567052L;
     private static final String[ ] NO_IMPORTS = { };
-    protected final Logger _LOG = LogManager.getLogger( this.getClass( ) );
     protected List< String > defaultClasses = new ArrayList< >( );
 
     @Override

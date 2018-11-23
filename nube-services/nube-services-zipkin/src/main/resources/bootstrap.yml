@@ -64,7 +64,7 @@ logging:
 ###################################################################################
 ### D I S C O V E R Y   S E R V E R   S E R V I C E   C O N F I G U R A T I O N ###
 ###################################################################################
-# Discovery cluster configuration.
+# Discovery discovery configuration.
 discovery-service-cluster:
   # Need DNS hostname resolver, or edit host files and add all hostnames:
   # - WINDOWS: c:\Windows\System32\Drivers\etc\hosts
@@ -140,10 +140,10 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone1.hostname}
+    hostname: ${discovery-service-discovery.zone1.hostname}
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.zone1.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.zone1.zone}}
       user: [{nube.zipkin-service.security.username}]
       username: [{nube.zipkin-service.security.username}]
       password: [{nube.zipkin-service.security.password}]
@@ -154,10 +154,10 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone2.hostname}
+    hostname: ${discovery-service-discovery.zone2.hostname}
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.zone2.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.zone2.zone}}
       user: [{nube.zipkin-service.security.username}]
       username: [{nube.zipkin-service.security.username}]
       password: [{nube.zipkin-service.security.password}]
@@ -168,10 +168,10 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone3.hostname}
+    hostname: ${discovery-service-discovery.zone3.hostname}
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.zone3.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.zone3.zone}}
       user: [{nube.zipkin-service.security.username}]
       username: [{nube.zipkin-service.security.username}]
       password: [{nube.zipkin-service.security.password}]
@@ -182,10 +182,10 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone4.hostname}
+    hostname: ${discovery-service-discovery.zone4.hostname}
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.zone4.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.zone4.zone}}
       user: [{nube.zipkin-service.security.username}]
       username: [{nube.zipkin-service.security.username}]
       password: [{nube.zipkin-service.security.password}]

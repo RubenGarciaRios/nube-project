@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 22/11/18 15:54
+ *  Last modified 24/11/18 13:41
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -18,13 +18,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Abstract Include Selector.
+ * Annotated classes with {@code @Import} indicates inclusions/exclusions
+ * of injected classes.
+ *
+ * @author Rubén García Ríos
+ */
 public abstract class AbstractIncludeSelector
         implements IncludeSelector {
     protected final Logger _LOG = LogManager.getLogger( this.getClass( ) );
     private static final long serialVersionUID = -5453050090836567052L;
     private static final String[ ] NO_IMPORTS = { };
     protected List< String > defaultClasses = new ArrayList< >( );
-
+    //formatter:off
     @Override
     public String[ ] selectImports( AnnotationMetadata importingClassMetadata ) {
         // Gets annotation values.
@@ -84,9 +91,13 @@ public abstract class AbstractIncludeSelector
                 : NO_IMPORTS;
     }
 
-    public static long getSerialVersionUID( ) {
-        return serialVersionUID;
-    }
+    /**
+     * Gets serial version uid.
+     *
+     * @return the serial version uid
+     */
+    public static long getSerialVersionUID( )
+        { return serialVersionUID; }
 
     @Override
     public boolean equals( Object o ) {
@@ -94,11 +105,15 @@ public abstract class AbstractIncludeSelector
         if ( !( o instanceof AbstractIncludeSelector ) ) return false;
         AbstractIncludeSelector that = ( AbstractIncludeSelector ) o;
         return Objects.equals( _LOG, that._LOG ) &&
-                Objects.equals( defaultClasses, that.defaultClasses );
+               Objects.equals( defaultClasses, that.defaultClasses );
     }
 
     @Override
-    public int hashCode( ) {
-        return Objects.hash( _LOG, defaultClasses );
-    }
+    public int hashCode( )
+        { return Objects.hash( _LOG, defaultClasses ); }
+
+    @Override
+    public String toString( )
+        { return this.getClass( ).getName( ) + "{" + "defaultClasses=" + defaultClasses + '}'; }
+    //formatter:on
 }

@@ -53,7 +53,7 @@ spring:
 ###################################################################################
 ### D I S C O V E R Y   S E R V E R   S E R V I C E   C O N F I G U R A T I O N ###
 ###################################################################################
-# Discovery cluster configuration.
+# Discovery discovery configuration.
 discovery-service-cluster:
   # Need DNS hostname resolver, or edit host files and add all hostnames:
   # - WINDOWS: c:\Windows\System32\Drivers\etc\hosts
@@ -121,7 +121,7 @@ eureka:
     #lease-expiration-duration-in-seconds: [{nube.eureka-discovery-service.instance.lease-expiration-duration-in-seconds}]
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.default.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.default.zone}}
       user: [{nube.admin-manager-service.security.username}]
       username: [{nube.admin-manager-service.security.username}]
       password: [{nube.admin-manager-service.security.password}]
@@ -135,7 +135,7 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone1.hostname}
+    hostname: ${discovery-service-discovery.zone1.hostname}
 
 ---
 spring:
@@ -143,7 +143,7 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone2.hostname}
+    hostname: ${discovery-service-discovery.zone2.hostname}
 
 ---
 spring:
@@ -151,7 +151,7 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone3.hostname}
+    hostname: ${discovery-service-discovery.zone3.hostname}
 
 ---
 spring:
@@ -159,4 +159,4 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone4.hostname}
+    hostname: ${discovery-service-discovery.zone4.hostname}

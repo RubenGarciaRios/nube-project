@@ -1,14 +1,13 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 16/11/18 12:04
+ *  Last modified 24/11/18 20:25
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.core.security.oauth2.provider.token.repository;
 
-import org.nube.core.base.data.provider.mongodb.annotation.MongoDBRepository;
+import org.nube.core.base.config.data.provider.mongodb.annotation.MongoRepository;
 import org.nube.core.security.oauth2.provider.token.domain.MongoOAuth2AccessToken;
-import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -18,12 +17,12 @@ import java.util.Optional;
  * OAuth2 Access Token MongoDB repository.
  *
  * @author Rubén García Ríos
- * @see MongoRepository
+ * @see org.springframework.data.mongodb.repository.MongoRepository
  * @see MongoOAuth2AccessToken
  */
-@MongoDBRepository
+@MongoRepository
 public interface OAuth2AccessTokenMongoRepository
-        extends MongoRepository< MongoOAuth2AccessToken, String > {
+        extends org.springframework.data.mongodb.repository.MongoRepository {
     /**
      * Find by token id optional.
      *

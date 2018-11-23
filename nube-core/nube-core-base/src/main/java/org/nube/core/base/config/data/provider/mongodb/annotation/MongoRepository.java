@@ -1,10 +1,10 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 16/11/18 12:04
+ *  Last modified 24/11/18 20:25
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.base.data.provider.mongodb.annotation;
+package org.nube.core.base.config.data.provider.mongodb.annotation;
 
 import java.lang.annotation.*;
 
@@ -18,5 +18,5 @@ import java.lang.annotation.*;
 @Target( ElementType.TYPE )
 @Documented
 @Inherited
-public @interface MongoDBRepository {
+public @interface MongoRepository {
 }

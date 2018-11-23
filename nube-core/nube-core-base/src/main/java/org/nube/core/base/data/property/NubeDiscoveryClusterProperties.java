@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 22/11/18 18:59
+ *  Last modified 24/11/18 2:06
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -18,7 +18,7 @@ import java.util.Objects;
 
 /**
  * NUBE Discovery Cluster Properties.
- * Used by core configuration module for disovery cluster configuration.
+ * Used by core configuration module for disovery discovery configuration.
  *
  * @author Rubén García Ríos
  */
@@ -30,7 +30,7 @@ public class NubeDiscoveryClusterProperties
     /**
      * NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX constant.
      */
-    public static final String NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX = "nube.cloud.discovery-cluster";
+    public static final String NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX = "nube.cloud.discovery-discovery";
     private static final long serialVersionUID = -4542913480070535272L;
     // ATTRIBUTES.
     private DataBase dataBase;
@@ -46,9 +46,9 @@ public class NubeDiscoveryClusterProperties
 
     /**
      * NUBE Discovery Cluster Database Properties.
-     * Used by core configuration module for disovery cluster Database configuration.
+     * Used by core configuration module for disovery discovery Database configuration.
      * <p>
-     * If <code>nube.cloud.discovery-cluster.database.enabled = true</code> NUBE Services
+     * If <code>nube.cloud.discovery-discovery.database.enabled = true</code> NUBE Services
      * connect to database to search all regions availables and connect to discovery service for high availability.
      *
      * @author Rubén García Ríos.
@@ -165,7 +165,7 @@ public class NubeDiscoveryClusterProperties
 
         /**
          * Discovery Cluster Database Server Address properties.
-         * Used by core configuration module for disovery cluster Database server
+         * Used by core configuration module for disovery discovery Database server
          * addresses configuration.
          *
          * @author Rubén García Ríos
@@ -387,9 +387,9 @@ public class NubeDiscoveryClusterProperties
 
     /**
      * NUBE Discovery Cluster Region Properties.
-     * Used by core configuration module for disovery cluster Region configuration.
+     * Used by core configuration module for disovery discovery Region configuration.
      * <p>
-     * If <code>nube.cloud.discovery-cluster.database.enabled = false</code> or NUBE Services
+     * If <code>nube.cloud.discovery-discovery.database.enabled = false</code> or NUBE Services
      * can't connect to database, this properties are default used to connect to discovery
      * service for high availability.
      *

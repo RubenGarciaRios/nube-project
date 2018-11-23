@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 16/11/18 15:02
+ *  Last modified 24/11/18 2:06
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -69,7 +69,6 @@ public class DefaultSSLConfiguration
     @Bean( "sslContextBuilder" )
     @ConditionalOnMissingBean
     public SSLContextBuilder simpleSSLContextBuilder( NubeSSLProperties nubeSSLProperties ) {
-
         _LOG.info( " - Generating SimpleSSLContextBuilder bean..." );
         SSLContextBuilder simpleSSLContextBuilder = new SimpleSSLContextBuilder( nubeSSLProperties );
         _LOG.info( " - SimpleSSLContextBuilder bean has been created successfully: {}", simpleSSLContextBuilder );

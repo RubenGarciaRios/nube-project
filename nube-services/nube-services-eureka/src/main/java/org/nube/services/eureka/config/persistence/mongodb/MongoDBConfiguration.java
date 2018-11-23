@@ -1,14 +1,14 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 22/11/18 15:49
+ *  Last modified 24/11/18 2:06
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.services.eureka.config.persistence.mongodb;
 
 import com.mongodb.MongoClient;
-import org.nube.core.base.data.provider.mongodb.old.AbstractMongoAdapter;
-import org.nube.core.base.data.provider.mongodb.old.MongoAdapter;
+import org.nube.core.base.config.data.provider.mongodb.old.AbstractMongoAdapter;
+import org.nube.core.base.config.data.provider.mongodb.old.MongoAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;

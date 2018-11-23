@@ -1,10 +1,10 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 22/11/18 15:49
+ *  Last modified 24/11/18 2:06
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.base.data.provider.mongodb.old;
+package org.nube.core.base.config.data.provider.mongodb.old;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;

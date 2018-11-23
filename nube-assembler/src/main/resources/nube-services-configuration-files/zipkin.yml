@@ -69,7 +69,7 @@ logging:
 ###################################################################################
 ### D I S C O V E R Y   S E R V E R   S E R V I C E   C O N F I G U R A T I O N ###
 ###################################################################################
-# Discovery cluster configuration.
+# Discovery discovery configuration.
 discovery-service-cluster:
   # Need DNS hostname resolver, or edit host files and add all hostnames:
   # - WINDOWS: c:\Windows\System32\Drivers\etc\hosts
@@ -107,10 +107,10 @@ eureka:
     region: es-madrid
     service-url:
       #defaultZone: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone1.hostname}:${discovery-service-cluster.zone1.eureka-port}/eureka/,[{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone2.hostname}:${discovery-service-cluster.zone2.eureka-port}/eureka/,[{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone3.hostname}:${discovery-service-cluster.zone3.eureka-port}/eureka/,[{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone4.hostname}:${discovery-service-cluster.zone4.eureka-port}/eureka/
-      zone1: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone1.hostname}:${discovery-service-cluster.zone1.eureka-port}/eureka/
-      zone2: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone2.hostname}:${discovery-service-cluster.zone2.eureka-port}/eureka/
-      zone3: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone3.hostname}:${discovery-service-cluster.zone3.eureka-port}/eureka/
-      zone4: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-cluster.zone4.hostname}:${discovery-service-cluster.zone4.eureka-port}/eureka/
+      zone1: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-discovery.zone1.hostname}:${discovery-service-discovery.zone1.eureka-port}/eureka/
+      zone2: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-discovery.zone2.hostname}:${discovery-service-discovery.zone2.eureka-port}/eureka/
+      zone3: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-discovery.zone3.hostname}:${discovery-service-discovery.zone3.eureka-port}/eureka/
+      zone4: [{nube.eureka-discovery-service.transport-protocol}]://[{nube.eureka-discovery-service.security.username}]:[{nube.eureka-discovery-service.security.password}]@${discovery-service-discovery.zone4.hostname}:${discovery-service-discovery.zone4.eureka-port}/eureka/
     availability-zones:
       es-madrid: zone1,zone2,zone3,zone4
     prefer-same-zone-eureka: true
@@ -145,10 +145,10 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone1.hostname}
+    hostname: ${discovery-service-discovery.zone1.hostname}
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.zone1.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.zone1.zone}}
       user: [{nube.zipkin-service.security.username}]
       username: [{nube.zipkin-service.security.username}]
       password: [{nube.zipkin-service.security.password}]
@@ -159,10 +159,10 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone2.hostname}
+    hostname: ${discovery-service-discovery.zone2.hostname}
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.zone2.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.zone2.zone}}
       user: [{nube.zipkin-service.security.username}]
       username: [{nube.zipkin-service.security.username}]
       password: [{nube.zipkin-service.security.password}]
@@ -173,10 +173,10 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone3.hostname}
+    hostname: ${discovery-service-discovery.zone3.hostname}
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.zone3.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.zone3.zone}}
       user: [{nube.zipkin-service.security.username}]
       username: [{nube.zipkin-service.security.username}]
       password: [{nube.zipkin-service.security.password}]
@@ -187,10 +187,10 @@ spring:
 # Discovery Server configuration
 eureka:
   instance:
-    hostname: ${discovery-service-cluster.zone4.hostname}
+    hostname: ${discovery-service-discovery.zone4.hostname}
     metadata-map:
       port: ${server.port}
-      zone: ${EUREKA_ZONE:${discovery-service-cluster.zone4.zone}}
+      zone: ${EUREKA_ZONE:${discovery-service-discovery.zone4.zone}}
       user: [{nube.zipkin-service.security.username}]
       username: [{nube.zipkin-service.security.username}]
       password: [{nube.zipkin-service.security.password}]

@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 13:25
+ *  Last modified 27/11/18 23:52
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -140,7 +140,7 @@ public final class RandomStringGenerator
         /**
          * Instantiates a new Builder.
          */
-        Builder( ) {
+        public Builder( ) {
             acceptedCharacters = ALPHANUMERIC.toCharArray( );
             length = DEFAULT_LENGTH;
             groupEnabled = DEFAULT_GROUP_ENABLED;

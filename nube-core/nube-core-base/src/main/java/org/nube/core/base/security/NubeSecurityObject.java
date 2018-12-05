@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 4/12/18 23:19
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -10,15 +10,29 @@ import org.nube.core.base.NubeObject;
 import org.nube.core.base.NubeObjectType;
 
 /**
- * The interface Core security object.
+ * NUBE Data Object.
+ * Indicates that any class that extends from it, belongs to the grouping of object type:
+ * {@link NubeObjectType#SECURITY}
+ * <p>
+ * Security Management, improvements and any realated object with security in general.
  *
- * @see NubeObject
+ * @author Rubén García Ríos
  */
-public interface NubeSecurityObject
+public abstract class NubeSecurityObject
         extends NubeObject {
+    private static final long serialVersionUID = 2529095755340823259L;
+
     /**
-     * INFO constant.
-     * @see NubeObject#INFO
+     * Instantiates a new Nube security object.
      */
-    Info INFO = new Info( NubeObjectType.SECURITY );
+    protected NubeSecurityObject( )
+        { super( NubeObjectType.SECURITY ); }
+
+    /**
+     * Gets serial version uid.
+     *
+     * @return the serial version uid
+     */
+    public static long getSerialVersionUID( )
+        { return serialVersionUID; }
 }

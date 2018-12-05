@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 28/11/18 19:43
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -163,11 +163,11 @@ public class Roles implements NubeDomainObject {
 
     @Override
     public String toString( ) {
-        return "Roles{" +
-                "id='" + id + '\'' +
-                ", enabled=" + enabled +
-                ", active=" + active +
-                ", privileges=" + privileges +
-                '}';
+        return this.getClass( ).getName( ) +
+               "{id='" + id + '\'' +
+               ", enabled=" + enabled +
+               ", active=" + active +
+               ", privileges=" + privileges + '}' +
+               META_DATA;
     }
 }

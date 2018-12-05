@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 27/11/18 23:52
+ *  Last modified 28/11/18 19:43
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -300,13 +300,13 @@ public final class RandomStringGenerator
 
         @Override
         public String toString( ) {
-            return this.getClass( ).getName( ) + "{" +
-                    "acceptedCharacters=" + Arrays.toString( acceptedCharacters ) +
-                    ", length=" + length +
-                    ", groupEnabled=" + groupEnabled +
-                    ", groupSeparator=" + groupSeparator +
-                    ", groupLength=" + groupLength +
-                    ", random=" + random + '}';
+            return this.getClass( ).getName( ) +
+                   "{acceptedCharacters=" + Arrays.toString( acceptedCharacters ) +
+                   ", length=" + length +
+                   ", groupEnabled=" + groupEnabled +
+                   ", groupSeparator=" + groupSeparator +
+                   ", groupLength=" + groupLength +
+                   ", random=" + random + '}';
         }
         //formatter:on
     }
@@ -349,13 +349,13 @@ public final class RandomStringGenerator
 
     @Override
     public String toString( ) {
-        return this.getClass( ).getName( ) + "{" +
-                "CHARACTERS=" + Arrays.toString( CHARACTERS ) +
-                ", LENGTH=" + LENGTH +
-                ", GROUP_ENABLED=" + GROUP_ENABLED +
-                ", GROUP_SEPARATOR=" + GROUP_SEPARATOR +
-                ", GROUP_LENGTH=" + GROUP_LENGTH +
-                ", RANDOM=" + RANDOM + '}';
+        return this.getClass( ).getName( ) +
+               "{CHARACTERS=" + Arrays.toString( CHARACTERS ) +
+               ", LENGTH=" + LENGTH +
+               ", GROUP_ENABLED=" + GROUP_ENABLED +
+               ", GROUP_SEPARATOR=" + GROUP_SEPARATOR +
+               ", GROUP_LENGTH=" + GROUP_LENGTH +
+               ", RANDOM=" + RANDOM + '}';
     }
     //formatter:on
 }

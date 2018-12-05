@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 4/12/18 23:11
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
  *
  * @see NubeObject
  */
-public enum ErrorCodes implements NubeObject {
+public enum ErrorCodes {
     /**
      * The Unknown exception.
      */

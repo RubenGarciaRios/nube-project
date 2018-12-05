@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 20:25
+ *  Last modified 5/12/18 0:56
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -18,4 +18,5 @@ import org.nube.core.security.oauth2.provider.code.domain.MongoOAuth2Authorizati
  */
 @MongoRepository
 public interface OAuth2AuthorizationCodeMongoRepository
-        extends org.springframework.data.mongodb.repository.MongoRepository { }
+        extends org.springframework.data.mongodb.repository.MongoRepository < MongoOAuth2AuthorizationCode, String > {
+}

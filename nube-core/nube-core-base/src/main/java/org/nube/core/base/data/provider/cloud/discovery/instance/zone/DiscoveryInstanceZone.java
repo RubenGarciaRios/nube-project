@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 15:08
+ *  Last modified 4/12/18 22:16
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -13,77 +13,117 @@ import org.nube.core.base.data.NubeDataObject;
  *
  * @author Rubén García Ríos
  */
-public interface DiscoveryInstanceZone
+public abstract class DiscoveryInstanceZone
         extends NubeDataObject {
+    private static final long serialVersionUID = -7214588509682807999L;
+    // CONSTANTS.
+    /**
+     * NAME constant.
+     */
+    public static final String NAME = "name";
+    /**
+     * IP constant.
+     */
+    public static final String IP = "ip";
+    /**
+     * DNS constant.
+     */
+    public static final String DNS = "dns";
+    /**
+     * DISCOVERY_PORT constant.
+     */
+    public static final String DISCOVERY_PORT = "discoveryPort";
+    /**
+     * ENABLED constant.
+     */
+    public static final String ENABLED = "enabled";
+    // ATTRIBUTES.
+    private String id;
+    private String name;
+    private String ip;
+    private String dns;
+    private int discoveryPort;
+    private boolean enabled;
+
     /**
      * Gets id.
      *
      * @return the id
      */
-    String getId( );
+    public String getId( )
+        { return id; }
 
     /**
      * Sets id.
      *
      * @param id the id
      */
-    void setId( String id );
+    public void setId( final String id )
+        { this.id = id; }
 
     /**
      * Gets name.
      *
      * @return the name
      */
-    String getName( );
+    public String getName( )
+        { return name; }
 
     /**
      * Sets name.
      *
      * @param name the name
      */
-    void setName( String name );
+    public void setName( final String name )
+        { this.name = name; }
 
     /**
      * Gets discovery instance ip address.
      *
      * @return the ip
      */
-    String getIp( );
+    public String getIp( )
+        { return ip; }
 
     /**
      * Sets discovery instance ip address.
      *
      * @param ip the ip
      */
-    void setIp( String ip );
+    public void setIp( final String ip )
+        { this.ip = ip; }
 
     /**
      * Gets discovery instance dns address.
      *
      * @return the dns
      */
-    String getDns( );
+    public String getDns( )
+        { return dns; }
 
     /**
      * Sets discovery instance dns address.
      *
      * @param dns the dns
      */
-    void setDns( String dns );
+    public void setDns( final String dns )
+        { this.dns = dns; }
 
     /**
      * Gets discovery instance port.
      *
      * @return the discovery port
      */
-    int getDiscoveryPort( );
+    public int getDiscoveryPort( )
+        { return discoveryPort; }
 
     /**
      * Sets discovery instance port.
      *
      * @param discoveryPort the discovery port
      */
-    void setDiscoveryPort( int discoveryPort );
+    public void setDiscoveryPort( final int discoveryPort )
+        { this.discoveryPort = discoveryPort; }
 
     /**
      * Is enabled boolean.
@@ -91,13 +131,27 @@ public interface DiscoveryInstanceZone
      *
      * @return the boolean
      */
-    boolean isEnabled( );
+    public boolean isEnabled( )
+        { return enabled; }
 
     /**
-     * Sets enabled.
-     * Enable/disable Zone.
+     * Enable Zone.
      *
-     * @param enabled the enabled
      */
-    void setEnabled( boolean enabled );
+    public void enabled( )
+        { this.enabled = true; }
+    /**
+     * Disable Zone.
+     *
+     */
+    public void disable( )
+        { this.enabled = false; }
+
+    /**
+     * Gets serial version uid.
+     *
+     * @return the serial version uid
+     */
+    public static long getSerialVersionUID( )
+    { return serialVersionUID; }
 }

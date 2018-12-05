@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 5/12/18 1:49
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -11,7 +11,6 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -20,7 +19,8 @@ import java.util.Objects;
  * The type User accounts.
  */
 @Document( collection = "userAccounts" )
-public class UserAccounts implements Serializable, Cloneable {
+public class UserAccounts
+        implements NubeDomainObject {
     private static final long serialVersionUID = -344502756189120672L;
     @Id
     private String id;
@@ -399,18 +399,18 @@ public class UserAccounts implements Serializable, Cloneable {
 
     @Override
     public String toString( ) {
-        return "UserAccounts{" +
-                "id='" + id + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", locked=" + locked +
-                ", expired=" + expired +
-                ", reset=" + reset +
-                ", roles=" + roles +
-                ", userProfile=" + userProfile +
-                ", creationDate=" + creationDate +
-                ", expirationDate=" + expirationDate +
-                '}';
+        return this.getClass( ).getName( ) +
+               "{id='" + id + '\'' +
+               ", email='" + email + '\'' +
+               ", password='" + password + '\'' +
+               ", enabled=" + enabled +
+               ", locked=" + locked +
+               ", expired=" + expired +
+               ", reset=" + reset +
+               ", roles=" + roles +
+               ", userProfile=" + userProfile +
+               ", creationDate=" + creationDate +
+               ", expirationDate=" + expirationDate + '}' +
+               META_DATA;
     }
 }

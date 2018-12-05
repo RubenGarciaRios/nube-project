@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 28/11/18 19:43
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -29,10 +29,6 @@ public class DefaultConfigurationIncludeSelector
     }
 
     @Override
-    public String toString( ) {
-        return "DefaultConfigurationIncludeSelector{" +
-                "_LOG=" + _LOG +
-                ", defaultClasses=" + defaultClasses +
-                '}';
-    }
+    public String toString( )
+        { return this.getClass( ).getName( ) + "{defaultClasses=" + defaultClasses + '}'; }
 }

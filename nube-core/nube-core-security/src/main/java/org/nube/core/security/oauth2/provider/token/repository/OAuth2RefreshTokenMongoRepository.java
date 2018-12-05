@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 20:25
+ *  Last modified 5/12/18 1:44
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -15,12 +15,10 @@ import java.util.Optional;
  * OAuth2 Refresh Token MongoDB repository.
  *
  * @author Rubén García Ríos
- * @see org.springframework.data.mongodb.repository.MongoRepository
- * @see MongoOAuth2RefreshToken
  */
 @MongoRepository
 public interface OAuth2RefreshTokenMongoRepository
-        extends org.springframework.data.mongodb.repository.MongoRepository {
+        extends org.springframework.data.mongodb.repository.MongoRepository< MongoOAuth2RefreshToken, String > {
     /**
      * Find by token id optional.
      *

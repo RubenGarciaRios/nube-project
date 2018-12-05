@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 20:25
+ *  Last modified 5/12/18 1:44
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -14,9 +14,8 @@ import org.nube.core.security.oauth2.provider.token.domain.MongoOAuth2ClientToke
  * OAuth2 Client Token MongoDB repository.
  *
  * @author Rubén García Ríos
- * @see org.springframework.data.mongodb.repository.MongoRepository
- * @see MongoOAuth2ClientToken
  */
 @MongoRepository
 public interface OAuth2ClientTokenMongoRepository
-        extends org.springframework.data.mongodb.repository.MongoRepository { }
+        extends org.springframework.data.mongodb.repository.MongoRepository< MongoOAuth2ClientToken, String > {
+}

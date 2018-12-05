@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 27/11/18 23:52
+ *  Last modified 4/12/18 23:10
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -18,27 +18,27 @@ import java.util.Collection;
 import java.util.Objects;
 
 /**
- * NUBE Discovery Cluster Properties.
- * Used by core configuration module for disovery discovery configuration.
+ * NUBE Discovery Instance Properties.
+ * Used by core configuration module for disovery instance configuration.
  *
  * @author Rubén García Ríos
  */
 @ConfigurationProperties( prefix =
-        NubeDiscoveryClusterProperties.NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX )
-public class NubeDiscoveryClusterProperties
-        implements NubePropertiesObject {
-    private static final Logger _LOG = LogManager.getLogger( NubeDiscoveryClusterProperties.class );
+        NubeDiscoveryInstanceProperties.NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX )
+public class NubeDiscoveryInstanceProperties
+        extends NubePropertiesObject {
+    private static final Logger _LOG = LogManager.getLogger( NubeDiscoveryInstanceProperties.class );
     /**
      * NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX constant.
      */
-    public static final String NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX = "nube.cloud.discovery-discovery";
+    public static final String NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX = "nube.cloud.discovery-instance";
     private static final long serialVersionUID = -4542913480070535272L;
     // ATTRIBUTES.
     private DataBase dataBase;
     private Collection< Region > regions;
 
-    public NubeDiscoveryClusterProperties( ) { }
-    public NubeDiscoveryClusterProperties(
+    public NubeDiscoveryInstanceProperties( ) { }
+    public NubeDiscoveryInstanceProperties(
             final DataBase dataBase,
             final Collection< Region > regions ) {
         this.dataBase = dataBase;
@@ -55,7 +55,7 @@ public class NubeDiscoveryClusterProperties
      * @author Rubén García Ríos.
      */
     public static class DataBase
-            implements NubePropertiesObject {
+            extends NubePropertiesObject {
         private static final Logger _LOG = LogManager.getLogger( DataBase.class );
         private static final long serialVersionUID = 1484876254726430361L;
         // DEFAULT VALUES.
@@ -119,7 +119,7 @@ public class NubeDiscoveryClusterProperties
          * @author Rubén García Ríos
          */
         public static class ServerAddress
-                implements NubePropertiesObject {
+                extends NubePropertiesObject {
             private static final Logger _LOG = LogManager.getLogger( ServerAddress.class );
             private static final long serialVersionUID = -618112279689199266L;
 
@@ -186,8 +186,12 @@ public class NubeDiscoveryClusterProperties
                 { return Objects.hash( getHost( ), getPort( ) ); }
 
             @Override
-            public String toString( )
-                { return "ServerAddress{" + "host='" + host + '\'' + ", port=" + port + '}'; }
+            public String toString( ) {
+                return this.getClass( ).getName( ) +
+                        "{host='" + host + '\'' +
+                        ", port=" + port + '}' +
+                        META_DATA;
+            }
             //formatter:on
         }
 
@@ -323,12 +327,14 @@ public class NubeDiscoveryClusterProperties
 
         @Override
         public String toString( ) {
-            return "DataBase{" + "enabled=" + enabled +
+            return this.getClass( ).getName( ) +
+                   "{enabled=" + enabled +
                    ", provider=" + provider +
                    ", addresses=" + addresses +
                    ", name='" + name + '\'' +
                    ", username='" + username + '\'' +
-                   ", password='" + password + '\'' + '}';
+                   ", password='" + password + "'}" +
+                   META_DATA;
         }
         //@formatter:on
     }
@@ -344,7 +350,7 @@ public class NubeDiscoveryClusterProperties
      * @author Rubén García Ríos
      */
     public static class Region
-            implements NubePropertiesObject {
+            extends NubePropertiesObject {
         private static final Logger _LOG = LogManager.getLogger( Region.class );
         private static final long serialVersionUID = -1968683883215746298L;
         // ATTRIBUTES.
@@ -367,7 +373,7 @@ public class NubeDiscoveryClusterProperties
          * @author Rubén García Ríos
          */
         public static class Zone
-                implements NubePropertiesObject {
+                extends NubePropertiesObject {
             private static final Logger _LOG = LogManager.getLogger( Zone.class );
             private static final long serialVersionUID = -2602112810157402198L;
             // DEFAULT VALUES.
@@ -507,12 +513,13 @@ public class NubeDiscoveryClusterProperties
 
             @Override
             public String toString( ) {
-                return "Zone{" +
-                     "name='" + name + '\'' +
+                return this.getClass( ).getName( ) +
+                     "{name='" + name + '\'' +
                      ", ip='" + ip + '\'' +
                      ", dns='" + dns + '\'' +
                      ", discoveryPort=" + discoveryPort +
-                     ", enabled=" + enabled + '}';
+                     ", enabled=" + enabled + '}' +
+                     META_DATA;
             }
             //@formatter:on
         }
@@ -572,8 +579,12 @@ public class NubeDiscoveryClusterProperties
             { return Objects.hash( getName( ), getZones( ) ); }
 
         @Override
-        public String toString( )
-            { return "Region{" + "name='" + name + '\'' + ", zones=" + zones + '}'; }
+        public String toString( ) {
+            return this.getClass( ).getName( ) +
+                   "{name='" + name + '\'' +
+                   ", zones=" + zones + '}' +
+                   META_DATA;
+        }
         //@formatter:on
     }
 
@@ -621,8 +632,8 @@ public class NubeDiscoveryClusterProperties
     @Override
     public boolean equals( final Object o ) {
         if ( this == o ) return true;
-        if ( !( o instanceof NubeDiscoveryClusterProperties ) ) return false;
-        final NubeDiscoveryClusterProperties that = ( NubeDiscoveryClusterProperties ) o;
+        if ( !( o instanceof NubeDiscoveryInstanceProperties ) ) return false;
+        final NubeDiscoveryInstanceProperties that = ( NubeDiscoveryInstanceProperties ) o;
         return Objects.equals( getDataBase( ), that.getDataBase( ) )
                && Objects.equals( getRegions( ), that.getRegions( ) );
     }
@@ -633,7 +644,10 @@ public class NubeDiscoveryClusterProperties
 
     @Override
     public String toString( ) {
-        return "NubeDiscoveryClusterProperties{" + "dataBase=" + dataBase + ", regions=" + regions + '}';
+        return this.getClass( ).getName( ) +
+                "{dataBase=" + dataBase +
+                ", regions=" + regions + '}' +
+                META_DATA;
     }
     //@formatter:on
 }

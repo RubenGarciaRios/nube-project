@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 28/11/18 19:04
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -12,8 +12,8 @@ import org.nube.core.base.NubeObjectType;
 public interface NubeCloudObject
         extends NubeObject {
     /**
-     * INFO constant.
-     * @see NubeObject#INFO
+     * META_DATA constant.
+     * @see NubeObject#META_DATA
      */
-    Info INFO = new Info( NubeObjectType.CLOUD );
+    MetaData META_DATA = new MetaData( NubeObjectType.CLOUD );
 }

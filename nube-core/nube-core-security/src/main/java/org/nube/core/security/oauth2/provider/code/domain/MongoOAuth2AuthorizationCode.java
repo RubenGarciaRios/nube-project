@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 5/12/18 1:29
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -14,124 +14,89 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import java.util.Objects;
 
 /**
- * The type OAuth 2 authorization code.
+ * OAuth2 Authorization Code for management by MongoDB Provider.
+ * <p>
+ * MongoDB referenced document name: {@code oauth2AuthorizationCodes}
  *
- * @see OAuth2AuthorizationCode
+ * @author Rubén García Ríos
  */
 @Document( collection = "oauth2AuthorizationCodes" )
-public class MongoOAuth2AuthorizationCode implements OAuth2AuthorizationCode {
-    private static final long serialVersionUID = 2254437867106564785L;
-
+public class MongoOAuth2AuthorizationCode
+        extends OAuth2AuthorizationCode {
+    private static final long serialVersionUID = -3961644135258138139L;
+    // CONSTANTS.
     /**
-     * The constant CODE.
+     * CODE constant, indicates the name of field in MongoDB document.
      */
     public static final String CODE = "code";
     /**
-     * The constant AUTHENTICATION.
+     * AUTHENTICATION constant, indicates the name of field in MongoDB document.
      */
     public static final String AUTHENTICATION = "authentication";
+    // ATTRIBUTES.
     //////////////////
     @Indexed
     private String id;
     //////////////////
-    private String code;
-    private OAuth2Authentication authentication;
-
+    //@formatter:off
     /**
-     * Instantiates a new O auth 2 authorization code.
+     * Instantiates a new Mongo OAuth2 Authorization Code.
      */
-    public MongoOAuth2AuthorizationCode( ) {
-    }
+    public MongoOAuth2AuthorizationCode( ) { }
 
     /**
-     * Instantiates a new O auth 2 authorization code.
+     * Instantiates a new Mongo OAuth2 Authorization Code.
      *
      * @param code           the code
      * @param authentication the authentication
      */
-    public MongoOAuth2AuthorizationCode( String code, OAuth2Authentication authentication ) {
-        this.code = code;
-        this.authentication = authentication;
-    }
+    public MongoOAuth2AuthorizationCode( String code, OAuth2Authentication authentication )
+        { super( code, authentication ); }
 
     /**
-     * Instantiates a new O auth 2 authorization code.
+     * Instantiates a new Mongo OAuth2 Authorization Code.
      *
      * @param oAuth2AuthorizationCode the o auth 2 authorization code
      */
-    public MongoOAuth2AuthorizationCode( OAuth2AuthorizationCode oAuth2AuthorizationCode ) {
-        this.code = oAuth2AuthorizationCode.getCode( );
-        this.authentication = oAuth2AuthorizationCode.getAuthentication( );
-    }
-
-    /**
-     * Gets serial version uid.
-     *
-     * @return the serial version uid
-     */
-    public static long getSerialVersionUID( ) {
-        return serialVersionUID;
-    }
+    public MongoOAuth2AuthorizationCode( OAuth2AuthorizationCode oAuth2AuthorizationCode )
+        { super( oAuth2AuthorizationCode ); }
 
     /**
      * Gets id.
      *
      * @return the id
      */
-    public String getId( ) {
-        return id;
-    }
+    public String getId( )
+        { return id; }
 
     /**
      * Sets id.
      *
      * @param id the id
      */
-    public void setId( String id ) {
-        this.id = id;
-    }
+    public void setId( String id )
+        { this.id = id; }
+
+    /**
+     * Gets serial version uid.
+     *
+     * @return the serial version uid
+     */
+    public static long getSerialVersionUID( )
+        { return serialVersionUID; }
 
     @Override
-    public String getCode( ) {
-        return code;
-    }
-
-    @Override
-    public void setCode( String code ) {
-        this.code = code;
-    }
-
-    @Override
-    public OAuth2Authentication getAuthentication( ) {
-        return authentication;
-    }
-
-    @Override
-    public void setAuthentication( OAuth2Authentication authentication ) {
-        this.authentication = authentication;
-    }
-
-    @Override
-    public boolean equals( Object o ) {
+    public boolean equals( final Object o ) {
         if ( this == o ) return true;
         if ( !( o instanceof MongoOAuth2AuthorizationCode ) ) return false;
-        MongoOAuth2AuthorizationCode that = ( MongoOAuth2AuthorizationCode ) o;
-        return Objects.equals( getId( ), that.getId( ) ) &&
-                Objects.equals( getCode( ), that.getCode( ) ) &&
-                Objects.equals( getAuthentication( ), that.getAuthentication( ) );
+        if ( !super.equals( o ) ) return false;
+        final MongoOAuth2AuthorizationCode that = ( MongoOAuth2AuthorizationCode ) o;
+        return Objects.equals( getId( ), that.getId( ) );
     }
 
     @Override
     public int hashCode( ) {
-        return Objects.hash( getId( ), getCode( ), getAuthentication( ) );
+        return Objects.hash( super.hashCode( ), getId( ) );
     }
-
-    @Override
-    public String toString( ) {
-        return "MongoOAuth2AuthorizationCode{" +
-                "id='" + id + '\'' +
-                ", code='" + code + '\'' +
-                ", authentication=" + authentication +
-                '}';
-    }
+    //@formatter:on
 }

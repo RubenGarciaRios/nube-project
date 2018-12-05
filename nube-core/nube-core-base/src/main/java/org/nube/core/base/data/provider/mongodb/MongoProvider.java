@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 27/11/18 23:58
+ *  Last modified 1/12/18 13:53
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -55,6 +55,15 @@ public class MongoProvider
     }
 
     /**
+     * Builder.
+     * Returns a new Instance of Mongo Builder {@link MongoBuilder} ready to use.
+     *
+     * @return the mongo client
+     */
+    public static MongoBuilder builder( )
+        { return new MongoBuilder( ); }
+
+    /**
      * Mongo Client.
      *
      * @return the mongo client
@@ -98,7 +107,7 @@ public class MongoProvider
          */
         public MongoBuilder( ) {
             serverAddresses = new ArrayList< >( );
-            serverAddresses.add( ( MongoServerAddress ) serverAddress( ) );
+            serverAddresses.add( ( MongoServerAddress ) MongoBuilder.serverAddress( ) );
             hasDefaultServerAddress = true;
             credential = new MongoCredential( );
         }
@@ -155,12 +164,23 @@ public class MongoProvider
             return this;
         }
 
-        @Override
-        public MongoBuilder.ServerAddress serverAddress( )
+        /**
+         * Server Address.
+         * Returns a new Instance of Server Adress {@link MongoServerAddress} ready to use.
+         *
+         * @return Server Address
+         */
+        public static MongoBuilder.ServerAddress serverAddress( )
             { return new MongoServerAddress( ); }
 
-        @Override
-        public Credential credential( )
+
+        /**
+         * Credential credential.
+         * Returns a new Instance of Credential {@link MongoCredential} ready to use.
+         *
+         * @return Credential
+         */
+        public static Credential credential( )
             { return new MongoCredential( ); }
 
         private void clearDefaultServerAdress( ) {
@@ -257,9 +277,10 @@ public class MongoProvider
 
             @Override
             public String toString( ) {
-                return this.getClass( ).getName( ) + "{" +
-                        "host='" + host + '\'' +
-                        ", port=" + port + '}';
+                return this.getClass( ).getName( ) +
+                       "{host='" + host + '\'' +
+                       ", port=" + port + '}' +
+                       META_DATA;
             }
         }
 
@@ -351,10 +372,11 @@ public class MongoProvider
 
             @Override
             public String toString( ) {
-                return this.getClass( ).getName( ) + "{" +
-                        "database='" + database + '\'' +
-                        ", username='" + username + '\'' +
-                        ", password=" + Arrays.toString( password ) + '}';
+                return this.getClass( ).getName( ) +
+                       "{database='" + database + '\'' +
+                       ", username='" + username + '\'' +
+                       ", password=" + Arrays.toString( password ) + '}' +
+                       META_DATA;
             }
         }
 
@@ -374,10 +396,11 @@ public class MongoProvider
 
         @Override
         public String toString( ) {
-            return this.getClass( ).getName( ) + "{" +
-                    "serverAddresses=" + serverAddresses +
-                    ", credential=" + credential +
-                    ", hasDefaultServerAddress=" + hasDefaultServerAddress + '}';
+            return this.getClass( ).getName( ) +
+                   "{serverAddresses=" + serverAddresses +
+                   ", credential=" + credential +
+                   ", hasDefaultServerAddress=" + hasDefaultServerAddress + '}' +
+                   META_DATA;
         }
     }
 
@@ -392,14 +415,14 @@ public class MongoProvider
     private void provide(
             final List< ServerAddress > serverAddresses,
             final MongoCredential mongoCredential ) {
-        _LOG.debug( "Recieved argument of type [{}] serverAddresses with value: {}",
+        _LOG.debug( "Recieved argument 'serverAddresses' of type [{}] with value: {}",
                     serverAddresses.getClass( ),
                     serverAddresses );
-        _LOG.debug( "Recieved argument of type [{}] mongoCredential with value: {}",
+        _LOG.debug( "Recieved argument 'mongoCredential' of type [{}] with value: {}",
                     mongoCredential.getClass( ),
                     mongoCredential );
         if ( serverAddresses.isEmpty( ) ) {
-            _LOG.error( "The argument of type [{}] serverAddresses must not be null: {}",
+            _LOG.error( "The argument 'serverAddresses' of type [{}] must not be null: {}",
                         serverAddresses.getClass( ),
                         serverAddresses );
             return;
@@ -414,7 +437,7 @@ public class MongoProvider
             return;
         }
         // Instance of MongoDB Client.
-        _LOG.debug( "Providing a new instance of [{}]", mongoClient.getClass( ).getName( ) );
+        _LOG.debug( "Providing a new instance of [{}]", MongoClient.class.getName( ) );
         mongoClient = new MongoClient(
                 serverAddresses,
                 mongoCredential,
@@ -433,7 +456,7 @@ public class MongoProvider
                     MongoDbFactory.class.getName( ),
                     mongoDbFactory );
         // Instance of MongoDB Template.
-        _LOG.debug( "Providing a new instance of [{}]", mongoTemplate.getClass( ).getName( ) );
+        _LOG.debug( "Providing a new instance of [{}]", MongoTemplate.class.getName( ) );
         mongoTemplate = new MongoTemplate( mongoDbFactory );
         _LOG.debug( "The [{}] instance has been provided successfully: {}",
                     MongoTemplate.class.getName( ),
@@ -456,9 +479,10 @@ public class MongoProvider
 
     @Override
     public String toString( ) {
-        return this.getClass( ).getName( ) + "{" +
-                "mongoClient=" + mongoClient +
-                ", mongoDbFactory=" + mongoDbFactory +
-                ", mongoTemplate=" + mongoTemplate + '}';
+        return this.getClass( ).getName( ) +
+               "{mongoClient=" + mongoClient +
+               ", mongoDbFactory=" + mongoDbFactory +
+               ", mongoTemplate=" + mongoTemplate + '}' +
+                META_DATA;
     }
 }

@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 20:25
+ *  Last modified 5/12/18 0:15
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -14,9 +14,9 @@ import org.nube.core.security.oauth2.provider.approval.domain.MongoOAuth2Approva
  * OAuth 2 Approvals MongoDB repository.
  *
  * @author Rubén García Ríos
- * @see org.springframework.data.mongodb.repository.MongoRepository
- * @see MongoOAuth2Approvals
  */
 @MongoRepository
 public interface OAuth2ApprovalsMongoRepository
-        extends org.springframework.data.mongodb.repository.MongoRepository { }
+        extends org.springframework.data.mongodb.repository.MongoRepository< MongoOAuth2Approvals, String > {
+
+}

@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 5/12/18 1:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -14,52 +14,52 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * The type OAuth 2 approvals.
+ * OAuth2 Approvals for management by MongoDB Provider.
+ * <p>
+ * MongoDB referenced document name: {@code oauth2Approvals}
+ *
+ * @author Rubén García Ríos
  */
 @Document( collection = "oauth2Approvals" )
-public class MongoOAuth2Approvals implements OAuth2Approvals {
+public class MongoOAuth2Approvals
+        extends OAuth2Approvals {
     private static final long serialVersionUID = -4020704363869562539L;
-
+    // CONSTANTS.
     /**
-     * The constant USER_ID.
+     * USER_ID constant, indicates the name of field in MongoDB document.
      */
     public static final String USER_ID = "userId";
     /**
-     * The constant CLIENT_ID.
+     * CLIENT_ID constant, indicates the name of field in MongoDB document.
      */
     public static final String CLIENT_ID = "clientId";
     /**
-     * The constant SCOPE.
+     * SCOPE constant, indicates the name of field in MongoDB document.
      */
     public static final String SCOPE = "scope";
     /**
-     * The constant STATUS_CODE.
+     * STATUS_CODE constant, indicates the name of field in MongoDB document.
      */
     public static final String STATUS_CODE = "statusCode";
     /**
-     * The constant EXPIRES_AT.
+     * EXPIRES_AT constant, indicates the name of field in MongoDB document.
      */
     public static final String EXPIRES_AT = "expiresAt";
     /**
-     * The constant LAST_MODIFIED_AT.
+     * LAST_MODIFIED_AT constant, indicates the name of field in MongoDB document.
      */
     public static final String LAST_MODIFIED_AT = "lastModifiedAt";
+    // ATTRIBUTES.
     //////////////////
     @Indexed
     private String id;
     //////////////////
-    private String userId;
-    private String clientId;
-    private String scope;
-    private String statusCode;
-    private Date expiresAt;
-    private Date lastModifiedAt;
-
+    //@formatter:off
     /**
-     * Instantiates a new O auth 2 approvals.
+     * Instantiates a new Mongo OAuth2 Approvals.
      */
-    public MongoOAuth2Approvals( ) {
-    }
+    public MongoOAuth2Approvals( )
+        { super( ); }
 
     /**
      * Instantiates a new O auth 2 approvals.
@@ -77,28 +77,22 @@ public class MongoOAuth2Approvals implements OAuth2Approvals {
             String scope,
             String statusCode,
             Date expiresAt,
-            Date lastModifiedAt ) {
-        this.userId = userId;
-        this.clientId = clientId;
-        this.scope = scope;
-        this.statusCode = statusCode;
-        this.expiresAt = expiresAt;
-        this.lastModifiedAt = lastModifiedAt;
-    }
+            Date lastModifiedAt )
+        { super( userId, clientId, scope, statusCode, expiresAt, lastModifiedAt ); }
 
     /**
-     * Instantiates a new O auth 2 approvals.
+     * Instantiates a new Mongo OAuth2 Approvals.
      *
      * @param oAuth2Approvals the o auth 2 approvals
      */
     public MongoOAuth2Approvals(
             OAuth2Approvals oAuth2Approvals ) {
-        this.userId = oAuth2Approvals.getUserId( );
-        this.clientId = oAuth2Approvals.getClientId( );
-        this.scope = oAuth2Approvals.getScope( );
-        this.statusCode = oAuth2Approvals.getStatusCode( );
-        this.expiresAt = oAuth2Approvals.getExpiresAt( );
-        this.lastModifiedAt = oAuth2Approvals.getLastModifiedAt( );
+        super( oAuth2Approvals.getUserId( ),
+               oAuth2Approvals.getClientId( ),
+               oAuth2Approvals.getScope( ),
+               oAuth2Approvals.getStatusCode( ),
+               oAuth2Approvals.getExpiresAt( ),
+               oAuth2Approvals.getLastModifiedAt( ) );
     }
 
     /**
@@ -119,111 +113,17 @@ public class MongoOAuth2Approvals implements OAuth2Approvals {
         return id;
     }
 
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
-    public void setId( String id ) {
-        this.id = id;
-    }
-
     @Override
-    public String getUserId( ) {
-        return userId;
-    }
-
-    @Override
-    public void setUserId( String userId ) {
-        this.userId = userId;
-    }
-
-    @Override
-    public String getClientId( ) {
-        return clientId;
-    }
-
-    @Override
-    public void setClientId( String clientId ) {
-        this.clientId = clientId;
-    }
-
-    @Override
-    public String getScope( ) {
-        return scope;
-    }
-
-    @Override
-    public void setScope( String scope ) {
-        this.scope = scope;
-    }
-
-    @Override
-    public String getStatusCode( ) {
-        return statusCode;
-    }
-
-    @Override
-    public void setStatusCode( String statusCode ) {
-        this.statusCode = statusCode;
-    }
-
-    @Override
-    public Date getExpiresAt( ) {
-        return expiresAt;
-    }
-
-    @Override
-    public void setExpiresAt( Date expiresAt ) {
-        this.expiresAt = expiresAt;
-    }
-
-    @Override
-    public Date getLastModifiedAt( ) {
-        return lastModifiedAt;
-    }
-
-    @Override
-    public void setLastModifiedAt( Date lastModifiedAt ) {
-        this.lastModifiedAt = lastModifiedAt;
-    }
-
-    @Override
-    public boolean equals( Object o ) {
+    public boolean equals( final Object o ) {
         if ( this == o ) return true;
         if ( !( o instanceof MongoOAuth2Approvals ) ) return false;
-        MongoOAuth2Approvals that = ( MongoOAuth2Approvals ) o;
-        return Objects.equals( getId( ), that.getId( ) ) &&
-                Objects.equals( getUserId( ), that.getUserId( ) ) &&
-                Objects.equals( getClientId( ), that.getClientId( ) ) &&
-                Objects.equals( getScope( ), that.getScope( ) ) &&
-                Objects.equals( getStatusCode( ), that.getStatusCode( ) ) &&
-                Objects.equals( getExpiresAt( ), that.getExpiresAt( ) ) &&
-                Objects.equals( getLastModifiedAt( ), that.getLastModifiedAt( ) );
+        if ( !super.equals( o ) ) return false;
+        final MongoOAuth2Approvals that = ( MongoOAuth2Approvals ) o;
+        return Objects.equals( getId( ), that.getId( ) );
     }
 
     @Override
-    public int hashCode( ) {
-        return Objects.hash(
-                getId( ),
-                getUserId( ),
-                getClientId( ),
-                getScope( ),
-                getStatusCode( ),
-                getExpiresAt( ),
-                getLastModifiedAt( ) );
-    }
-
-    @Override
-    public String toString( ) {
-        return "MongoOAuth2Approvals{" +
-                "id='" + id + '\'' +
-                ", userId='" + userId + '\'' +
-                ", clientId='" + clientId + '\'' +
-                ", scope='" + scope + '\'' +
-                ", statusCode='" + statusCode + '\'' +
-                ", expiresAt=" + expiresAt +
-                ", lastModifiedAt=" + lastModifiedAt +
-                '}';
-    }
+    public int hashCode( )
+        { return Objects.hash( super.hashCode( ), getId( ) ); }
+    //@formatter:on
 }

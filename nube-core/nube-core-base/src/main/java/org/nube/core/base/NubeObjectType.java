@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 28/11/18 13:52
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -11,6 +11,7 @@ public enum NubeObjectType {
     CONFIGURATION,
     CLOUD,
     DATA,
+    DATA_PROPERTIES,
     SECURITY,
     OTHER,
     UNDEFINED

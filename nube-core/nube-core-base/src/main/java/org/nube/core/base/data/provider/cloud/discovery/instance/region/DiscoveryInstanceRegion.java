@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 15:09
+ *  Last modified 4/12/18 22:17
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -16,35 +16,59 @@ import java.util.Collection;
  *
  * @author Rubén García Ríos
  */
-public interface DiscoveryInstanceRegion
+public abstract class DiscoveryInstanceRegion
         extends NubeDataObject {
+    private static final long serialVersionUID = -1084133934279905049L;
+    // CONSTANTS.
+    /**
+     * NAME constant.
+     */
+    public static final String NAME = "name";
+    /**
+     * ZONES constant.
+     */
+    public static final String ZONES = "zones";
+    /**
+     * ENABLED constant.
+     */
+    public static final String ENABLED = "enabled";
+    // ATTRIBUTES.
+    private String id;
+    private String name;
+    private Collection< DiscoveryInstanceZone > zones;
+    private boolean enabled;
+
     /**
      * Gets id.
      *
      * @return the id
      */
-    String getId( );
+    public String getId( )
+        { return id; }
 
     /**
      * Sets id.
      *
      * @param id the id
      */
-    void setId( String id );
+    public void setId( final String id )
+        { this.id = id; }
 
     /**
      * Gets name.
      *
      * @return the name
      */
-    String getName( );
+    public String getName( )
+        { return name; }
 
     /**
      * Sets name.
      *
      * @param name the name
      */
-    void setName( String name );
+    public void setName( final String name )
+        { this.name = name; }
 
     /**
      * Gets Zones.
@@ -52,14 +76,16 @@ public interface DiscoveryInstanceRegion
      *
      * @return the zones
      */
-    Collection< DiscoveryInstanceZone > getZones( );
+    public Collection< DiscoveryInstanceZone > getZones( )
+        { return zones; }
 
     /**
      * Sets Zones.
      *
      * @param zones the zones
      */
-    void setZones( Collection< DiscoveryInstanceZone > zones );
+    public void setZones( final Collection< DiscoveryInstanceZone > zones )
+        { this.zones = zones; }
 
     /**
      * Is enabled boolean.
@@ -67,13 +93,27 @@ public interface DiscoveryInstanceRegion
      *
      * @return the boolean
      */
-    boolean isEnabled( );
+    public boolean isEnabled( )
+        { return enabled; }
 
     /**
-     * Sets enabled.
-     * Enable/disable Region.
+     * Enable Region.
      *
-     * @param enabled the enabled
      */
-    void setEnabled( boolean enabled );
+    public void enabled( )
+        { this.enabled = true; }
+    /**
+     * Disable Region.
+     *
+     */
+    public void disable( )
+        { this.enabled = false; }
+
+    /**
+     * Gets serial version uid.
+     *
+     * @return the serial version uid
+     */
+    public static long getSerialVersionUID( )
+        { return serialVersionUID; }
 }

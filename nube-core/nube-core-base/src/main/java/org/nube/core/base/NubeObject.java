@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 4/12/18 22:37
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -9,6 +9,7 @@ package org.nube.core.base;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.nube.core.base.utils.RandomStringGenerator;
+import org.nube.core.base.utils.StringParser;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,47 +21,62 @@ import java.util.Objects;
  *
  * @author Rubén García Ríos.
  */
-public interface NubeObject
-        extends Serializable,
+public abstract class NubeObject
+        implements Serializable,
         Cloneable {
+    private static final long serialVersionUID = -1680093483289080721L;
     /**
-     * INFO constant.
+     * META_DATA constant.
      * Have all information of the NUBE Objects instantiation.
      */
-    Info INFO = new Info( NubeObjectType.BASIC );
-    /**
-     * ID constant.
-     * Unique id, useful to check multiple instances of the same object.
-     */
-    String ID = RandomStringGenerator.builder( )
-            .length( 7 )
-            .build( )
-            .generate( );
+    public final MetaData META_DATA;
 
     /**
-     * Info.
+     * Instantiates a new Nube object.
+     */
+    protected NubeObject( )
+        { META_DATA = new MetaData( NubeObjectType.BASIC ); }
+
+    /**
+     * Instantiates a new Nube object.
+     *
+     * @param nubeObjectType the nube object type
+     */
+    protected NubeObject( NubeObjectType nubeObjectType )
+        { META_DATA = new MetaData( nubeObjectType ); }
+
+    /**
+     * MetaData.
      * Used to provide usefull information of NUBE Objects instantiation.
      *
      * @author Rubén García Ríos.
      */
-    class Info {
-        private final static Logger _LOG = LogManager.getLogger( Info.class );
+    public static class MetaData {
+        private final static Logger _LOG = LogManager.getLogger( MetaData.class );
         // CONSTANTS.
         /**
-         * The Type.
+         * ID constant.
+         * Unique id, useful to check multiple instances of the same object.
+         */
+        public final String ID = RandomStringGenerator.builder( )
+                .length( 7 )
+                .build( )
+                .generate( );
+        /**
+         * TYPE constant.
          */
         public final NubeObjectType TYPE;
         /**
-         * The Creation date.
+         * CREATION_DATE constant.
          */
         public final Date CREATION_DATE = new Date( );
 
         /**
-         * Instantiates a new Info.
+         * Instantiates a new MetaData.
          *
          * @param nubeObjectType the nube object type
          */
-        public Info( NubeObjectType nubeObjectType ) {
+        public MetaData( NubeObjectType nubeObjectType ) {
             TYPE = nubeObjectType;
             _LOG.debug( "Object info of the new instance of [{}]: {}",
                         super.getClass().getName( ), this.toString( ) );
@@ -69,10 +85,10 @@ public interface NubeObject
         @Override
         public boolean equals( final Object o ) {
             if ( this == o ) return true;
-            if ( !( o instanceof Info ) ) return false;
-            final Info info = ( Info ) o;
-            return TYPE == info.TYPE &&
-                    Objects.equals( CREATION_DATE, info.CREATION_DATE );
+            if ( !( o instanceof MetaData ) ) return false;
+            final MetaData metaData = ( MetaData ) o;
+            return TYPE == metaData.TYPE &&
+                    Objects.equals( CREATION_DATE, metaData.CREATION_DATE );
         }
 
         @Override
@@ -81,10 +97,38 @@ public interface NubeObject
         }
 
         @Override
-        public String toString( ) {
-            return this.getClass( ).getName( ) + "{" +
-                    "TYPE=" + TYPE +
-                    ", CREATION_DATE=" + CREATION_DATE + '}';
-        }
+        public String toString( )
+            { return this.getClass( ).getName( ) + "{ID='" + ID + "', TYPE=" + TYPE + ", CREATION_DATE=" + CREATION_DATE + '}'; }
+    }
+
+    /**
+     * Object hierarchy validation.
+     *
+     * @param nubeObjectType the nube object type
+     * @return the nube object type
+     */
+    protected static NubeObjectType objectHierarchyValidation( NubeObjectType nubeObjectType )
+        { return nubeObjectType; }
+
+    /**
+     * Gets serial version uid.
+     *
+     * @return the serial version uid
+     */
+    public static long getSerialVersionUID( )
+        { return serialVersionUID; }
+
+    @Override
+    public String toString( ) {
+        return StringParser.of( this )
+                .beautify( )
+                    .withLineBreaks( )
+                    .withSpaceIndent( )
+                    .withIndentSizeOf( 4 )
+                    .and( )
+                .useStatements( )
+                    .jsonLikeStyle( )
+                    .and( )
+                .apply( ).parse( );
     }
 }

@@ -1,102 +1,72 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 5/12/18 1:43
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.core.security.oauth2.provider.token.domain;
 
+import org.nube.core.security.oauth2.provider.token.OAuth2RefreshToken;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import java.util.Objects;
 
 /**
- * The type OAuth 2 refresh token.
+ * OAuth2 Refresh Token for management by MongoDB Provider.
+ * <p>
+ * MongoDB referenced document name: {@code oauth2RefreshTokens}
  *
- * @see org.nube.core.security.oauth2.provider.token.OAuth2RefreshToken
+ * @author Rubén García Ríos
  */
 @Document( collection = "oauth2RefreshTokens" )
-public class MongoOAuth2RefreshToken implements org.nube.core.security.oauth2.provider.token.OAuth2RefreshToken {
+public class MongoOAuth2RefreshToken
+        extends OAuth2RefreshToken {
     private static final long serialVersionUID = -1554139895650993739L;
-
+    // CONSTANTS.
     /**
-     * The constant TOKEN_ID.
+     * TOKEN_ID constant, indicates the name of field in MongoDB document.
      */
     public static final String TOKEN_ID = "tokenId";
     /**
-     * The constant TOKEN.
+     * TOKEN constant, indicates the name of field in MongoDB document.
      */
     public static final String TOKEN = "token";
     /**
-     * The constant AUTHENTICATION.
+     * AUTHENTICATION constant, indicates the name of field in MongoDB document.
      */
     public static final String AUTHENTICATION = "authentication";
+    // ATTRIBUTES.
     ////////////////////////
     @Indexed
     private String id;
     ////////////////////////
-    private final String tokenId;
-    private final OAuth2RefreshToken token;
-    private final OAuth2Authentication authentication;
-
+    //@formatter:off
     /**
-     * Instantiates a new O auth 2 refresh token.
+     * Instantiates a new Mongo OAuth2 Refresh Token.
      *
      * @param token          the token
      * @param authentication the authentication
      */
     public MongoOAuth2RefreshToken(
-            OAuth2RefreshToken token,
-            OAuth2Authentication authentication ) {
-        this.tokenId = token.getValue( );
-        this.token = token;
-        this.authentication = authentication;
-    }
+            org.springframework.security.oauth2.common.OAuth2RefreshToken token,
+            OAuth2Authentication authentication )
+        { super( token, authentication ); }
+
+    public String getId( )
+        { return id; }
+
+    public void setId( final String id )
+        { this.id = id; }
 
     /**
      * Gets serial version uid.
      *
      * @return the serial version uid
      */
-    public static long getSerialVersionUID( ) {
-        return serialVersionUID;
-    }
-
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
-    public String getId( ) {
-        return id;
-    }
-
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
-    public void setId( String id ) {
-        this.id = id;
-    }
-
-    @Override
-    public String getTokenId( ) {
-        return tokenId;
-    }
-
-    @Override
-    public OAuth2RefreshToken getToken( ) {
-        return token;
-    }
-
-    @Override
-    public OAuth2Authentication getAuthentication( ) {
-        return authentication;
-    }
+    public static long getSerialVersionUID( )
+        { return serialVersionUID; }
 
     @Override
     public boolean equals( Object o ) {
@@ -104,23 +74,13 @@ public class MongoOAuth2RefreshToken implements org.nube.core.security.oauth2.pr
         if ( !( o instanceof MongoOAuth2RefreshToken ) ) return false;
         MongoOAuth2RefreshToken that = ( MongoOAuth2RefreshToken ) o;
         return Objects.equals( getId( ), that.getId( ) ) &&
-                Objects.equals( getTokenId( ), that.getTokenId( ) ) &&
-                Objects.equals( getToken( ), that.getToken( ) ) &&
-                Objects.equals( getAuthentication( ), that.getAuthentication( ) );
+               Objects.equals( getTokenId( ), that.getTokenId( ) ) &&
+               Objects.equals( getToken( ), that.getToken( ) ) &&
+               Objects.equals( getAuthentication( ), that.getAuthentication( ) );
     }
 
     @Override
-    public int hashCode( ) {
-        return Objects.hash( getId( ), getTokenId( ), getToken( ), getAuthentication( ) );
-    }
-
-    @Override
-    public String toString( ) {
-        return "MongoOAuth2RefreshToken{" +
-                "id='" + id + '\'' +
-                ", tokenId='" + tokenId + '\'' +
-                ", token=" + token +
-                ", authentication=" + authentication +
-                '}';
-    }
+    public int hashCode( )
+        { return Objects.hash( getId( ), getTokenId( ), getToken( ), getAuthentication( ) ); }
+    //@formatter:on
 }

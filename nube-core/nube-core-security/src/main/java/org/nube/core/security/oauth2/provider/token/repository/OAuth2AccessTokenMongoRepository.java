@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 20:25
+ *  Last modified 5/12/18 1:44
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -17,12 +17,10 @@ import java.util.Optional;
  * OAuth2 Access Token MongoDB repository.
  *
  * @author Rubén García Ríos
- * @see org.springframework.data.mongodb.repository.MongoRepository
- * @see MongoOAuth2AccessToken
  */
 @MongoRepository
 public interface OAuth2AccessTokenMongoRepository
-        extends org.springframework.data.mongodb.repository.MongoRepository {
+        extends org.springframework.data.mongodb.repository.MongoRepository< MongoOAuth2AccessToken, String > {
     /**
      * Find by token id optional.
      *

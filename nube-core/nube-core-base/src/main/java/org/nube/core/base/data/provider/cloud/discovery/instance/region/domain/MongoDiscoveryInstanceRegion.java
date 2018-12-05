@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 15:07
+ *  Last modified 4/12/18 22:11
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -22,30 +22,13 @@ import java.util.Objects;
  */
 @Document( collection = "discoveryInstanceRegions" )
 public class MongoDiscoveryInstanceRegion
-        implements DiscoveryInstanceRegion {
+        extends DiscoveryInstanceRegion {
     private static final long serialVersionUID = 6756850645093430986L;
-    // CONSTANTS.
-    /**
-     * NAME constant.
-     */
-    public static final String NAME = "name";
-    /**
-     * ZONES constant.
-     */
-    public static final String ZONES = "zones";
-    /**
-     * ENABLED constant.
-     */
-    public static final String ENABLED = "enabled";
     // ATTRIBUTES.
     //////////////////
     @Indexed
     private String id;
     //////////////////
-    private String name;
-    private Collection< DiscoveryInstanceZone > zones;
-    private boolean enabled;
-
     /**
      * Instantiates a new Mongo discovery instance region.
      */
@@ -65,9 +48,12 @@ public class MongoDiscoveryInstanceRegion
             final Collection< DiscoveryInstanceZone > zones,
             final boolean enabled ) {
         this.id = id;
-        this.name = name;
-        this.zones = zones;
-        this.enabled = enabled;
+        super.setName( name );
+        super.setZones( zones );
+        if ( enabled )
+            super.enabled( );
+        else
+            super.disable( );
     }
 
     @Override
@@ -77,30 +63,6 @@ public class MongoDiscoveryInstanceRegion
     @Override
     public void setId( final String id )
         { this.id = id; }
-
-    @Override
-    public String getName( )
-        { return name; }
-
-    @Override
-    public void setName( final String name )
-        { this.name = name; }
-
-    @Override
-    public Collection< DiscoveryInstanceZone > getZones( )
-        { return zones; }
-
-    @Override
-    public void setZones( final Collection< DiscoveryInstanceZone > zones )
-        { this.zones = zones; }
-
-    @Override
-    public boolean isEnabled( )
-        { return enabled; }
-
-    @Override
-    public void setEnabled( final boolean enabled )
-        { this.enabled = enabled; }
 
     /**
      * Gets serial version uid.
@@ -124,13 +86,4 @@ public class MongoDiscoveryInstanceRegion
     @Override
     public int hashCode( )
         { return Objects.hash( getId( ), getName( ), getZones( ), isEnabled( ) ); }
-
-    @Override
-    public String toString( ) {
-        return this.getClass( ).getName( ) + "{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", zones=" + zones +
-                ", enabled=" + enabled + '}';
-    }
 }

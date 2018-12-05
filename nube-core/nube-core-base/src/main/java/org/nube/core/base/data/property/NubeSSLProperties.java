@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 2:06
+ *  Last modified 4/12/18 23:10
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 @ConfigurationProperties( prefix = NubeSSLProperties.NUBE_PROPERTIES_SSL_PREFIX )
 public class NubeSSLProperties
-        implements NubePropertiesObject {
+        extends NubePropertiesObject {
     /**
      * NUBE_PROPERTIES_SSL_PREFIX constant.
      */
@@ -58,7 +58,7 @@ public class NubeSSLProperties
      * @author Rubén García Ríos.
      */
     public static class KeyStore
-            implements NubePropertiesObject {
+            extends NubePropertiesObject {
         private static final long serialVersionUID = -5102790233088935086L;
         // Path to keystore.
         private String path;
@@ -196,12 +196,13 @@ public class NubeSSLProperties
 
         @Override
         public String toString( ) {
-            return "KeyStore{" +
-                    "path='" + path + '\'' +
-                    ", type='" + type + '\'' +
-                    ", alias='" + alias + '\'' +
-                    ", password='" + password + '\'' +
-                    ", storePassword='" + storePassword + '\'' + '}';
+            return this.getClass( ).getName( ) +
+                   "{path='" + path + '\'' +
+                   ", type='" + type + '\'' +
+                   ", alias='" + alias + '\'' +
+                   ", password='" + password + '\'' +
+                   ", storePassword='" + storePassword + "'}" +
+                   META_DATA;
         }
         //@formatter:on
     }
@@ -212,7 +213,7 @@ public class NubeSSLProperties
      *
      */
     public static class TrustStore
-            implements NubePropertiesObject {
+            extends NubePropertiesObject {
         private static final long serialVersionUID = -1515924486798971518L;
         // Path to truststore.
         private String path;
@@ -330,11 +331,12 @@ public class NubeSSLProperties
 
         @Override
         public String toString( ) {
-            return "TrustStore{" +
-                    "path='" + path + '\'' +
+            return this.getClass( ).getName( ) +
+                    "{path='" + path + '\'' +
                     ", type='" + type + '\'' +
                     ", password='" + password + '\'' +
-                    ", storePassword='" + storePassword + '\'' + '}';
+                    ", storePassword='" + storePassword + "'}" +
+                    META_DATA;
         }
         //@formatter:on
     }
@@ -411,10 +413,11 @@ public class NubeSSLProperties
 
     @Override
     public String toString( ) {
-        return "NubeSSLProperties{" +
-                "clientAuth='" + clientAuth + '\'' +
+        return this.getClass( ).getName( ) +
+                "{clientAuth='" + clientAuth + '\'' +
                 ", keyStore=" + keyStore +
-                ", trustStore=" + trustStore + '}';
+                ", trustStore=" + trustStore + '}' +
+                META_DATA;
     }
     //@formatter:on
 }

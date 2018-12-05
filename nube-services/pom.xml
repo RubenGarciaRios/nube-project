@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~  Developed by Rubén García Ríos
-  ~  Last modified 24/11/18 2:06
+  ~  Last modified 28/11/18 19:03
   ~  Copyright (c) 2018 All rights reserved.
   -->
 
@@ -294,7 +294,7 @@
 					<execution>
 						<id>NUBE - Services [Spring Boot Plugin] - Build Info</id>
 						<goals>
-							<goal>build-info</goal>
+							<goal>build-metaData</goal>
 							<goal>repackage</goal>
 						</goals>
 						<configuration>

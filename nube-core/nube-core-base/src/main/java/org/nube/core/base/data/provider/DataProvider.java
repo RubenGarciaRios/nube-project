@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 27/11/18 23:58
+ *  Last modified 5/12/18 1:49
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -82,20 +82,6 @@ public interface DataProvider
          * @return the builder
          */
         Builder removeAllServerAdress( Collection< ServerAddress > serverAddresses );
-
-        /**
-         * Server address builder . server address.
-         *
-         * @return the builder . server address
-         */
-        Builder.ServerAddress serverAddress( );
-
-        /**
-         * Credential credential.
-         *
-         * @return the credential
-         */
-        Credential credential( );
 
         /**
          * The interface Server address.

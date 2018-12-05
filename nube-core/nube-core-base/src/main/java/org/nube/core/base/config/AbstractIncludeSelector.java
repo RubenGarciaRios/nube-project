@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 13:41
+ *  Last modified 28/11/18 19:43
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -114,6 +114,6 @@ public abstract class AbstractIncludeSelector
 
     @Override
     public String toString( )
-        { return this.getClass( ).getName( ) + "{" + "defaultClasses=" + defaultClasses + '}'; }
+        { return this.getClass( ).getName( ) + "{defaultClasses=" + defaultClasses + '}'; }
     //formatter:on
 }

@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 4/12/18 22:17
+ *  Last modified 5/12/18 9:51
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -19,19 +19,6 @@ import java.util.Collection;
 public abstract class DiscoveryInstanceRegion
         extends NubeDataObject {
     private static final long serialVersionUID = -1084133934279905049L;
-    // CONSTANTS.
-    /**
-     * NAME constant.
-     */
-    public static final String NAME = "name";
-    /**
-     * ZONES constant.
-     */
-    public static final String ZONES = "zones";
-    /**
-     * ENABLED constant.
-     */
-    public static final String ENABLED = "enabled";
     // ATTRIBUTES.
     private String id;
     private String name;

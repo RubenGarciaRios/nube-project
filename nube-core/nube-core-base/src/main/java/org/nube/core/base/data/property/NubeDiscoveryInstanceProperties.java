@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 4/12/18 23:10
+ *  Last modified 5/12/18 12:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -8,7 +8,7 @@ package org.nube.core.base.data.property;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.nube.core.base.data.Provider;
+import org.nube.core.base.data.provider.DataProviderType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.validation.constraints.NotBlank;
@@ -64,9 +64,9 @@ public class NubeDiscoveryInstanceProperties
          */
         public static final boolean DEFAULT_ENABLED = true;
         /**
-         * DEFAULT_PROVIDER constant.
+         * DEFAULT_DATA_PROVIDER_TYPE constant.
          */
-        public static final Provider DEFAULT_PROVIDER = Provider.MONGODB;
+        public static final DataProviderType DEFAULT_DATA_PROVIDER_TYPE = DataProviderType.MONGODB;
         /**
          * DEFAULT_SERVER_ADDRESS constant.
          */
@@ -86,7 +86,7 @@ public class NubeDiscoveryInstanceProperties
         public static final String DEFAULT_PASSWORD = "";
         // ATTRIBUTES.
         private boolean enabled = DEFAULT_ENABLED;
-        private Provider provider = DEFAULT_PROVIDER;
+        private DataProviderType dataProviderType = DEFAULT_DATA_PROVIDER_TYPE;
         private Collection< ServerAddress > addresses =
             new ArrayList< ServerAddress >( ) { {
                 add( DEFAULT_SERVER_ADDRESS );
@@ -98,13 +98,13 @@ public class NubeDiscoveryInstanceProperties
         public DataBase( ) { }
         public DataBase(
                 final boolean enabled,
-                final Provider provider,
+                final DataProviderType dataProviderType,
                 final Collection< ServerAddress > addresses,
                 final String name,
                 final String username,
                 final String password ) {
             this.enabled = enabled;
-            this.provider = provider;
+            this.dataProviderType = dataProviderType;
             this.addresses = addresses;
             this.name = name;
             this.username = username;
@@ -222,20 +222,20 @@ public class NubeDiscoveryInstanceProperties
             { this.enabled = enabled; }
 
         /**
-         * Gets provider.
+         * Gets dataProviderType.
          *
-         * @return the provider
+         * @return the dataProviderType
          */
-        public Provider getProvider( )
-            { return provider; }
+        public DataProviderType getDataProviderType( )
+            { return dataProviderType; }
 
         /**
-         * Sets provider.
+         * Sets dataProviderType.
          *
-         * @param provider the provider
+         * @param dataProviderType the dataProviderType
          */
-        public void setProvider( Provider provider )
-            { this.provider = provider; }
+        public void setDataProviderType( DataProviderType dataProviderType )
+            { this.dataProviderType = dataProviderType; }
 
         /**
          * Gets addresses.
@@ -307,7 +307,7 @@ public class NubeDiscoveryInstanceProperties
             if ( !( o instanceof DataBase ) ) return false;
             final DataBase dataBase = ( DataBase ) o;
             return isEnabled( ) == dataBase.isEnabled( )
-                   && getProvider( ) == dataBase.getProvider( )
+                   && getDataProviderType( ) == dataBase.getDataProviderType( )
                    && Objects.equals( getAddresses( ), dataBase.getAddresses( ) )
                    && Objects.equals( getName( ), dataBase.getName( ) )
                    && Objects.equals( getUsername( ),dataBase.getUsername( ) )
@@ -318,7 +318,7 @@ public class NubeDiscoveryInstanceProperties
         public int hashCode( ) {
             return Objects.hash(
                     isEnabled( ),
-                    getProvider( ),
+                    getDataProviderType( ),
                     getAddresses( ),
                     getName( ),
                     getUsername( ),
@@ -329,7 +329,7 @@ public class NubeDiscoveryInstanceProperties
         public String toString( ) {
             return this.getClass( ).getName( ) +
                    "{enabled=" + enabled +
-                   ", provider=" + provider +
+                   ", dataProviderType=" + dataProviderType +
                    ", addresses=" + addresses +
                    ", name='" + name + '\'' +
                    ", username='" + username + '\'' +

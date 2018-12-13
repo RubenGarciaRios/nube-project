@@ -1,12 +1,11 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 5/12/18 1:49
+ *  Last modified 5/12/18 12:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.core.security.oauth2.provider.token.domain;
 
-import org.nube.core.security.oauth2.provider.token.OAuth2ClientToken;
 import org.nube.core.security.oauth2.provider.token.OAuth2Token;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,15 +15,15 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import java.util.Objects;
 
 /**
- * OAuth2 Client Token for management by MongoDB Provider.
+ * OAuth2 Client Token for management by MongoDB DataProviderType.
  * <p>
  * MongoDB referenced document name: {@code oauth2ClientTokens}
  *
  * @author Rubén García Ríos
  */
 @Document( collection = "oauth2ClientTokens" )
-public class MongoOAuth2ClientToken extends OAuth2Token
-        implements OAuth2ClientToken {
+public class MongoOAuth2ClientToken
+        extends OAuth2Token {
     private static final long serialVersionUID = 7313275873324236187L;
 
     /**
@@ -78,11 +77,11 @@ public class MongoOAuth2ClientToken extends OAuth2Token
     /**
      * Instantiates a new Mongo OAuth2 Client Token.
      *
-     * @param oAuth2ClientToken the OAuth2 Client Token.
+     * @param oAuth2Token the OAuth2 Token
      */
     public MongoOAuth2ClientToken(
-            final OAuth2ClientToken oAuth2ClientToken )
-        { super( oAuth2ClientToken ); }
+            final OAuth2Token oAuth2Token )
+        { super( oAuth2Token ); }
 
     /**
      * Gets id.

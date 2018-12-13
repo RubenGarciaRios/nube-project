@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 28/11/18 19:43
+ *  Last modified 13/12/18 14:06
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -27,6 +27,54 @@ public final class RandomStringGenerator
     private final static Logger _LOG = LogManager.getLogger( RandomStringGenerator.class );
     private static final long serialVersionUID = -6851590086073781118L;
     // CONSTANTS.
+    /**
+     * DEFAULT_ACEPTED_LETTERS constant.
+     */
+    public static final String DEFAULT_ACEPTED_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    /**
+     * DEFAULT_ACEPTED_DIGITS constant.
+     */
+    public static final String DEFAULT_ACEPTED_DIGITS = "0123456789";
+    /**
+     * ALPHANUMERIC_CHARACTERS constant.
+     */
+    public static final String ALPHANUMERIC_CHARACTERS =
+            DEFAULT_ACEPTED_LETTERS.toUpperCase( Locale.ROOT ) +
+            DEFAULT_ACEPTED_LETTERS.toLowerCase( Locale.ROOT ) +
+            DEFAULT_ACEPTED_DIGITS;
+    /**
+     * ALPHANUMERIC_LOWERCASE_CHARACTERS constant.
+     */
+    public static final String ALPHANUMERIC_LOWERCASE_CHARACTERS =
+            DEFAULT_ACEPTED_LETTERS.toLowerCase( Locale.ROOT ) +
+            DEFAULT_ACEPTED_DIGITS;
+    /**
+     * ALPHANUMERIC_UPPERCASE_CHARACTERS constant.
+     */
+    public static final String ALPHANUMERIC_UPPERCASE_CHARACTERS =
+            DEFAULT_ACEPTED_LETTERS.toUpperCase( Locale.ROOT ) +
+            DEFAULT_ACEPTED_DIGITS;
+    /**
+     * DEFAULT_LENGTH constant.
+     */
+    public static final int DEFAULT_LENGTH = 5;
+    /**
+     * DEFAULT_GROUP_ENABLED constant.
+     */
+    public static final boolean DEFAULT_GROUP_ENABLED = false;
+    /**
+     * DEFAULT_GROUP_LENGTH constant.
+     */
+    public static final int DEFAULT_GROUP_LENGTH = 5;
+    /**
+     * DEFAULT_GROUP_SEPARATOR constant.
+     */
+    public static final char DEFAULT_GROUP_SEPARATOR = '-';
+    /**
+     * DEFAULT_RANDOM constant.
+     */
+    public static final Random DEFAULT_RANDOM = new SecureRandom( );
+    /////////////////
     private final char[ ] CHARACTERS;
     private int LENGTH;
     private boolean GROUP_ENABLED;
@@ -93,42 +141,6 @@ public final class RandomStringGenerator
             implements Serializable {
         private final static Logger _LOG = LogManager.getLogger( Builder.class );
         private static final long serialVersionUID = -2289981810761652569L;
-        // CONSTANTS.
-        /**
-         * DEFAULT_ACEPTED_LETTERS constant.
-         */
-        public static final String DEFAULT_ACEPTED_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        /**
-         * DEFAULT_ACEPTED_DIGITS constant.
-         */
-        public static final String DEFAULT_ACEPTED_DIGITS = "0123456789";
-        /**
-         * ALPHANUMERIC constant.
-         */
-        public static final String ALPHANUMERIC =
-                DEFAULT_ACEPTED_LETTERS +
-                DEFAULT_ACEPTED_LETTERS.toLowerCase( Locale.ROOT ) +
-                DEFAULT_ACEPTED_DIGITS;
-        /**
-         * DEFAULT_LENGTH constant.
-         */
-        public static final int DEFAULT_LENGTH = 5;
-        /**
-         * DEFAULT_GROUP_ENABLED constant.
-         */
-        public static final boolean DEFAULT_GROUP_ENABLED = false;
-        /**
-         * DEFAULT_GROUP_LENGTH constant.
-         */
-        public static final int DEFAULT_GROUP_LENGTH = 5;
-        /**
-         * DEFAULT_GROUP_SEPARATOR constant.
-         */
-        public static final char DEFAULT_GROUP_SEPARATOR = '-';
-        /**
-         * DEFAULT_RANDOM constant.
-         */
-        public static final Random DEFAULT_RANDOM = new SecureRandom( );
         // ATTRIBUTES.
         private char[ ] acceptedCharacters;
         private int length;
@@ -141,7 +153,7 @@ public final class RandomStringGenerator
          * Instantiates a new Builder.
          */
         public Builder( ) {
-            acceptedCharacters = ALPHANUMERIC.toCharArray( );
+            acceptedCharacters = ALPHANUMERIC_CHARACTERS.toCharArray( );
             length = DEFAULT_LENGTH;
             groupEnabled = DEFAULT_GROUP_ENABLED;
             groupLength = DEFAULT_GROUP_LENGTH;
@@ -254,9 +266,18 @@ public final class RandomStringGenerator
          * @param acceptedCharacters the accepted characters
          * @return {@code this}
          */
+        public Builder acceptedCharacters( final String acceptedCharacters )
+            { return acceptedCharacters( acceptedCharacters.toCharArray( ) ); }
+
+        /**
+         * Accepted characters builder.
+         *
+         * @param acceptedCharacters the accepted characters
+         * @return {@code this}
+         */
         public Builder acceptedCharacters( final char[ ] acceptedCharacters ) {
             this.acceptedCharacters = acceptedCharacters == null
-                    ? ALPHANUMERIC.toCharArray( )
+                    ? ALPHANUMERIC_CHARACTERS.toCharArray( )
                     : acceptedCharacters;
             _LOG.debug( "The attribute acceptedCharacters has ben assigned succesfully with value: {}",
                         this.acceptedCharacters );

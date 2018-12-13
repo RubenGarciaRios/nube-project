@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 5/12/18 1:29
+ *  Last modified 5/12/18 12:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import java.util.Objects;
 
 /**
- * OAuth2 Access Token for management by MongoDB Provider.
+ * OAuth2 Access Token for management by MongoDB DataProviderType.
  * <p>
  * MongoDB referenced document name: {@code oauth2AccessTokens}
  *
@@ -74,11 +74,11 @@ public class MongoOAuth2AccessToken
     /**
      * Instantiates a new Mongo OAuth2 Access Token.
      *
-     * @param oAuth2AccessToken the o auth 2 access token
+     * @param oAuth2Token the OAuth2 Token
      */
     public MongoOAuth2AccessToken(
-            final org.nube.core.security.oauth2.provider.token.OAuth2AccessToken oAuth2AccessToken )
-        { super( oAuth2AccessToken ); }
+            final OAuth2Token oAuth2Token )
+        { super( oAuth2Token ); }
 
     /**
      * Gets id.

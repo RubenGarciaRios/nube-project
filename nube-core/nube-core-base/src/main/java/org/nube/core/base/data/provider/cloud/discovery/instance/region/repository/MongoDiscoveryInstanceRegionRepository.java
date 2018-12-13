@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 24/11/18 20:25
+ *  Last modified 5/12/18 9:42
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -19,7 +19,7 @@ import java.util.Collection;
  */
 @MongoRepository
 public interface MongoDiscoveryInstanceRegionRepository
-        extends org.springframework.data.mongodb.repository.MongoRepository {
+        extends org.springframework.data.mongodb.repository.MongoRepository< MongoDiscoveryInstanceRegion, String > {
 
     /**
      * Find all by Enabled MongoDB Discovery Instance Region.

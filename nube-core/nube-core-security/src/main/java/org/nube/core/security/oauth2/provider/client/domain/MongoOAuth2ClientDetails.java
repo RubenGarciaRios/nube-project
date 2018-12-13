@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 5/12/18 1:49
+ *  Last modified 5/12/18 12:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * OAuth2 Client Details for management by MongoDB Provider.
+ * OAuth2 Client Details for management by MongoDB DataProviderType.
  * <p>
  * MongoDB referenced document name: {@code oauth2ClientDetails}
  * @author Rubén García Ríos

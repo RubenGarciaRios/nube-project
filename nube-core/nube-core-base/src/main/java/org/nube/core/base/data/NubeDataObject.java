@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 4/12/18 23:08
+ *  Last modified 5/12/18 14:55
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -62,4 +62,8 @@ public abstract class NubeDataObject
                 return NubeObjectType.UNDEFINED;
         }
     }
+
+    @Override
+    public String toString( )
+        { return super.toString( ); }
 }

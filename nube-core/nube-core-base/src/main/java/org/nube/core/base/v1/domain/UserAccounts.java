@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 5/12/18 1:49
+ *  Last modified 5/12/18 10:54
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -395,22 +395,5 @@ public class UserAccounts
     @Override
     public int hashCode( ) {
         return Objects.hash( getId( ) );
-    }
-
-    @Override
-    public String toString( ) {
-        return this.getClass( ).getName( ) +
-               "{id='" + id + '\'' +
-               ", email='" + email + '\'' +
-               ", password='" + password + '\'' +
-               ", enabled=" + enabled +
-               ", locked=" + locked +
-               ", expired=" + expired +
-               ", reset=" + reset +
-               ", roles=" + roles +
-               ", userProfile=" + userProfile +
-               ", creationDate=" + creationDate +
-               ", expirationDate=" + expirationDate + '}' +
-               META_DATA;
     }
 }

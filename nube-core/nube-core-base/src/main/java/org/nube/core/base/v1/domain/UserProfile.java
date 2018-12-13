@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 28/11/18 19:43
+ *  Last modified 5/12/18 10:54
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -182,15 +182,5 @@ public class UserProfile implements NubeDomainObject {
     @Override
     public int hashCode( ) {
         return Objects.hash( getName( ), getLastName( ) );
-    }
-
-    @Override
-    public String toString( ) {
-        return this.getClass( ).getName( ) +
-               "{name='" + name + '\'' +
-               ", lastName='" + lastName + '\'' +
-               ", phone='" + phone + '\'' +
-               ", mobile='" + mobile + "'}" +
-               META_DATA;
     }
 }

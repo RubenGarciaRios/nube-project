@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 28/11/18 19:43
+ *  Last modified 5/12/18 10:54
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -150,14 +150,5 @@ public class Privileges implements NubeDomainObject {
     @Override
     public int hashCode( ) {
         return Objects.hash( getId( ) );
-    }
-
-    @Override
-    public String toString( ) {
-        return this.getClass( ).getName( ) +
-               "{id='" + id + '\'' +
-               ", resource='" + resource + '\'' +
-               ", operation='" + operation + "'}" +
-               META_DATA;
     }
 }

@@ -1,12 +1,12 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 4/12/18 23:09
+ *  Last modified 5/12/18 12:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.core.base.data.property;
 
-import org.nube.core.base.data.Provider;
+import org.nube.core.base.data.provider.DataProviderType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.validation.Valid;
@@ -25,7 +25,7 @@ public class NubeDatabaseProperties
     // ATTRIBUTES.
     @NotEmpty
     private String type;
-    private Provider provider;
+    private DataProviderType dataProviderType;
     @Valid
     private List< ServerAddress > serverAddresses;
     @Valid
@@ -33,11 +33,11 @@ public class NubeDatabaseProperties
     // CONSTRUCTORS.
     public NubeDatabaseProperties( ) { }
     public NubeDatabaseProperties(
-            @NotEmpty final String type, final Provider provider,
+            @NotEmpty final String type, final DataProviderType dataProviderType,
             @Valid final List< ServerAddress > serverAddresses,
             @Valid final Credentials credentials ) {
         this.type = type;
-        this.provider = provider;
+        this.dataProviderType = dataProviderType;
         this.serverAddresses = serverAddresses;
         this.credentials = credentials;
     }
@@ -170,11 +170,11 @@ public class NubeDatabaseProperties
     public void setType( final String type )
         { this.type = type; }
 
-    public Provider getProvider( )
-        { return provider; }
+    public DataProviderType getDataProviderType( )
+        { return dataProviderType; }
 
-    public void setProvider( final Provider provider )
-        { this.provider = provider; }
+    public void setDataProviderType( final DataProviderType dataProviderType )
+        { this.dataProviderType = dataProviderType; }
 
     public List< ServerAddress > getServerAddresses( )
         { return serverAddresses; }
@@ -194,20 +194,20 @@ public class NubeDatabaseProperties
         if ( !( o instanceof NubeDatabaseProperties ) ) return false;
         final NubeDatabaseProperties that = ( NubeDatabaseProperties ) o;
         return Objects.equals( getType( ), that.getType( ) ) &&
-               getProvider( ) == that.getProvider( ) &&
+               getDataProviderType( ) == that.getDataProviderType( ) &&
                Objects.equals( getServerAddresses( ), that.getServerAddresses( ) ) &&
                Objects.equals( getCredentials( ), that.getCredentials( ) );
     }
 
     @Override
     public int hashCode( )
-        { return Objects.hash( getType( ), getProvider( ), getServerAddresses( ), getCredentials( ) ); }
+        { return Objects.hash( getType( ), getDataProviderType( ), getServerAddresses( ), getCredentials( ) ); }
 
     @Override
     public String toString( ) {
         return this.getClass( ).getName( ) +
                "{type='" + type + '\'' +
-               ", provider=" + provider +
+               ", dataProviderType=" + dataProviderType +
                ", serverAddresses=" + serverAddresses +
                ", credentials=" + credentials + '}' +
                META_DATA;

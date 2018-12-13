@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 4/12/18 22:37
+ *  Last modified 13/12/18 18:33
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -59,7 +59,7 @@ public abstract class NubeObject
          * Unique id, useful to check multiple instances of the same object.
          */
         public final String ID = RandomStringGenerator.builder( )
-                .length( 7 )
+                .length( 15 )
                 .build( )
                 .generate( );
         /**
@@ -120,7 +120,7 @@ public abstract class NubeObject
 
     @Override
     public String toString( ) {
-        return StringParser.of( this )
+        return StringParser.forObject( this )
                 .beautify( )
                     .withLineBreaks( )
                     .withSpaceIndent( )
@@ -129,6 +129,7 @@ public abstract class NubeObject
                 .useStatements( )
                     .jsonLikeStyle( )
                     .and( )
+                .doRecursivityWithInstancesOf( MetaData.class )
                 .apply( ).parse( );
     }
 }

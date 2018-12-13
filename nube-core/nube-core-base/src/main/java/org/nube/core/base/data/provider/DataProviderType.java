@@ -1,17 +1,17 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 27/11/18 20:06
+ *  Last modified 5/12/18 12:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
-package org.nube.core.base.data;
+package org.nube.core.base.data.provider;
 
 /**
- * Provider enumeration list.
+ * DataProviderType enumeration list.
  *
  * @author Rubén García Ríos
  */
-public enum Provider {
+public enum DataProviderType {
     /**
      * Mongodb provider.
      */
@@ -47,12 +47,12 @@ public enum Provider {
 
     private final String value;
 
-    Provider( String value ) {
+    DataProviderType( String value ) {
         this.value = value;
     }
 
     /**
-     * Provider value string.
+     * DataProviderType value string.
      *
      * @return the string
      */

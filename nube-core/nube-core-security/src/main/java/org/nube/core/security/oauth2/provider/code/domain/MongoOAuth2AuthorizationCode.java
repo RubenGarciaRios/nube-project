@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 5/12/18 1:29
+ *  Last modified 5/12/18 12:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import java.util.Objects;
 
 /**
- * OAuth2 Authorization Code for management by MongoDB Provider.
+ * OAuth2 Authorization Code for management by MongoDB DataProviderType.
  * <p>
  * MongoDB referenced document name: {@code oauth2AuthorizationCodes}
  *

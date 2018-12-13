@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 4/12/18 22:11
+ *  Last modified 5/12/18 12:30
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -15,8 +15,9 @@ import java.util.Collection;
 import java.util.Objects;
 
 /**
- * MongoDB Discovery Instance Region.
- * MongoDB Database Object implementation of {@link DiscoveryInstanceRegion}.
+ * Discovery Instance Region for management by MongoDB DataProviderType.
+ * <p>
+ * MongoDB referenced document name: {@code discoveryInstanceRegions}
  *
  * @author Rubén García Ríos
  */
@@ -24,6 +25,19 @@ import java.util.Objects;
 public class MongoDiscoveryInstanceRegion
         extends DiscoveryInstanceRegion {
     private static final long serialVersionUID = 6756850645093430986L;
+    // CONSTANTS.
+    /**
+     * NAME constant, indicates the name of field in MongoDB document.
+     */
+    public static final String NAME = "name";
+    /**
+     * ZONES constant, indicates the name of field in MongoDB document.
+     */
+    public static final String ZONES = "zones";
+    /**
+     * ENABLED constant, indicates the name of field in MongoDB document.
+     */
+    public static final String ENABLED = "enabled";
     // ATTRIBUTES.
     //////////////////
     @Indexed

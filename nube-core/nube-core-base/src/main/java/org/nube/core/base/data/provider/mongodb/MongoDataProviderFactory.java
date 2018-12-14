@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 13/12/18 18:59
+ *  Last modified 14/12/18 14:10
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -10,10 +10,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Contract;
 import org.nube.core.base.data.NubeDataObject;
+import org.nube.core.base.data.ServerAddress;
+import org.nube.core.base.data.provider.DataProvider;
 import org.nube.core.base.data.provider.DataProviderFactory;
-import org.springframework.beans.factory.config.BeanDefinition;
 
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -35,54 +37,81 @@ public class MongoDataProviderFactory
     /**
      * Instantiates a new Mongo Provider Factory.
      *
+     * @param id       the id
      * @param database the database
      */
-    @Contract( "null -> fail" )
-    public MongoDataProviderFactory( @NotNull final String database )
-        { this( database, null ); }
+    @Contract( "null, _ -> fail; _, null -> fail" )
+    public MongoDataProviderFactory(
+            @NotNull final String id,
+            @NotNull final String database )
+        { this( id, database, null ); }
 
     /**
      * Instantiates a new Mongo Provider Factory.
      *
+     * @param id       the id
      * @param database the database
      * @param username the username
      */
-    @Contract( "null, _ -> fail" )
+    @Contract( "null, _, _ -> fail; _, null, _ -> fail" )
     public MongoDataProviderFactory(
+            @NotNull final String id,
             @NotNull final String database,
             String username )
-        { this( database, username, null ); }
+        { this( id, database, username, null ); }
 
     /**
      * Instantiates a new Mongo Provider Factory.
      *
+     * @param id       the id
      * @param database the database
      * @param username the username
      * @param password the password
      */
-    @Contract( "null, _, _ -> fail" )
+    @Contract( "null, _, _, _ -> fail; _, null, _, _ -> fail" )
     public MongoDataProviderFactory(
+            @NotNull final String id,
             @NotNull final String database,
             String username,
             char[ ] password )
-        { this( database, username, password, null ); }
+        { this( id, database, username, password, ( ServerAddress[ ] ) null ); }
 
     /**
      * Instantiates a new Mongo Provider Factory.
      *
+     * @param id              the id
      * @param database        the database
      * @param username        the username
      * @param password        the password
      * @param serverAddresses the server addresses
      */
-    @Contract( "null, _, _, _ -> fail" )
+    @Contract( "null, _, _, _, _ -> fail; _, null, _, _, _ -> fail" )
     public MongoDataProviderFactory(
+            @NotNull final String id,
             @NotNull final String database,
             final String username,
             final char[ ] password,
-            final Collection< MongoDataProvider.MongoConnectionManagementConfigurer.MongoServerAddress > serverAddresses ) {
-        if ( database == null || database.isEmpty( ) )
-            throw new IllegalArgumentException( "Argument 'database' must not be null." );
+            final ServerAddress... serverAddresses )
+        { this( id, database, username, password, serverAddresses != null ? Arrays.asList( serverAddresses ) : null ); }
+
+    /**
+     * Instantiates a new Mongo Provider Factory.
+     *
+     * @param id              the id
+     * @param database        the database
+     * @param username        the username
+     * @param password        the password
+     * @param serverAddresses the server addresses
+     */
+    @Contract( "null, _, _, _, _ -> fail; _, null, _, _, _ -> fail" )
+    public MongoDataProviderFactory(
+            @NotNull final String id,
+            @NotNull final String database,
+            final String username,
+            final char[ ] password,
+            final Collection< ServerAddress > serverAddresses ) {
+        _LOG.debug( "Recieved argument of type[{}], with value: {}",
+                    String.class.getName( ), id );
         _LOG.debug( "Recieved argument of type[{}], with value: {}",
                     String.class.getName( ), database );
         _LOG.debug( "Recieved argument of type[{}], with value: {}",
@@ -92,6 +121,10 @@ public class MongoDataProviderFactory
         _LOG.debug( "Recieved argument of type[{}], with value: {}",
                     Collection.class.getName( ), serverAddresses );
         _LOG.debug( "Initialization of new object of type [{}]", MongoDataProvider.class.getName( ) );
+        if ( id == null || id.isEmpty( ) )
+            throw new IllegalArgumentException( "Argument 'id' must not be null." );
+        if ( database == null || database.isEmpty( ) )
+            throw new IllegalArgumentException( "Argument 'database' must not be null." );
         mongoDataProvider = MongoDataProvider.connectionManagement( )
                 .useDataBase( database )
                 .addAllServerAddresses( serverAddresses )
@@ -104,7 +137,7 @@ public class MongoDataProviderFactory
 
     /**
      * Instantiates a new Mongo Provider Factory.
-
+     *
      * @param mongoDataProvider the Mongo Data Provider
      */
     public MongoDataProviderFactory( final MongoDataProvider mongoDataProvider )
@@ -112,9 +145,8 @@ public class MongoDataProviderFactory
 
     @NotNull
     @Override
-    public BeanDefinition[ ] getBeanDefinitions( )
-        { return mongoDataProvider.beanDefinitions( ); }
-    //@formatter:on
+    public DataProvider getDataProvider( )
+        { return mongoDataProvider; }
 
     @Override
     public boolean equals( final Object o ) {
@@ -131,4 +163,5 @@ public class MongoDataProviderFactory
     @Override
     public String toString( )
         { return super.toString( ); }
+    //@formatter:on
 }

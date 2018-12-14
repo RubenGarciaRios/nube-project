@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 13/12/18 19:03
+ *  Last modified 14/12/18 9:29
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -90,8 +90,14 @@ public class MongoDataProvider
          * Instantiates a new Mongo Connection Management Configurer.
          */
         public MongoConnectionManagementConfigurer( ) {
-            super( DEFAULT_DATABASE, DEFAULT_USERNAME, DEFAULT_PASSWORD );
+            super( null, DEFAULT_DATABASE, DEFAULT_USERNAME, DEFAULT_PASSWORD );
             serverAddresses = new ArrayList< >( );
+        }
+
+        @Override
+        public ConnectionManagementConfigurer identifiedBy( final String id ) {
+            super.identifiedBy( id );
+            return this;
         }
 
         @Override
@@ -145,6 +151,8 @@ public class MongoDataProvider
         @Override
         @SuppressWarnings( { "unchecked", "null" } )
         public MongoDataProvider configure( ) {
+            if ( id == null || id.isEmpty( ) )
+                throw new RuntimeException( "Attribute 'ID' can not be empty and must have a valid value." );
             // If not already added any server address, adds default.
             if ( super.serverAddresses == null || super.serverAddresses.isEmpty( ) )
                 super.serverAddresses.add(

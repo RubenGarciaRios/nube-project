@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 13/12/18 19:03
+ *  Last modified 14/12/18 9:41
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -9,14 +9,14 @@ package org.nube.core.base.data.provider;
 import org.jetbrains.annotations.Contract;
 import org.nube.core.base.data.NubeDataObject;
 import org.nube.core.base.utils.PasswordUtilities;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
+import org.springframework.context.ApplicationContext;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
 
 // https://github.com/ssinger/dynamic-beans-example
 public abstract class DataProvider<
@@ -30,23 +30,32 @@ public abstract class DataProvider<
     private static String DEFAULT_USERNAME = "";
     private static char[ ] DEFAULT_PASSWORD = { };
     // ATTRIBUTES.
+    /**
+     * Inmutable attribute used for Bean prefix identification in registration proccess.
+     */
+    public final String ID;
     private final String DATABASE;
     private final String USERNAME;
     private final char[ ] PASSWORD;
+    private Map< String, String > beanIDs;
 
     private DataProvider(
+            final String id,
             final String database,
             final String username,
             final char[ ] password ) {
+        ID = id;
         DATABASE = database;
         USERNAME = username;
         PASSWORD = password;
+        beanIDs = new HashMap< >( );
     }
 
     @Contract( "null -> fail" )
     @SuppressWarnings( "unchecked" )
     protected DataProvider( @NotNull final C connectionManagerConfigurer ) {
-        this( connectionManagerConfigurer.database,
+        this( connectionManagerConfigurer.id,
+              connectionManagerConfigurer.database,
               connectionManagerConfigurer.username,
               connectionManagerConfigurer.password );
     }
@@ -66,21 +75,23 @@ public abstract class DataProvider<
     @NotNull
     public abstract BeanDefinition[ ] beanDefinitions( );
 
+    public final Map< String, String > getBeanIDs( )
+        { return beanIDs; }
 
-    /*
-    public void register( final ApplicationContext applicationContext, final String providerID ) {
+    public final void register( final ApplicationContext applicationContext ) {
         AutowireCapableBeanFactory beanFactory = applicationContext.getAutowireCapableBeanFactory( );
         //beanFactory.initializeBean(  )
         BeanDefinitionRegistry beanDefinitionRegistry = ( BeanDefinitionRegistry ) beanFactory;
-        for ( GenericBeanDefinition genericBeanDefinition : PROVIDER_BEAN_COMPONENTS ) {
-            String beanClassName = genericBeanDefinition.getBeanClass( ).getName( );
-            String beanID = providerID +
+        BeanDefinition[ ] beanDefinitions = beanDefinitions( );
+        for ( BeanDefinition beanDefinition : beanDefinitions ) {
+            String beanClassName = beanDefinition.getBeanClassName( );
+            String beanID = ID +
                             Character.toLowerCase( beanClassName.charAt( 0 ) ) +
                             beanClassName.substring( 1 );
-            beanDefinitionRegistry.registerBeanDefinition( beanID, genericBeanDefinition );
+            beanIDs.put( beanID, beanDefinition.getBeanClassName( ) );
+            beanDefinitionRegistry.registerBeanDefinition( beanID, beanDefinition );
         }
     }
-    */
 
     public static abstract class ConnectionManagementConfigurer<
             P extends DataProvider,
@@ -89,6 +100,7 @@ public abstract class DataProvider<
             extends NubeDataObject {
         private static final long serialVersionUID = -3104671840993899407L;
         // ATTRIBUTES.
+        protected String id;
         protected Collection< S > serverAddresses;
         protected String database;
         protected String username;
@@ -97,20 +109,23 @@ public abstract class DataProvider<
         private boolean authenticate;
 
         protected ConnectionManagementConfigurer( ) {
-            this( new ArrayList< >( ),
+            this( null,
+                  new ArrayList< >( ),
                   DEFAULT_DATABASE,
                   DEFAULT_USERNAME,
                   DEFAULT_PASSWORD );
         }
 
         protected ConnectionManagementConfigurer(
+                final String id,
                 final String database,
                 final String username,
                 final char[ ] password ) {
-            this( new ArrayList<>( ), database, username, password );
+            this( id, new ArrayList< >( ), database, username, password );
         }
 
         public ConnectionManagementConfigurer(
+                final String id,
                 final Collection< S > serverAddresses,
                 final String database,
                 final String username,
@@ -118,9 +133,15 @@ public abstract class DataProvider<
             this.serverAddresses = serverAddresses == null
                     ? new ArrayList< >( )
                     : serverAddresses;
+            this.id = id;
             this.database = database;
             this.username = username;
             this.password = password;
+        }
+
+        public T identifiedBy( final String id ) {
+            this.id = id;
+            return instance( );
         }
 
         @NotNull

@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 14/12/18 14:56
+ *  Last modified 17/12/18 13:46
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -8,22 +8,39 @@ package org.nube.core.base.data;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
+import org.nube.core.base.utils.PasswordUtilities;
 
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Abstract Server Address.
+ *
+ * @author Rubén García Ríos
+ */
 public abstract class AbstractServerAddress
         extends NubeDataObject
         implements ServerAddress {
     private static final long serialVersionUID = -5578877182639697554L;
-    // CONSTANTS.
+    /**
+     * DEFAULT_HOST constant.
+     */
+// CONSTANTS.
     public static final String DEFAULT_HOST = "localhost";
+    /**
+     * DEFAULT_PORT constant.
+     */
     public static final Integer DEFAULT_PORT = null;
+    /**
+     * DEFAULT_PROTOCOL constant.
+     */
     public static final ConnectionProtocol DEFAULT_PROTOCOL = ConnectionProtocol.HTTP;
+    // Credentials regex validation
     private static final Pattern CREDENTIALS_PATTERN = Pattern.compile(
-            "(((\\w*\\%*\\$*\\-*\\_*\\&*\\+*){1,}(\\:)" +
+            "(((\\w*\\%*\\$*\\-*\\_*\\&*\\+*){1,}(\\:)?" +
             "(\\w*\\%*\\$*\\-*\\_*\\&*\\+*){1,})(\\@))?" );
     // Port regex validation.
     private static final Pattern PORT_PATTERN = Pattern.compile(
@@ -31,11 +48,11 @@ public abstract class AbstractServerAddress
             "65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$" );
     // URL regex validation.
     private static final Pattern URL_PATTERN = Pattern.compile(
-            "^((?:(https?):\\/\\/)?((\\w*\\%*\\$*\\-*\\_*\\&*\\+*){1,}\\:(\\w*\\%*\\$*" +
-            "\\-*\\_*\\&*\\+*){1,}\\@)?((?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[0-9][0-9]|" +
+            "^((?:(https?):\\/\\/)?((\\w*\\%*\\$*\\-*\\_*\\&*\\+*){1,}(\\:)?(\\w*\\%*\\$*" +
+            "\\-*\\_*\\&*\\+*){1,}(\\@))?((?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[0-9][0-9]|" +
             "[0-9])\\.(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[0-9][0-9]|[0-9])\\.)(?:(?" +
             ":25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[0-9][0-9]|[0-9])\\.)(?:(?:25[0-5]|2[0-4" +
-            "][0-9]|1[0-9][0-9]|[0-9][0-9]|[0-9]))|(?:(?:(?:\\w+\\.){1,2}[\\w]{2,3})))" +
+            "][0-9]|1[0-9][0-9]|[0-9][0-9]|[0-9]))|(?:(?:(?:\\w+\\.){1,2}[\\w]{2,3}))|(?:localhost))" +
             "(?::(\\d+))?((?:\\/[\\w]+)*)(?:\\/|(\\/[\\w]+\\.[\\w]{3,4})|(\\?(?:([\\w]" +
             "+=[\\w]+)&)*([\\w]+=[\\w]+))?|\\?(?:(wsdl|wadl))))$" );
     // ATTRIBUTES.
@@ -46,42 +63,100 @@ public abstract class AbstractServerAddress
     private String url;
     private ConnectionProtocol connectionProtocol;
 
+    /**
+     * Instantiates a new Abstract Server Address with default values.
+     */
     public AbstractServerAddress( )
         { this( DEFAULT_HOST, DEFAULT_PORT ); }
 
+    /**
+     * Instantiates a new Abstract Server Address by url.
+     *
+     * @param url the url
+     */
     @Contract( "null -> fail" )
     public AbstractServerAddress( @NotNull final String url )
         { setUrl( url ); }
 
+    /**
+     * Instantiates a new Abstract Server Address with default values and specified port.
+     *
+     * @param port the port
+     */
     public AbstractServerAddress( @Nullable final Integer port )
         { this( DEFAULT_HOST, port ); }
 
+    /**
+     * Instantiates a new Abstract Server Address with default values and specified host and port.
+     *
+     * @param host the host
+     * @param port the port
+     */
     @Contract( "null, _ -> fail" )
     public AbstractServerAddress(
             @NotNull final String host,
             @Nullable final Integer port )
         { this( DEFAULT_PROTOCOL, host, port ); }
 
+    /**
+     * Instantiates a new Abstract Server Address with default values and specified connection protocol and host.
+     *
+     * @param connectionProtocol the connection protocol
+     * @param host               the host
+     */
     @Contract( "null, _ -> fail; _, null -> fail" )
     public AbstractServerAddress(
             @NotNull final ConnectionProtocol connectionProtocol,
             @NotNull final String host )
         { this( connectionProtocol, host, DEFAULT_PORT ); }
 
+    /**
+     * Instantiates a new Abstract Server Address with default values and specified connection protocol and port.
+     *
+     * @param connectionProtocol the connection protocol
+     * @param port               the port
+     */
     @Contract( "null, _ -> fail" )
     public AbstractServerAddress(
             @NotNull final ConnectionProtocol connectionProtocol,
             @Nullable final Integer port )
         { this( connectionProtocol, DEFAULT_HOST, port ); }
 
+    /**
+     * Instantiates a new Abstract Server Address without server authentication.
+     *
+     * @param connectionProtocol the connection protocol
+     * @param host               the host
+     * @param port               the port
+     */
     @Contract( "null, _, _ -> fail; _, null, _ -> fail" )
     public AbstractServerAddress(
             @NotNull final ConnectionProtocol connectionProtocol,
             @NotNull final String host,
-            @Nullable final Integer port ) {
+            @Nullable final Integer port )
+        { this( connectionProtocol, host, port, null, null ); }
+
+    /**
+     * Instantiates a new Abstract Server Address with server authentication.
+     *
+     * @param connectionProtocol the connection protocol
+     * @param host               the host
+     * @param port               the port
+     * @param username           the username
+     * @param password           the password
+     */
+    @Contract( "null, _, _, _, _ -> fail; _, null, _, _, _ -> fail" )
+    public AbstractServerAddress(
+            @NotNull final ConnectionProtocol connectionProtocol,
+            @NotNull final String host,
+            @NotNull final Integer port,
+            @Nullable final String username,
+            @Nullable final char[ ] password ) {
         setConnectionProtocol( connectionProtocol );
         setHost( host );
         setPort( port );
+        setUsername( username );
+        setPassword( password );
     }
 
     @NotNull
@@ -125,6 +200,25 @@ public abstract class AbstractServerAddress
         refreshURL( );
     }
 
+    @Override
+    public String getUsername( )
+        { return username; }
+
+    @Override
+    public void setUsername( final String username )
+        { this.username = username; }
+
+    @Override
+    public char[ ] getPassword( )
+        { return password; }
+
+    @Override
+    public void setPassword( final char[ ] password ) {
+        if ( this.password != null )
+            PasswordUtilities.erase( this.password );
+        this.password = password;
+    }
+
     @NotNull
     @Override
     public String getUrl( )
@@ -139,14 +233,28 @@ public abstract class AbstractServerAddress
         refresData( );
     }
 
+    /**
+     * Gets serial version uid.
+     *
+     * @return the serial version uid
+     */
     public static long getSerialVersionUID( )
         { return serialVersionUID; }
 
+    // Refresh URL with actual attribute values.
+    private void refreshURL( ) {
+        this.url = connectionProtocol.getUrlPrefix( ) +
+                   ( username != null && !username.isEmpty( ) ? username : "" ) +
+                   ( username != null && !username.isEmpty( ) && password != null && password.length > 0
+                           ? ":" + password.toString( )
+                           : "" ) +
+                   host +
+                   ( port != null ? ":" + port : "" );
+    }
 
-    private void refreshURL( )
-        { this.url = connectionProtocol.getUrlPrefix( ) + host + ( port != null ? ":" + port : "" ); }
-
-    private void refresData( ) {
+    // Refresh attribute values by url attribute value.
+    private void refresData( )
+            throws IllegalArgumentException {
         connectionProtocol = url.startsWith( ConnectionProtocol.HTTPS.getUrlPrefix( ) )
                 ? ConnectionProtocol.HTTPS
                 : ConnectionProtocol.HTTP;
@@ -154,22 +262,21 @@ public abstract class AbstractServerAddress
         if ( remainURL.contains( ":" ) ) {
             Matcher matcher = CREDENTIALS_PATTERN.matcher( remainURL );
             String[ ] remainURLParts = remainURL.split( ":" );
-            while ( matcher.find( ) ) {
-                System.out.println("Full match: " + matcher.group(0));
-                for (int i = 1; i <= matcher.groupCount(); i++) {
-                    System.out.println("Group " + i + ": " + matcher.group(i));
-                }
+            if ( matcher.find( ) ) {
+                String[ ] credentials = matcher
+                        .group( 0 )
+                        .substring( 0, matcher.group( 0 ).length( ) - 1 )
+                        .split( ":" );
+                if ( credentials.length == 2 ) {
+                    setUsername( credentials[ 0 ] );
+                    setPassword( credentials[ 1 ].toCharArray( ) );
+                } else if ( credentials.length == 1 )
+                    setUsername( credentials[ 0 ] );
             }
-
-            port = PORT_PATTERN.matcher( remainURLParts[ remainURLParts.length-1 ] ).matches( )
-                    ? Integer.parseInt( remainURLParts[ remainURLParts.length-1 ] )
-                    : null;
-            if ( port != null )
-                host = remainURL.substring( 0, remainURL.lastIndexOf( ":" ) );
-            else
-                host = remainURL;
+            setPort( Integer.parseInt( remainURLParts[ remainURLParts.length-1 ] ) );
+            setHost( port != null ? remainURL.substring( 0, remainURL.lastIndexOf( ":" ) ) : remainURL );
         } else
-            host = remainURL;
+            setHost( remainURL );
     }
 
     @Override
@@ -179,13 +286,18 @@ public abstract class AbstractServerAddress
         final AbstractServerAddress that = ( AbstractServerAddress ) o;
         return Objects.equals( getHost( ), that.getHost( ) ) &&
                Objects.equals( getPort( ), that.getPort( ) ) &&
+               Objects.equals( getUsername( ), that.getUsername( ) ) &&
+               Arrays.equals( getPassword( ), that.getPassword( ) ) &&
                Objects.equals( getUrl( ), that.getUrl( ) ) &&
                getConnectionProtocol( ) == that.getConnectionProtocol( );
     }
 
     @Override
-    public int hashCode( )
-        { return Objects.hash( getHost( ), getPort( ), getUrl( ), getConnectionProtocol( ) ); }
+    public int hashCode( ) {
+        int result = Objects.hash( getHost( ), getPort( ), getUsername( ), getUrl( ), getConnectionProtocol( ) );
+        result = 31 * result + Arrays.hashCode( getPassword( ) );
+        return result;
+    }
 
     @Override
     public String toString( )

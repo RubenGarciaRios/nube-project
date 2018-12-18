@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 4/12/18 23:10
+ *  Last modified 17/12/18 14:34
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -19,13 +19,13 @@ import java.util.Objects;
  *
  * @author Rubén García Ríos
  */
-@ConfigurationProperties( prefix = NubeSSLProperties.NUBE_PROPERTIES_SSL_PREFIX )
+@ConfigurationProperties( prefix = NubeSSLProperties.PREFIX )
 public class NubeSSLProperties
         extends NubePropertiesObject {
     /**
-     * NUBE_PROPERTIES_SSL_PREFIX constant.
+     * PREFIX constant.
      */
-    public static final String NUBE_PROPERTIES_SSL_PREFIX = "nube.ssl";
+    public static final String PREFIX = "nube.ssl";
     private static final Logger _LOG = LogManager.getLogger( NubeSSLProperties.class );
     private static final long serialVersionUID = 6376617351138655352L;
     // DEFAULT VALUES.

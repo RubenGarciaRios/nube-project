@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 14/12/18 14:10
+ *  Last modified 17/12/18 15:16
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -26,7 +26,7 @@ import java.util.Objects;
  *
  * @author Rubén García Ríos
  */
-public class MongoDataProviderFactory
+public class MongoDataProviderFactory< S extends ServerAddress >
         extends NubeDataObject
         implements DataProviderFactory {
     private final static Logger _LOG = LogManager.getLogger( MongoDataProviderFactory.class );
@@ -126,6 +126,7 @@ public class MongoDataProviderFactory
         if ( database == null || database.isEmpty( ) )
             throw new IllegalArgumentException( "Argument 'database' must not be null." );
         mongoDataProvider = MongoDataProvider.connectionManagement( )
+                .identifiedBy( id )
                 .useDataBase( database )
                 .addAllServerAddresses( serverAddresses )
                 .authenticateWithUsername( username )

@@ -1,6 +1,6 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 5/12/18 12:30
+ *  Last modified 17/12/18 14:34
  *  Copyright (c) 2018 All rights reserved.
  */
 
@@ -24,14 +24,14 @@ import java.util.Objects;
  * @author Rubén García Ríos
  */
 @ConfigurationProperties( prefix =
-        NubeDiscoveryInstanceProperties.NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX )
+        NubeDiscoveryInstanceProperties.PREFIX )
 public class NubeDiscoveryInstanceProperties
         extends NubePropertiesObject {
     private static final Logger _LOG = LogManager.getLogger( NubeDiscoveryInstanceProperties.class );
     /**
-     * NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX constant.
+     * PREFIX constant.
      */
-    public static final String NUBE_PROPERTIES_CLOUD_DISCOVERY_CLUSTER_PREFIX = "nube.cloud.discovery-instance";
+    public static final String PREFIX = "nube.cloud.discovery-instance";
     private static final long serialVersionUID = -4542913480070535272L;
     // ATTRIBUTES.
     private DataBase dataBase;

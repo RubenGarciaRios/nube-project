@@ -1,21 +1,31 @@
 /*
  *  Developed by Rubén García Ríos
- *  Last modified 14/12/18 9:41
+ *  Last modified 18/12/18 18:17
  *  Copyright (c) 2018 All rights reserved.
  */
 
 package org.nube.core.base.data.provider;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 import org.nube.core.base.data.NubeDataObject;
 import org.nube.core.base.utils.PasswordUtilities;
+import org.nube.core.base.utils.RandomStringGenerator;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.NotNull;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 // https://github.com/ssinger/dynamic-beans-example
@@ -24,11 +34,12 @@ public abstract class DataProvider<
         extends NubeDataObject {
     private static final long serialVersionUID = 3129762729209077235L;
     // DEFAULT VALUES.
-    private static String DEFAULT_HOST = "localhost";
-    private static int DEFAULT_PORT = 0;
-    private static String DEFAULT_DATABASE = "nube";
-    private static String DEFAULT_USERNAME = "";
-    private static char[ ] DEFAULT_PASSWORD = { };
+    private static final String DEFAULT_HOST = "localhost";
+    private static final Set< String > DEFAULT_BASE_PACKAGES = Collections.singleton( "org.nube" );
+    private static final int DEFAULT_PORT = 0;
+    private static final String DEFAULT_DATABASE = "nube";
+    private static final String DEFAULT_USERNAME = "";
+    private static final char[ ] DEFAULT_PASSWORD = { };
     // ATTRIBUTES.
     /**
      * Inmutable attribute used for Bean prefix identification in registration proccess.
@@ -37,17 +48,20 @@ public abstract class DataProvider<
     private final String DATABASE;
     private final String USERNAME;
     private final char[ ] PASSWORD;
+    private final Set< String > BASE_PACKAGES;
     private Map< String, String > beanIDs;
 
     private DataProvider(
             final String id,
             final String database,
             final String username,
-            final char[ ] password ) {
+            final char[ ] password,
+            final Set< String > basePackages ) {
         ID = id;
         DATABASE = database;
         USERNAME = username;
         PASSWORD = password;
+        BASE_PACKAGES = basePackages;
         beanIDs = new HashMap< >( );
     }
 
@@ -57,7 +71,8 @@ public abstract class DataProvider<
         this( connectionManagerConfigurer.id,
               connectionManagerConfigurer.database,
               connectionManagerConfigurer.username,
-              connectionManagerConfigurer.password );
+              connectionManagerConfigurer.password,
+              connectionManagerConfigurer.basePackages );
     }
 
     protected String database( )
@@ -72,25 +87,71 @@ public abstract class DataProvider<
     protected boolean authenticate( )
         { return USERNAME != null && !USERNAME.isEmpty( ); }
 
+    protected Set< String > basePackages( )
+        { return BASE_PACKAGES; }
+
     @NotNull
     public abstract BeanDefinition[ ] beanDefinitions( );
 
     public final Map< String, String > getBeanIDs( )
         { return beanIDs; }
 
-    public final void register( final ApplicationContext applicationContext ) {
+    @SafeVarargs
+    @NotNull
+    protected static Set< Class< ? > > scanAnnotatedEntities(
+            @Nullable final Class< ? extends Annotation >... entityAnnotationsClasses )
+            throws ClassNotFoundException {
+        return scanAnnotatedEntities( DEFAULT_BASE_PACKAGES, entityAnnotationsClasses ); }
+
+    @SafeVarargs
+    @NotNull
+    protected static Set< Class< ? > > scanAnnotatedEntities(
+            @Nullable final Collection< String > basePackages,
+            @Nullable final Class< ? extends Annotation >... entityAnnotationsClasses )
+            throws ClassNotFoundException {
+        if ( basePackages == null ||
+             basePackages.isEmpty( ) ||
+             entityAnnotationsClasses == null ||
+             entityAnnotationsClasses.length == 0 )
+            return Collections.emptySet( );
+        // Scan for Entities with annotated classes.
+        Set< Class< ? > > entities = new HashSet< >( );
+        ClassPathScanningCandidateComponentProvider componentProvider =
+                new ClassPathScanningCandidateComponentProvider( false);
+        // Add filters to find by annotated classes.
+        for ( Class< ? extends Annotation > annotationClass : entityAnnotationsClasses )
+            if ( annotationClass != null )
+                componentProvider.addIncludeFilter( new AnnotationTypeFilter( annotationClass ) );
+        // Add all Beans Definitions candidates.
+        for ( String basePackage : basePackages ) {
+            if ( StringUtils.hasText( basePackage ) ) {
+                Set< BeanDefinition > beanDefinitions = componentProvider.findCandidateComponents( basePackage );
+                for ( BeanDefinition beanDefinition : beanDefinitions )
+                    if ( beanDefinition != null && StringUtils.hasText( beanDefinition.getBeanClassName( ) ) )
+                        entities.add( ClassUtils.forName(
+                                beanDefinition.getBeanClassName( ),
+                                DataProvider.class.getClassLoader( ) ) );
+            }
+        }
+        return entities;
+    }
+
+    public final Map< String, String > register( final ApplicationContext applicationContext ) {
         AutowireCapableBeanFactory beanFactory = applicationContext.getAutowireCapableBeanFactory( );
         //beanFactory.initializeBean(  )
         BeanDefinitionRegistry beanDefinitionRegistry = ( BeanDefinitionRegistry ) beanFactory;
         BeanDefinition[ ] beanDefinitions = beanDefinitions( );
         for ( BeanDefinition beanDefinition : beanDefinitions ) {
-            String beanClassName = beanDefinition.getBeanClassName( );
-            String beanID = ID +
-                            Character.toLowerCase( beanClassName.charAt( 0 ) ) +
-                            beanClassName.substring( 1 );
+            String beanClassName = beanDefinition.getBeanClassName( ) != null
+                    ? beanDefinition.getBeanClassName( )
+                    : "" ;
+            String beanID = ID + ( StringUtils.hasText( beanClassName )
+                    ? Character.toLowerCase( beanClassName.charAt( 0 ) ) + beanClassName.substring( 1 )
+                    : RandomStringGenerator.builder( ).build( ) );
             beanIDs.put( beanID, beanDefinition.getBeanClassName( ) );
             beanDefinitionRegistry.registerBeanDefinition( beanID, beanDefinition );
         }
+        return beanIDs;
     }
 
     public static abstract class ConnectionManagementConfigurer<
@@ -105,6 +166,7 @@ public abstract class DataProvider<
         protected String database;
         protected String username;
         protected char[ ] password;
+        protected Set< String > basePackages;
         protected GenericBeanDefinition[ ] providerBeanComponents;
         private boolean authenticate;
 
@@ -129,14 +191,26 @@ public abstract class DataProvider<
                 final Collection< S > serverAddresses,
                 final String database,
                 final String username,
-                final char[ ] password ) {
+                final char[ ] password )
+            { this( id, serverAddresses, database, username, password, null ); }
+
+        public ConnectionManagementConfigurer(
+                final String id,
+                final Collection< S > serverAddresses,
+                final String database,
+                final String username,
+                final char[ ] password,
+                final Set< String > basePackages ) {
+            this.id = id;
             this.serverAddresses = serverAddresses == null
                     ? new ArrayList< >( )
                     : serverAddresses;
-            this.id = id;
             this.database = database;
             this.username = username;
             this.password = password;
+            this.basePackages = basePackages == null
+                    ? new HashSet< >( )
+                    : basePackages;
         }
 
         public T identifiedBy( final String id ) {
@@ -148,9 +222,27 @@ public abstract class DataProvider<
         public abstract S addServerAddress( );
 
         @NotNull
-        public T addAllServerAddresses( final Collection< S > serverAddresses ) {
+        @SuppressWarnings( "unchecked" )
+        public T addAllServerAddresses( final Collection serverAddresses ) {
             if ( serverAddresses != null && !serverAddresses.isEmpty( ) )
-                this.serverAddresses.addAll( serverAddresses );
+                try {
+                    for ( Object serverAddress : serverAddresses )
+                        if ( serverAddress instanceof ServerAddress )
+                            this.serverAddresses.add( ( S ) serverAddress );
+                        else if ( serverAddress instanceof org.nube.core.base.data.ServerAddress )
+                            if ( ( ( org.nube.core.base.data.ServerAddress ) serverAddress ).getPort( ) != null )
+                                this.addServerAddress( )
+                                    .withHost( ( ( org.nube.core.base.data.ServerAddress ) serverAddress ).getHost( ) )
+                                    .withPort( ( ( org.nube.core.base.data.ServerAddress ) serverAddress ).getPort( ) )
+                                    .and( );
+                            else
+                                this.addServerAddress( )
+                                    .withHost( ( ( org.nube.core.base.data.ServerAddress ) serverAddress ).getHost( ) )
+                                    .and( );
+
+                } catch ( Exception e ) {
+                   //...
+                }
             return instance( );
         }
 
@@ -183,7 +275,7 @@ public abstract class DataProvider<
         }
 
         @NotNull
-        public T withoutAuthentication(  ) {
+        public T withoutAuthentication( ) {
             this.username = "";
             PasswordUtilities.erase( this.password );
             return instance( );
@@ -197,6 +289,32 @@ public abstract class DataProvider<
             if ( this.password != null )
                 PasswordUtilities.erase( this.password );
             this.password = password;
+            return instance( );
+        }
+
+        @NotNull
+        public T scanBasePackages( @Nullable final Set< String > basePackages ) {
+            this.basePackages = basePackages;
+            return instance( );
+        }
+
+        @NotNull
+        public T addBasePackages( @NotNull final Set< String > basePackages ) {
+            if ( basePackages == null || basePackages.isEmpty( ) )
+                return instance( );
+            if ( this.basePackages == null )
+                this.basePackages = new HashSet< >( );
+            this.basePackages.addAll( basePackages );
+            return instance( );
+        }
+
+        @NotNull
+        public T addBasePackage( @NotNull final String basePackage ) {
+            if ( basePackage == null || basePackages.isEmpty( ) )
+                return instance( );
+            if ( basePackages == null )
+                this.basePackages = new HashSet< >( );
+            basePackages.add( basePackage );
             return instance( );
         }
 
@@ -287,6 +405,78 @@ public abstract class DataProvider<
             result = 31 * result + Arrays.hashCode( password );
             return result;
         }
+
+        @Override
+        public String toString( )
+            { return super.toString( ); }
+    }
+
+    protected final static class BeanDefinitionBuilder< G >
+            extends NubeDataObject {
+        private static final long serialVersionUID = -5436606366126756494L;
+        private GenericBeanDefinition beanDefinition;
+        private G object;
+
+        @SuppressWarnings( "unchecked" )
+        public BeanDefinitionBuilder( Class< G > clazz, Object... beanArgs )
+                throws NoSuchMethodException,
+                IllegalAccessException,
+                InvocationTargetException,
+                InstantiationException {
+            if ( beanArgs == null ) {
+                beanDefinition = new GenericBeanDefinition( );
+                beanDefinition.setBeanClass( clazz );
+                object = clazz.newInstance( );
+                return;
+            }
+            // Checking of arguments types for get a candidate object constructor and constructor for Bean deficinition.
+            ConstructorArgumentValues constructorArgs = new ConstructorArgumentValues( );
+            List< Class< ? > > argumentTypes = new ArrayList< >( );
+            for ( final Object beanArg : beanArgs ) {
+                constructorArgs.addGenericArgumentValue( beanArg );
+                argumentTypes.add( beanArg.getClass( ) );
+            }
+            // Search for candidate constructors.
+            Constructor< ? > candidateConstructor = null;
+            try {
+                candidateConstructor = clazz.getConstructor(
+                        argumentTypes.toArray( new Class< ? >[ argumentTypes.size( ) ] ) );
+            } catch ( NoSuchMethodException e ) {
+                Constructor< ? >[ ] constructors = clazz.getDeclaredConstructors( );
+                for ( final Constructor< ? > constructor : constructors ) {
+                    constructor.setAccessible( true );
+                    Class< ? >[ ] params = constructor.getParameterTypes( );
+                    if ( params.length == beanArgs.length ) {
+                        int i = params.length;
+                        for ( final Class< ? > param : params ) {
+                            for ( final Class< ? > argumentType : argumentTypes ) {
+                                if ( param.isAssignableFrom( argumentType ) || param.equals( argumentType ) ) {
+                                    --i;
+                                    break;
+                                }
+                            }
+                        }
+                        if ( i != 0 )
+                            continue;
+                        candidateConstructor = constructor;
+                        break;
+                    }
+                }
+            }
+            if ( candidateConstructor == null )
+                throw new NoSuchMethodException( "Class [" + clazz.getName( ) + "] don't have any know constructor with the given arguments." );
+            // Attributes initialization.
+            beanDefinition = new GenericBeanDefinition( );
+            beanDefinition.setBeanClass( clazz );
+            beanDefinition.setConstructorArgumentValues( constructorArgs );
+            object = ( G ) candidateConstructor.newInstance( beanArgs );
+        }
+
+        public GenericBeanDefinition beanDefinition( )
+            { return beanDefinition; }
+
+        public G object( )
+            { return object; }
 
         @Override
         public String toString( )

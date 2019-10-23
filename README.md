@@ -1,6 +1,10 @@
 NUBE PROJECT
 ============
-A **Spring Cloud** integration project (\#under construction).
+A **Spring Cloud** integration project (\#readme under construction).
+
+*Notice*: The development takes place in free moments, so it can be quite a while without updating.
+
+**Project under alpha development stage**
 
 ## Index
 
